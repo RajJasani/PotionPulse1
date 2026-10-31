@@ -58,7 +58,7 @@ export const MoonPhaseIndicator: React.FC = () => {
   return (
     <div className="relative group cursor-pointer select-none">
       {/* Single-line sleek compact pill */}
-      <div className="h-9 flex items-center gap-1.5 bg-slate-100 dark:bg-[#181428] px-3 rounded-full border border-slate-300 dark:border-white/15 text-xs shadow-sm hover:border-amber-400 transition-all duration-200">
+      <div className="h-9 flex items-center gap-1.5 bg-amber-100/80 px-3 rounded-full border border-amber-300/80 text-xs shadow-sm hover:border-amber-500 transition-all duration-200">
         {/* Moon Disc SVG */}
         <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 flex-shrink-0">
           <circle cx="12" cy="12" r="9.5" fill="#0D0B14" stroke="#F59E0B" strokeWidth="1.5" />

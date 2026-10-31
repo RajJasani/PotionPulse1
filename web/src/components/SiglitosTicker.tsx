@@ -21,18 +21,18 @@ export const SiglitosTicker: React.FC<SiglitosTickerProps> = ({
   ];
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#170C2A] via-[#2D144B] to-[#170C2A] border-b border-amber-400/25 py-2 overflow-hidden select-none relative z-40 shadow-lg">
+    <div className="w-full bg-gradient-to-r from-[#FFFBEB] via-[#FEF3C7] to-[#FFF7ED] border-b border-amber-300/80 py-2.5 overflow-hidden select-none relative z-40 shadow-sm">
       <div className="animate-ticker font-sans font-black text-xs sm:text-[12px] tracking-widest uppercase flex items-center">
         {/* Set 1 */}
         {items.map((item, idx) => {
           const Icon = item.icon;
           return (
             <div key={`set1-${idx}`} className="flex items-center gap-2.5 px-6 whitespace-nowrap">
-              <Icon className="w-3.5 h-3.5 text-amber-400 fill-amber-400 flex-shrink-0 animate-pulse" />
-              <span className="bg-gradient-to-r from-amber-200 via-amber-300 to-yellow-100 bg-clip-text text-transparent drop-shadow-sm font-black">
+              <Icon className="w-3.5 h-3.5 text-amber-600 fill-amber-500 flex-shrink-0 animate-pulse" />
+              <span className="text-amber-950 font-black tracking-wider">
                 {item.text}
               </span>
-              <span className="text-amber-400/60 font-black text-sm ml-2">✦</span>
+              <span className="text-amber-500 font-black text-sm ml-2">✦</span>
             </div>
           );
         })}
@@ -41,11 +41,11 @@ export const SiglitosTicker: React.FC<SiglitosTickerProps> = ({
           const Icon = item.icon;
           return (
             <div key={`set2-${idx}`} className="flex items-center gap-2.5 px-6 whitespace-nowrap">
-              <Icon className="w-3.5 h-3.5 text-amber-400 fill-amber-400 flex-shrink-0 animate-pulse" />
-              <span className="bg-gradient-to-r from-amber-200 via-amber-300 to-yellow-100 bg-clip-text text-transparent drop-shadow-sm font-black">
+              <Icon className="w-3.5 h-3.5 text-amber-600 fill-amber-500 flex-shrink-0 animate-pulse" />
+              <span className="text-amber-950 font-black tracking-wider">
                 {item.text}
               </span>
-              <span className="text-amber-400/60 font-black text-sm ml-2">✦</span>
+              <span className="text-amber-500 font-black text-sm ml-2">✦</span>
             </div>
           );
         })}

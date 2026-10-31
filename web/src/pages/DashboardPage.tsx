@@ -139,22 +139,22 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="space-y-8 pb-16">
       {/* Operational Overview Telemetry Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-amber-200/80">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] font-sans font-black uppercase tracking-widest mb-1.5 shadow-sm border border-amber-400/25">
-            <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/90 text-amber-900 text-[11px] font-sans font-black uppercase tracking-widest mb-1.5 shadow-sm border border-amber-300">
+            <Zap className="w-3.5 h-3.5 text-amber-600 fill-amber-500 animate-pulse" />
             <span>APOTHECARY TELEMETRY MATRIX</span>
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-black text-white drop-shadow-sm">
+          <h2 className="font-display text-2xl sm:text-3xl font-black text-slate-900">
             Live Inventory Intelligence
           </h2>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <span className="hidden sm:inline-block px-3.5 py-1.5 rounded-full text-xs font-sans font-black bg-white/10 text-amber-300 border border-amber-400/30 uppercase tracking-wider shadow-sm backdrop-blur-md">
+          <span className="hidden sm:inline-block px-3.5 py-1.5 rounded-full text-xs font-sans font-black bg-amber-100/80 text-amber-900 border border-amber-300 uppercase tracking-wider shadow-sm">
             ★ 100% ARTISANAL POTIONS ★
           </span>
-          <span className="px-3.5 py-1.5 rounded-full text-xs font-sans font-black bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border border-amber-500/40 uppercase tracking-wider shadow-md">
+          <span className="px-3.5 py-1.5 rounded-full text-xs font-sans font-black bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 text-slate-950 border border-amber-500/40 uppercase tracking-wider shadow-md">
             EST. 2026
           </span>
         </div>
@@ -194,29 +194,29 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       </div>
 
       {/* 3. Potion Flash Bottles Showcase with Glass Sheen */}
-      <div className="rounded-3xl luxury-glass p-6 sm:p-8 border border-amber-400/25 shadow-2xl relative overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-48 bg-purple-600/15 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-96 h-48 bg-amber-500/10 blur-3xl pointer-events-none" />
+      <div className="rounded-3xl luxury-glass p-6 sm:p-8 border border-amber-300/80 shadow-xl relative overflow-hidden">
+        {/* Subtle warm sunset background glow */}
+        <div className="absolute top-0 right-1/4 w-96 h-48 bg-amber-400/15 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-48 bg-orange-400/15 blur-3xl pointer-events-none" />
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-white/10 relative z-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-amber-200/80 relative z-10">
           <div>
             <div className="flex items-center gap-2.5">
-              <h3 className="font-display text-xl sm:text-2xl font-black text-white drop-shadow-sm">
+              <h3 className="font-display text-xl sm:text-2xl font-black text-slate-900">
                 Lowest-Stock Potion Flash Tubes
               </h3>
               <span className="px-3 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-rose-500 to-pink-600 text-white uppercase shadow-md shadow-rose-500/30 animate-pulse tracking-wider">
                 CRITICAL
               </span>
             </div>
-            <p className="font-sans text-xs font-semibold text-purple-200/80 mt-1">
+            <p className="font-sans text-xs font-semibold text-slate-600 mt-1">
               Live volumetric liquid gauges with animated meniscus and slosh physics.
             </p>
           </div>
 
           <button
             onClick={() => onNavigateTab('inventory')}
-            className="self-start sm:self-auto flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 hover:border-amber-400/50 font-sans text-xs font-black uppercase text-amber-300 shadow-sm hover:scale-105 active:scale-95 transition-all backdrop-blur-md"
+            className="self-start sm:self-auto flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100/90 hover:bg-amber-200 border border-amber-300 font-sans text-xs font-black uppercase text-amber-950 shadow-sm hover:scale-105 active:scale-95 transition-all"
           >
             <span>All Shelves</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -226,7 +226,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
             {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-52 w-full rounded-3xl border border-white/10" />
+              <Skeleton key={i} className="h-52 w-full rounded-3xl border border-amber-200" />
             ))}
           </div>
         ) : (
@@ -238,16 +238,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="flex flex-col items-center justify-between p-5 rounded-3xl bg-gradient-to-b from-[#2B174D]/90 via-[#21113C]/90 to-[#170B2B]/95 border border-white/15 hover:border-amber-400/60 shadow-xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 group relative overflow-hidden luxury-shimmer cursor-default"
+                className="flex flex-col items-center justify-between p-5 rounded-3xl bg-gradient-to-b from-amber-50/90 via-white to-orange-50/70 border border-amber-300/80 hover:border-amber-500 shadow-md hover:shadow-xl hover:shadow-amber-500/15 transition-all duration-300 group relative overflow-hidden cursor-default"
               >
                 {/* Micro backlight */}
-                <div className="absolute inset-0 bg-radial from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 bg-radial from-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
                 <div className="text-center mb-3 w-full relative z-10">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black bg-amber-400/20 text-amber-300 border border-amber-400/40 uppercase tracking-widest mb-1.5 shadow-sm">
+                  <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black bg-amber-100 text-amber-900 border border-amber-300 uppercase tracking-widest mb-1.5 shadow-sm">
                     {ing.category}
                   </span>
-                  <h4 className="font-display font-black text-sm text-white truncate w-full drop-shadow-sm" title={ing.name}>
+                  <h4 className="font-display font-black text-sm text-slate-900 truncate w-full" title={ing.name}>
                     {ing.name}
                   </h4>
                 </div>
@@ -265,7 +265,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
                 <button
                   onClick={() => onNavigateTab('inventory')}
-                  className="mt-4 w-full py-2 px-3 rounded-full bg-white/10 hover:bg-gradient-to-r hover:from-amber-400 hover:to-orange-500 hover:text-black text-amber-200 border border-white/15 hover:border-amber-400/50 text-xs font-sans font-black uppercase tracking-wider transition-all duration-200 shadow-sm relative z-10 hover:scale-105 active:scale-95"
+                  className="mt-4 w-full py-2 px-3 rounded-full bg-amber-100 hover:bg-gradient-to-r hover:from-amber-400 hover:to-orange-400 hover:text-slate-950 text-amber-950 border border-amber-300 text-xs font-sans font-black uppercase tracking-wider transition-all duration-200 shadow-sm relative z-10 hover:scale-105 active:scale-95"
                 >
                   Manage Stock
                 </button>
@@ -278,21 +278,21 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* 4. Main Asymmetric Bento: Prophecy Panel vs Restock & Anomalies */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column (7 cols): Prophecy Engine & Runout Countdown */}
-        <div className="lg:col-span-7 rounded-3xl luxury-glass p-6 sm:p-8 border border-amber-400/25 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+        <div className="lg:col-span-7 rounded-3xl luxury-glass p-6 sm:p-8 border border-amber-300/80 shadow-xl flex flex-col justify-between relative overflow-hidden">
           <div>
-            <div className="flex items-center justify-between mb-5 pb-4 border-b border-white/10">
+            <div className="flex items-center justify-between mb-5 pb-4 border-b border-amber-200/80">
               <div>
-                <h3 className="font-display text-xl sm:text-2xl font-black text-white flex items-center gap-2.5 drop-shadow-sm">
-                  <Clock className="w-5 h-5 text-amber-400" />
+                <h3 className="font-display text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2.5">
+                  <Clock className="w-5 h-5 text-amber-600" />
                   <span>The Prophecy Engine</span>
                 </h3>
-                <p className="font-sans text-xs font-semibold text-purple-200/80 mt-1">
+                <p className="font-sans text-xs font-semibold text-slate-600 mt-1">
                   ML-projected inventory depletion trajectories and stockout timelines.
                 </p>
               </div>
               <button
                 onClick={() => onNavigateTab('crystal-ball')}
-                className="font-sans text-xs font-black uppercase text-amber-300 hover:text-amber-200 flex items-center gap-1 hover:underline tracking-wider"
+                className="font-sans text-xs font-black uppercase text-amber-900 hover:text-amber-950 flex items-center gap-1 hover:underline tracking-wider"
               >
                 <span>Full Charts</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -302,53 +302,53 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             {loading ? (
               <div className="space-y-3">
                 {[...Array(5)].map((_, i) => (
-                  <Skeleton key={i} className="h-16 w-full rounded-2xl border border-white/10" />
+                  <Skeleton key={i} className="h-16 w-full rounded-2xl border border-amber-200" />
                 ))}
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-sans text-xs">
                   <thead>
-                    <tr className="border-b border-white/15 text-amber-300/90 font-black uppercase tracking-wider text-[11px]">
-                      <th className="pb-3.5">Reagent</th>
-                      <th className="pb-3.5 text-right">Stock</th>
-                      <th className="pb-3.5 text-right">Burn Rate</th>
-                      <th className="pb-3.5 text-right">Prophesied Runout</th>
-                      <th className="pb-3.5 text-center">Urgency</th>
+                    <tr className="border-b border-amber-300/80 text-amber-950 font-black uppercase tracking-wider text-[11px] bg-amber-100/60 rounded-xl">
+                      <th className="py-3 px-3">Reagent</th>
+                      <th className="py-3 px-3 text-right">Stock</th>
+                      <th className="py-3 px-3 text-right">Burn Rate</th>
+                      <th className="py-3 px-3 text-right">Prophesied Runout</th>
+                      <th className="py-3 px-3 text-center">Urgency</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-amber-100/80">
                     {prophecies.slice(0, 6).map((p) => {
                       const urgencyBadge = {
                         CRITICAL: 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-rose-500/25',
                         WARNING: 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black shadow-amber-500/25',
                         HEALTHY: 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-black shadow-emerald-500/25',
-                      }[p.urgency] || 'bg-white/20 text-white';
+                      }[p.urgency] || 'bg-amber-100 text-amber-950';
 
                       return (
                         <tr
                           key={p.ingredient_id}
-                          className="hover:bg-white/5 transition-colors group"
+                          className="hover:bg-amber-50/70 transition-colors group"
                         >
-                          <td className="py-3.5 font-black text-white text-sm group-hover:text-amber-300 transition-colors">
+                          <td className="py-3.5 px-3 font-black text-slate-900 text-sm group-hover:text-amber-800 transition-colors">
                             {p.name}
                           </td>
-                          <td className="py-3.5 text-right font-mono font-bold text-slate-200">
+                          <td className="py-3.5 px-3 text-right font-mono font-bold text-slate-800">
                             {p.current_stock.toFixed(1)} {p.unit}
                           </td>
-                          <td className="py-3.5 text-right font-mono font-semibold text-purple-300/90">
+                          <td className="py-3.5 px-3 text-right font-mono font-bold text-purple-900">
                             ~{p.depletion_rate_per_day.toFixed(1)}/d
                           </td>
-                          <td className="py-3.5 text-right font-mono font-black text-amber-300">
+                          <td className="py-3.5 px-3 text-right font-mono font-black text-amber-950">
                             {p.is_stocked_out ? (
-                              <span className="text-rose-400 font-extrabold uppercase tracking-wide">EXHAUSTED</span>
+                              <span className="text-rose-600 font-extrabold uppercase tracking-wide">EXHAUSTED</span>
                             ) : (
                               `${p.days_until_stockout.toFixed(1)} days`
                             )}
                           </td>
-                          <td className="py-3.5 text-center">
+                          <td className="py-3.5 px-3 text-center">
                             <span
-                              className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-md border border-white/10 inline-block ${urgencyBadge}`}
+                              className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm border border-black/5 inline-block ${urgencyBadge}`}
                             >
                               {p.is_stocked_out ? 'DEPLETED' : p.urgency}
                             </span>
@@ -362,12 +362,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             )}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-semibold text-purple-200/80">
+          <div className="mt-6 pt-4 border-t border-amber-200/80 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-semibold text-slate-600">
             <span>
               Powered by Histogram Gradient Boosting Regressor (18.4% WAPE).
             </span>
-            <span className="inline-flex items-center gap-1 font-sans text-emerald-400 font-black">
-              <ShieldCheck className="w-4 h-4 fill-current" />
+            <span className="inline-flex items-center gap-1 font-sans text-emerald-700 font-black">
+              <ShieldCheck className="w-4 h-4 fill-current text-emerald-600" />
               <span>95% Service Buffer</span>
             </span>
           </div>
@@ -376,21 +376,21 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         {/* Right Column (5 cols): Top Restock Recommendations & Strange Happenings */}
         <div className="lg:col-span-5 space-y-6">
           {/* Restock Spell Box with Purple/Violet Gradient Aura */}
-          <div className="rounded-3xl luxury-glass p-6 border border-purple-400/30 shadow-2xl glow-violet-card relative overflow-hidden">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-              <h3 className="font-display text-xl font-black text-white flex items-center gap-2 drop-shadow-sm">
-                <Wand2 className="w-5 h-5 text-purple-400" />
+          <div className="rounded-3xl luxury-glass p-6 border border-purple-300/80 shadow-xl glow-violet-card relative overflow-hidden bg-gradient-to-br from-[#FAF5FF] via-white to-[#F5F3FF]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-purple-200/80">
+              <h3 className="font-display text-xl font-black text-purple-950 flex items-center gap-2">
+                <Wand2 className="w-5 h-5 text-purple-600" />
                 <span>The Restock Spell</span>
               </h3>
-              <span className="font-mono text-xs font-black px-3 py-0.5 rounded-full bg-emerald-500 text-slate-950 border border-emerald-400/40 shadow-sm">
+              <span className="font-mono text-xs font-black px-3 py-0.5 rounded-full bg-emerald-500 text-white shadow-sm">
                 {recommendations.length} to reorder
               </span>
             </div>
 
             {loading ? (
-              <Skeleton className="h-32 w-full rounded-2xl border border-white/10" />
+              <Skeleton className="h-32 w-full rounded-2xl border border-purple-200" />
             ) : recommendations.length === 0 ? (
-              <div className="text-center py-6 text-purple-200/90 text-xs font-bold">
+              <div className="text-center py-6 text-purple-900 text-xs font-bold">
                 ✨ All shelves adequately provisioned with safety stock.
               </div>
             ) : (
@@ -400,23 +400,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     key={rec.ingredient_id}
                     whileHover={{ x: 4, scale: 1.01 }}
                     transition={{ duration: 0.2 }}
-                    className="p-4 rounded-2xl bg-[#23143F]/80 border border-purple-400/25 hover:border-purple-400/50 shadow-lg flex items-start justify-between gap-3 transition-all"
+                    className="p-4 rounded-2xl bg-white/90 border border-purple-200/80 hover:border-purple-400 shadow-md flex items-start justify-between gap-3 transition-all"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h4 className="font-sans font-black text-sm text-white">
+                        <h4 className="font-sans font-black text-sm text-purple-950">
                           {rec.ingredient_name}
                         </h4>
                         <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950 shadow-sm">
                           +{rec.recommended_quantity} {rec.unit}
                         </span>
                       </div>
-                      <p className="font-sans text-[11px] font-medium text-purple-200/90 mt-1 leading-snug line-clamp-2">
+                      <p className="font-sans text-[11px] font-medium text-slate-700 mt-1 leading-snug line-clamp-2">
                         {rec.reasoning}
                       </p>
-                      <div className="mt-2 flex items-center gap-3 text-[11px] font-mono font-bold text-amber-300">
+                      <div className="mt-2 flex items-center gap-3 text-[11px] font-mono font-bold text-amber-900">
                         <span className="flex items-center gap-1">
-                          <Coins className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                          <Coins className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
                           {rec.estimated_cost_gold} Gold
                         </span>
                       </div>
@@ -425,7 +425,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <button
                       onClick={() => handleCastRestock(rec)}
                       disabled={castingRestockId === rec.ingredient_id}
-                      className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-600 hover:from-purple-400 hover:to-indigo-400 text-white border border-purple-400/40 text-xs font-black uppercase tracking-wider shadow-lg shadow-purple-500/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 disabled:opacity-50"
+                      className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-black uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 disabled:opacity-50"
                     >
                       <Wand2 className="w-3.5 h-3.5" />
                       <span>{castingRestockId === rec.ingredient_id ? 'Brewing...' : 'Restock'}</span>
@@ -437,25 +437,25 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </div>
 
           {/* Live Strange Happenings Alert Box */}
-          <div className="rounded-3xl luxury-glass p-6 border border-rose-400/30 shadow-2xl glow-magenta-card relative overflow-hidden">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-              <h3 className="font-display text-lg font-black text-white flex items-center gap-2 drop-shadow-sm">
-                <AlertTriangle className="w-5 h-5 text-rose-400 animate-bounce" />
+          <div className="rounded-3xl luxury-glass p-6 border border-rose-300/80 shadow-xl glow-magenta-card relative overflow-hidden bg-gradient-to-br from-[#FFF1F2] via-white to-[#FFF7ED]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-rose-200/80">
+              <h3 className="font-display text-lg font-black text-rose-950 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-rose-600 animate-bounce" />
                 <span>Strange Happenings Sentinel</span>
               </h3>
               <button
                 onClick={() => onNavigateTab('anomalies')}
-                className="font-sans text-xs font-black uppercase text-amber-300 hover:text-amber-200 hover:underline tracking-wider"
+                className="font-sans text-xs font-black uppercase text-rose-900 hover:text-rose-950 hover:underline tracking-wider"
               >
                 Feed &rarr;
               </button>
             </div>
 
             {loading ? (
-              <Skeleton className="h-28 w-full rounded-2xl border border-white/10" />
+              <Skeleton className="h-28 w-full rounded-2xl border border-rose-200" />
             ) : anomalies.length === 0 ? (
-              <div className="text-center py-5 text-xs font-bold flex items-center justify-center gap-2 text-purple-200/90">
-                <CheckCircle className="w-4 h-4 text-emerald-400 fill-emerald-400" />
+              <div className="text-center py-5 text-xs font-bold flex items-center justify-center gap-2 text-emerald-800">
+                <CheckCircle className="w-4 h-4 text-emerald-600 fill-emerald-500" />
                 <span>Pantry wards intact. No unauthorized spikes or missing stock detected.</span>
               </div>
             ) : (
@@ -465,26 +465,26 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     key={anom.id}
                     whileHover={{ x: 4, scale: 1.01 }}
                     transition={{ duration: 0.2 }}
-                    className="p-4 rounded-2xl bg-[#2A102E]/80 border border-rose-400/25 hover:border-rose-400/50 shadow-lg transition-all flex items-center justify-between gap-3"
+                    className="p-4 rounded-2xl bg-white/90 border border-rose-200/80 hover:border-rose-400 shadow-md transition-all flex items-center justify-between gap-3"
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-black text-sm text-white">
+                        <span className="font-black text-sm text-slate-900">
                           {anom.ingredient_name || 'Reagent'}
                         </span>
                         <span className="text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-sm tracking-wide">
                           {anom.anomaly_type}
                         </span>
                       </div>
-                      <p className="text-xs font-sans text-purple-200/90 mt-1 leading-snug">
-                        Actual: <strong className="text-rose-400 font-black">{anom.actual_consumption}</strong> vs expected{' '}
-                        <strong className="text-slate-100 font-bold">{anom.expected_consumption}</strong>
+                      <p className="text-xs font-sans text-slate-700 mt-1 leading-snug">
+                        Actual: <strong className="text-rose-700 font-black">{anom.actual_consumption}</strong> vs expected{' '}
+                        <strong className="text-slate-900 font-bold">{anom.expected_consumption}</strong>
                       </p>
                     </div>
 
                     <button
                       onClick={() => handleResolveAnomaly(anom.id)}
-                      className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-300 text-slate-950 font-sans font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all border border-emerald-300/40 flex-shrink-0"
+                      className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-sans font-black text-xs uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all flex-shrink-0"
                     >
                       Ward
                     </button>

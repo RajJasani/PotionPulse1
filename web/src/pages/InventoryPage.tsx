@@ -236,17 +236,17 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
       </div>
 
       {/* Filter & Search Bar in Glass Card */}
-      <div className="p-5 rounded-3xl luxury-glass border border-amber-400/20 shadow-2xl space-y-4">
+      <div className="p-5 rounded-3xl luxury-glass border border-amber-300/80 shadow-xl space-y-4">
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
           {/* Search Input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-amber-400 absolute left-4 top-3.5" />
+            <Search className="w-4 h-4 text-amber-600 absolute left-4 top-3.5" />
             <input
               type="text"
               placeholder="Search by reagent name, scent, or category..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#1C1233]/90 border border-white/20 text-white font-sans font-bold text-sm rounded-full pl-11 pr-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400 min-h-[44px] placeholder:text-slate-400"
+              className="w-full bg-amber-50/70 border border-amber-300/80 text-slate-900 font-sans font-bold text-sm rounded-full pl-11 pr-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500 min-h-[44px] placeholder:text-slate-500"
             />
           </div>
 
@@ -255,7 +255,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
             <select
               value={selectedShelf}
               onChange={(e) => setSelectedShelf(e.target.value)}
-              className="bg-[#1C1233]/90 border border-white/20 text-white font-sans font-bold text-xs rounded-full px-4 py-2.5 shadow-sm min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="bg-amber-50/70 border border-amber-300/80 text-slate-900 font-sans font-bold text-xs rounded-full px-4 py-2.5 shadow-sm min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500"
             >
               <option value="ALL">All Shelves ({shelves.length})</option>
               {shelves.map((s) => (
@@ -272,7 +272,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
             className={`px-4 py-2 rounded-full font-sans text-xs font-black uppercase tracking-wider border transition-all min-h-[44px] flex items-center gap-2 shadow-sm ${
               lowStockOnly
                 ? 'bg-rose-500 text-white border-rose-400 shadow-md shadow-rose-500/30'
-                : 'bg-[#1C1233]/90 border-white/20 text-slate-200 hover:bg-white/10'
+                : 'bg-amber-50 border-amber-300 text-slate-800 hover:bg-amber-100'
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -288,8 +288,8 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-1.5 rounded-full font-sans text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all border min-h-[36px] ${
                 selectedCategory === cat
-                  ? 'bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border-amber-500/40 shadow-lg shadow-amber-500/20 scale-[1.02]'
-                  : 'bg-white/10 border-white/15 text-slate-200 hover:text-white hover:bg-white/20'
+                  ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 text-slate-950 border-amber-500/40 shadow-md scale-[1.02]'
+                  : 'bg-amber-50/80 border-amber-200/80 text-slate-700 hover:text-slate-950 hover:bg-amber-100'
               }`}
             >
               {cat === 'ALL' ? 'All Reagents' : cat}
@@ -299,27 +299,27 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
       </div>
 
       {/* Main Shelves Table in Glass Card */}
-      <div className="rounded-3xl luxury-glass border border-amber-400/25 shadow-2xl overflow-hidden">
+      <div className="rounded-3xl luxury-glass border border-amber-300/80 shadow-xl overflow-hidden">
         {loading ? (
           <div className="p-6 space-y-4">
             {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full rounded-2xl border border-white/10" />
+              <Skeleton key={i} className="h-16 w-full rounded-2xl border border-amber-200" />
             ))}
           </div>
         ) : sortedIngredients.length === 0 ? (
           <div className="p-12 text-center">
             <Package className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-            <h3 className="font-display text-xl font-black text-white">
+            <h3 className="font-display text-xl font-black text-slate-900">
               No matching reagents on the shelves
             </h3>
-            <p className="font-sans text-xs font-semibold text-purple-200/80 mt-1">
+            <p className="font-sans text-xs font-semibold text-slate-600 mt-1">
               Try adjusting your search criteria or consecrate a new mystical reagent.
             </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left font-sans text-xs">
-              <thead className="bg-[#190D2E] border-b border-white/15 text-amber-300 uppercase tracking-wider text-[11px] font-black">
+              <thead className="bg-amber-100/90 border-b border-amber-300 text-amber-950 uppercase tracking-wider text-[11px] font-black">
                 <tr>
                   <th className="py-4 px-4">Flask</th>
                   <th
@@ -363,7 +363,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                   <th className="py-4 px-4 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-amber-100/80">
                 {sortedIngredients.map((ing) => {
                   const isStockedOut = ing.current_stock <= 0;
                   const isCritical = ing.current_stock <= ing.minimum_threshold;
@@ -373,7 +373,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                     <motion.tr
                       key={ing.id}
                       layout
-                      className="hover:bg-white/5 transition-colors group"
+                      className="hover:bg-amber-50/70 transition-colors group"
                     >
                       {/* Mini Bottle Gauge */}
                       <td className="py-3 px-4 w-16">
@@ -390,17 +390,17 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
 
                       {/* Name & Category */}
                       <td className="py-3 px-4">
-                        <div className="font-black text-white text-sm group-hover:text-amber-300 transition-colors">
+                        <div className="font-black text-slate-900 text-sm group-hover:text-amber-800 transition-colors">
                           {ing.name}
                         </div>
-                        <span className="text-[10px] uppercase font-mono font-bold text-amber-400">
+                        <span className="text-[10px] uppercase font-mono font-bold text-amber-700">
                           {ing.category}
                         </span>
                       </td>
 
                       {/* Shelf */}
                       <td className="py-3 px-4">
-                        <span className="font-mono text-amber-200 font-bold px-3 py-1 rounded-full bg-white/10 border border-amber-400/25 shadow-sm">
+                        <span className="font-mono text-amber-950 font-bold px-3 py-1 rounded-full bg-amber-100 border border-amber-300 shadow-sm">
                           {ing.shelf_name || 'Shelf Vault'}
                         </span>
                       </td>
@@ -410,33 +410,33 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                         <span
                           className={
                             isStockedOut
-                              ? 'text-rose-400 font-extrabold'
+                              ? 'text-rose-600 font-extrabold'
                               : isCritical
-                              ? 'text-rose-400 font-extrabold'
+                              ? 'text-rose-600 font-extrabold'
                               : isLow
-                              ? 'text-amber-300 font-extrabold'
-                              : 'text-emerald-400 font-extrabold'
+                              ? 'text-amber-700 font-extrabold'
+                              : 'text-emerald-700 font-extrabold'
                           }
                         >
                           {ing.current_stock.toFixed(1)} {ing.unit}
                         </span>
                         {isStockedOut && (
-                          <div className="text-[9px] uppercase font-black text-rose-400">
+                          <div className="text-[9px] uppercase font-black text-rose-600">
                             DEPLETED
                           </div>
                         )}
                       </td>
 
                       {/* Thresholds */}
-                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-200 text-[11px]">
+                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-800 text-[11px]">
                         <div>Reorder: {ing.reorder_point} {ing.unit}</div>
-                        <div className="text-[10px] text-purple-300/80 font-medium">
+                        <div className="text-[10px] text-slate-500 font-medium">
                           Min: {ing.minimum_threshold} {ing.unit} &bull; Lead: {ing.lead_time_days}d
                         </div>
                       </td>
 
                       {/* Cost */}
-                      <td className="py-3 px-4 text-right font-mono text-amber-300 font-black text-sm">
+                      <td className="py-3 px-4 text-right font-mono text-amber-950 font-black text-sm">
                         {ing.unit_cost_gold.toFixed(2)} G
                       </td>
 
@@ -448,21 +448,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                             setSaleQuantity(1);
                           }}
                           disabled={isStockedOut}
-                          className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-slate-950 font-black uppercase tracking-wider text-xs shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 mx-auto disabled:opacity-30 disabled:cursor-not-allowed border border-amber-500/40"
-                        >
-                          <ShoppingCart className="w-3.5 h-3.5 stroke-[2.5]" />
-                          <span>Dispense</span>
-                        </button>
-                      </td>
-                    </motion.tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-                          className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-slate-950 border border-amber-500/40 text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 mx-auto disabled:opacity-30 disabled:cursor-not-allowed"
+                          className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 hover:from-amber-300 hover:to-orange-500 text-slate-950 font-black uppercase tracking-wider text-xs shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 mx-auto disabled:opacity-30 disabled:cursor-not-allowed border border-amber-500/40"
                         >
                           <ShoppingCart className="w-3.5 h-3.5 stroke-[2.5]" />
                           <span>Dispense</span>
@@ -480,42 +466,42 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
       {/* QUICK SALE MODAL */}
       <AnimatePresence>
         {saleModalReagent && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="w-full max-w-md rounded-3xl luxury-glass border border-amber-400/30 p-6 sm:p-7 shadow-2xl relative overflow-hidden"
+              className="w-full max-w-md rounded-3xl bg-white/95 border border-amber-300 p-6 sm:p-7 shadow-2xl relative overflow-hidden"
             >
               {/* Amber aura */}
-              <div className="absolute -top-16 -right-16 w-48 h-48 bg-amber-500/20 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -top-16 -right-16 w-48 h-48 bg-amber-400/15 rounded-full blur-2xl pointer-events-none" />
 
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 relative z-10">
+              <div className="flex items-center justify-between pb-4 border-b border-amber-200/80 relative z-10">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-amber-500/30">
                     <ShoppingCart className="w-4 h-4 text-slate-950 stroke-[2.5]" />
                   </div>
-                  <h3 className="font-display text-xl font-black text-white">
+                  <h3 className="font-display text-xl font-black text-slate-900">
                     Dispense Reagent
                   </h3>
                 </div>
                 <button
                   onClick={() => setSaleModalReagent(null)}
-                  className="p-1.5 rounded-full border border-white/15 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                  className="p-1.5 rounded-full border border-amber-200 text-slate-600 hover:text-black hover:bg-amber-100 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               <form onSubmit={handleRecordSale} className="mt-5 space-y-4 relative z-10">
-                <div className="p-4 rounded-2xl bg-[#23143F]/80 border border-purple-400/25 flex items-center justify-between">
+                <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between">
                   <div>
-                    <h4 className="font-display font-black text-white text-base">
+                    <h4 className="font-display font-black text-slate-900 text-base">
                       {saleModalReagent.name}
                     </h4>
-                    <p className="font-sans text-xs font-semibold text-purple-200/80 mt-0.5">
+                    <p className="font-sans text-xs font-semibold text-slate-600 mt-0.5">
                       In Stock:{' '}
-                      <strong className="font-mono text-emerald-400 font-bold">
+                      <strong className="font-mono text-emerald-700 font-bold">
                         {saleModalReagent.current_stock.toFixed(1)} {saleModalReagent.unit}
                       </strong>
                     </p>
@@ -530,14 +516,14 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
 
                 {/* Quantity Stepper */}
                 <div>
-                  <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                  <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                     Quantity to Dispense ({saleModalReagent.unit})
                   </label>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => setSaleQuantity(Math.max(0.5, saleQuantity - 1))}
-                      className="w-12 h-11 rounded-2xl bg-white/10 border border-white/15 text-white font-mono text-lg font-black shadow-sm hover:bg-white/20 active:translate-y-0.5 transition-colors"
+                      className="w-12 h-11 rounded-2xl bg-amber-100 border border-amber-300 text-amber-950 font-mono text-lg font-black shadow-sm hover:bg-amber-200 active:translate-y-0.5 transition-colors"
                     >
                       -
                     </button>
@@ -548,7 +534,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                       max={saleModalReagent.current_stock}
                       value={saleQuantity}
                       onChange={(e) => setSaleQuantity(parseFloat(e.target.value) || 0)}
-                      className="flex-1 bg-[#1C1233]/90 border border-white/20 text-center font-mono text-base font-black text-white rounded-2xl py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="flex-1 bg-amber-50/70 border border-amber-300 text-center font-mono text-base font-black text-slate-900 rounded-2xl py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                     <button
                       type="button"
@@ -557,7 +543,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                           Math.min(saleModalReagent.current_stock, saleQuantity + 1)
                         )
                       }
-                      className="w-12 h-11 rounded-2xl bg-white/10 border border-white/15 text-white font-mono text-lg font-black shadow-sm hover:bg-white/20 active:translate-y-0.5 transition-colors"
+                      className="w-12 h-11 rounded-2xl bg-amber-100 border border-amber-300 text-amber-950 font-mono text-lg font-black shadow-sm hover:bg-amber-200 active:translate-y-0.5 transition-colors"
                     >
                       +
                     </button>
@@ -566,13 +552,13 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
 
                 {/* Customer Type */}
                 <div>
-                  <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                  <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                     Customer Archetype
                   </label>
                   <select
                     value={customerType}
                     onChange={(e) => setCustomerType(e.target.value)}
-                    className="w-full bg-[#1C1233]/90 border border-white/20 text-white font-sans font-bold text-xs rounded-2xl px-4 py-3 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full bg-amber-50/70 border border-amber-300 text-slate-900 font-sans font-bold text-xs rounded-2xl px-4 py-3 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
                     <option value="Sorcerer">Sorcerer</option>
                     <option value="Witch">Witch</option>
@@ -583,7 +569,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                 </div>
 
                 {/* Price summary */}
-                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-slate-950 border border-amber-500/40 flex items-center justify-between text-xs font-mono font-black shadow-lg shadow-amber-500/20">
+                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 text-slate-950 border border-amber-500/40 flex items-center justify-between text-xs font-mono font-black shadow-lg shadow-amber-500/20">
                   <span>Total Gold Due:</span>
                   <span className="text-base flex items-center gap-1 font-black">
                     <Coins className="w-4 h-4 text-slate-950 fill-current" />
@@ -595,14 +581,14 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                   <button
                     type="button"
                     onClick={() => setSaleModalReagent(null)}
-                    className="flex-1 py-3 rounded-full border border-white/15 bg-white/10 text-slate-200 font-sans text-xs font-black uppercase tracking-wider shadow-sm hover:bg-white/20 transition-all"
+                    className="flex-1 py-3 rounded-full border border-amber-300 bg-amber-50 text-slate-800 font-sans text-xs font-black uppercase tracking-wider shadow-sm hover:bg-amber-100 transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submittingSale || saleQuantity <= 0 || saleQuantity > saleModalReagent.current_stock}
-                    className="flex-1 py-3 rounded-full bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] hover:from-[#FFE033] hover:to-[#FFA000] text-black border border-amber-500/40 font-sans text-xs font-black uppercase tracking-wider shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-40"
+                    className="flex-1 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 hover:from-amber-300 hover:to-orange-500 text-slate-950 border border-amber-500/40 font-sans text-xs font-black uppercase tracking-wider shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-40"
                   >
                     {submittingSale ? 'Dispensing...' : 'Confirm Sale'}
                   </button>
@@ -616,28 +602,28 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
       {/* ADD REAGENT MODAL */}
       <AnimatePresence>
         {addModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="w-full max-w-lg rounded-3xl luxury-glass border border-amber-400/30 p-6 sm:p-7 shadow-2xl relative overflow-hidden"
+              className="w-full max-w-lg rounded-3xl bg-white/95 border border-amber-300 p-6 sm:p-7 shadow-2xl relative overflow-hidden"
             >
               {/* Violet aura */}
-              <div className="absolute -top-16 -right-16 w-56 h-56 bg-purple-600/25 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -top-16 -right-16 w-56 h-56 bg-purple-400/15 rounded-full blur-2xl pointer-events-none" />
 
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 relative z-10">
+              <div className="flex items-center justify-between pb-4 border-b border-amber-200/80 relative z-10">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-md shadow-emerald-500/30">
                     <Plus className="w-5 h-5 text-slate-950 stroke-[3]" />
                   </div>
-                  <h3 className="font-display text-xl font-black text-white">
+                  <h3 className="font-display text-xl font-black text-slate-900">
                     Catalog New Reagent
                   </h3>
                 </div>
                 <button
                   onClick={() => setAddModalOpen(false)}
-                  className="p-1.5 rounded-full border border-white/15 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                  className="p-1.5 rounded-full border border-amber-200 text-slate-600 hover:text-black hover:bg-amber-100 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -645,7 +631,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
 
               <form onSubmit={handleCreateReagent} className="mt-5 space-y-4 relative z-10">
                 <div>
-                  <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                  <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                     Reagent Name
                   </label>
                   <input
@@ -656,13 +642,13 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                     onChange={(e) =>
                       setNewReagent({ ...newReagent, name: e.target.value })
                     }
-                    className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-4 py-2.5 text-white font-bold text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+                    className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-4 py-2.5 text-slate-900 font-bold text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder:text-slate-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Category
                     </label>
                     <select
@@ -670,7 +656,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                       onChange={(e) =>
                         setNewReagent({ ...newReagent, category: e.target.value })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2.5 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2.5 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     >
                       <option value="Herb">Herb</option>
                       <option value="Fauna Reagent">Fauna Reagent</option>
@@ -681,7 +667,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                   </div>
 
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Unit of Measure
                     </label>
                     <input
@@ -692,14 +678,14 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                       onChange={(e) =>
                         setNewReagent({ ...newReagent, unit: e.target.value })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2.5 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2.5 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder:text-slate-500"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Initial Stock
                     </label>
                     <input
@@ -713,12 +699,12 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                           current_stock: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Min Alert
                     </label>
                     <input
@@ -732,12 +718,12 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                           minimum_threshold: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Reorder Pt
                     </label>
                     <input
@@ -751,14 +737,14 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                           reorder_point: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Lead Time (Days)
                     </label>
                     <input
@@ -772,12 +758,12 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                           lead_time_days: parseInt(e.target.value) || 1,
                         })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                    <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                       Unit Cost (Gold)
                     </label>
                     <input
@@ -791,13 +777,13 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                           unit_cost_gold: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
+                  <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1.5">
                     Shelf Vault Location
                   </label>
                   <select
@@ -805,7 +791,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                     onChange={(e) =>
                       setNewReagent({ ...newReagent, shelf_id: e.target.value })
                     }
-                    className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl px-3 py-2.5 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2.5 text-slate-900 font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
                     {shelves.map((s) => (
                       <option key={s.id} value={s.id}>
@@ -819,22 +805,16 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
                   <button
                     type="button"
                     onClick={() => setAddModalOpen(false)}
-                    className="flex-1 py-3 rounded-full border border-white/15 bg-white/10 text-slate-200 font-sans text-xs font-black uppercase tracking-wider shadow-sm hover:bg-white/20 transition-all"
+                    className="flex-1 py-3 rounded-full border border-amber-300 bg-amber-50 text-slate-800 font-sans text-xs font-black uppercase tracking-wider shadow-sm hover:bg-amber-100 transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-3 rounded-full bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-300 text-slate-950 font-sans text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all"
+                    className="flex-1 py-3 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-sans text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all"
                   >
                     Catalog Reagent
                   </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
                 </div>
               </form>
             </motion.div>

@@ -26,10 +26,10 @@ const EventsPage = lazy(() =>
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   React.useEffect(() => {
-    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('dark');
   }, []);
 
   const toggleDarkMode = () => {
@@ -72,28 +72,32 @@ export function App() {
 
       {/* 3. Grand Interactive WebGL Animated Shader Hero Section */}
       {activeTab === 'dashboard' && (
-        <Hero
-          trustBadge={{
-            text: "EST. 2026 ✦ 100% ARTISANAL POTIONS ✦ REAL-TIME INVENTORY TELEMETRY",
-            icons: ["✨", "🧪", "⚡"],
-          }}
-          headline={{
-            line1: "The Cauldron View",
-            line2: "Predictive Demand Prophecies",
-          }}
-          subtitle="Automated restock charms, LightGBM runout forecasting, and live anomaly sentinels for high-volume alchemical operations."
-          buttons={{
-            primary: {
-              text: "Full Moon Festival (3.0x Surge)",
-              onClick: () => setActiveTab('events'),
-            },
-            secondary: {
-              text: "Audit Pantry Shelves →",
-              onClick: () => setActiveTab('inventory'),
-            },
-          }}
-          className="w-full min-h-[520px] lg:min-h-[580px] border-b border-amber-400/25 shadow-2xl relative"
-        />
+        <div className="relative">
+          <Hero
+            trustBadge={{
+              text: "EST. 2026 ✦ 100% ARTISANAL POTIONS ✦ REAL-TIME INVENTORY TELEMETRY",
+              icons: ["✨", "🧪", "⚡"],
+            }}
+            headline={{
+              line1: "The Cauldron View",
+              line2: "Predictive Demand Prophecies",
+            }}
+            subtitle="Automated restock charms, LightGBM runout forecasting, and live anomaly sentinels for high-volume alchemical operations."
+            buttons={{
+              primary: {
+                text: "Full Moon Festival (3.0x Surge)",
+                onClick: () => setActiveTab('events'),
+              },
+              secondary: {
+                text: "Audit Pantry Shelves →",
+                onClick: () => setActiveTab('inventory'),
+              },
+            }}
+            className="w-full min-h-[520px] lg:min-h-[580px] shadow-2xl relative"
+          />
+          {/* Subtle bottom fade to blend the fiery shader smoothly into the colorful light theme below */}
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FBF8F1] via-[#FBF8F1]/40 to-transparent pointer-events-none z-20" />
+        </div>
       )}
 
       {/* 4. Main Stage Content */}
@@ -145,30 +149,30 @@ export function App() {
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
       {/* Siglitos Playful Footer */}
-      <footer className="border-t border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0E0C16]/95 backdrop-blur-xl py-8 text-center text-xs font-sans transition-colors mt-16 shadow-lg">
+      <footer className="border-t border-amber-200/80 bg-white/95 backdrop-blur-xl py-8 text-center text-xs font-sans mt-16 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <span className="font-display font-black text-base tracking-tight text-slate-900 dark:text-white">
-              Potion<span className="text-amber-500 dark:text-amber-400">Pulse</span>
+            <span className="font-display font-black text-base tracking-tight text-slate-900">
+              Potion<span className="text-amber-500">Pulse</span>
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border border-amber-500/40 uppercase tracking-wider -rotate-1 shadow-sm">
               Smart Inventory OS
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] font-sans font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-            <span className="flex items-center gap-1.5 text-amber-600 dark:text-amber-300">
-              <span className="text-amber-400">✦</span> 100% Pure Magic
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] font-sans font-extrabold uppercase tracking-wider text-slate-700">
+            <span className="flex items-center gap-1.5 text-amber-700">
+              <span className="text-amber-500">✦</span> 100% Pure Magic
             </span>
-            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-              <span className="text-emerald-400">✦</span> No Artificial Glitches
+            <span className="flex items-center gap-1.5 text-emerald-700">
+              <span className="text-emerald-500">✦</span> No Artificial Glitches
             </span>
-            <span className="flex items-center gap-1.5 text-violet-600 dark:text-violet-300">
-              <span className="text-violet-400">✦</span> FastAPI + LightGBM
+            <span className="flex items-center gap-1.5 text-violet-700">
+              <span className="text-violet-500">✦</span> FastAPI + LightGBM
             </span>
           </div>
 
-          <div className="px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 border border-slate-300 dark:border-white/15 font-mono text-[11px] font-black text-slate-800 dark:text-slate-200 tracking-wide shadow-sm">
+          <div className="px-3 py-1 rounded-full bg-amber-100/80 border border-amber-300 font-mono text-[11px] font-black text-amber-950 tracking-wide shadow-sm">
             Halloween Hackathon 2026
           </div>
         </div>
