@@ -25,7 +25,11 @@ const EventsPage = lazy(() =>
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+
+  React.useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   const toggleDarkMode = () => {
     setIsDarkMode((prev) => {
@@ -51,7 +55,7 @@ export function App() {
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark bg-sig-black text-sig-cream' : 'bg-sig-cream text-sig-black'} flex flex-col transition-colors duration-200 selection:bg-sig-limon selection:text-sig-black`}>
+    <div className={`min-h-screen ${isDarkMode ? 'dark text-slate-100' : 'text-slate-900'} flex flex-col transition-colors duration-200 selection:bg-amber-400 selection:text-black`}>
       {/* 1. Signature Siglitos Running Marquee */}
       <SiglitosTicker unresolvedCount={2} hasActiveEvent={true} />
 

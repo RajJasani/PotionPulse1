@@ -129,17 +129,17 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
   return (
     <div className="space-y-6 pb-16">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-white/10">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-sig-fresa to-pink-600 text-white border border-black/10 uppercase tracking-wider shadow-sm">
+            <span className="px-3 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-rose-500 to-pink-600 text-white uppercase tracking-wider shadow-md shadow-rose-500/20">
               SURVEILLANCE SENTINEL
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-sig-black dark:text-sig-cream flex items-center gap-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-white flex items-center gap-3 drop-shadow-sm">
             <span>Strange Happenings</span>
           </h2>
-          <p className="font-sans text-xs font-bold text-sig-black/60 dark:text-sig-cream/60 mt-1">
+          <p className="font-sans text-xs font-semibold text-purple-200/80 mt-1">
             Flags unexplained stock depletion, physical theft, sudden volume surges, and seasonal shifts.
           </p>
         </div>
@@ -147,7 +147,7 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
         <button
           onClick={handleScanNow}
           disabled={scanning}
-          className="flex items-center gap-2 bg-gradient-to-r from-sig-limon via-[#FFD000] to-[#FF9F06] hover:from-[#FFF700] hover:to-[#FF8A00] text-sig-black border border-black/15 px-5 py-2.5 rounded-full font-sans text-xs font-black uppercase tracking-wider shadow-pro hover:shadow-pro-glow-amber hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[44px] disabled:opacity-50"
+          className="flex items-center gap-2 bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] hover:from-[#FFE033] hover:to-[#FFA000] text-black border border-amber-500/40 px-5 py-2.5 rounded-full font-sans text-xs font-black uppercase tracking-wider shadow-lg shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all min-h-[44px] disabled:opacity-50"
         >
           <Radar className={`w-4 h-4 ${scanning ? 'animate-spin' : ''}`} />
           <span>{scanning ? 'Sweeping Wards...' : 'Scan For Anomalies'}</span>
@@ -156,25 +156,27 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
 
       {/* Suggested Recurring Spikes Banner */}
       {suggestions.length > 0 && (
-        <div className="p-5 rounded-3xl bg-gradient-to-r from-[#FFF9DC] via-[#FFF1A8] to-[#FFE2BF] dark:from-[#211634] dark:to-[#171328] border border-black/15 dark:border-white/15 shadow-pro space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-600 fill-amber-600" />
-              <h3 className="font-display text-lg font-black text-sig-black dark:text-sig-cream">
+        <div className="p-6 rounded-3xl luxury-glass border border-amber-400/30 shadow-2xl space-y-3 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/15 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="flex items-center justify-between pb-2 border-b border-white/10 relative z-10">
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="w-5 h-5 text-amber-400 fill-amber-400" />
+              <h3 className="font-display text-lg font-black text-white">
                 Cluster Divination: Potential High Coven Festival
               </h3>
             </div>
-            <span className="text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full bg-sig-black text-white">
+            <span className="text-[10px] font-mono font-black px-3 py-1 rounded-full bg-white/10 text-amber-300 border border-amber-400/30">
               {suggestions.length} Co-Occurring Spikes
             </span>
           </div>
-          <p className="font-sans text-xs font-bold text-sig-black/80 dark:text-sig-cream/80">
+          <p className="font-sans text-xs font-medium text-slate-200/90 relative z-10">
             The sentinel noticed concurrent consumption surges across multiple reagents. This pattern indicates an uncataloged ritual or festival.
           </p>
-          <div className="flex flex-wrap items-center gap-2 pt-1">
+          <div className="flex flex-wrap items-center gap-2 pt-1 relative z-10">
             <button
               onClick={() => onNavigateTab('events')}
-              className="px-4 py-2 rounded-full bg-sig-black text-white dark:bg-sig-limon dark:text-sig-black border border-black/15 font-sans text-xs font-black uppercase tracking-wider shadow-pro-sm hover:shadow-pro hover:-translate-y-0.5 active:translate-y-0 transition-all"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-sans text-xs font-black uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all"
             >
               Catalog Festival in Midnight Curse &rarr;
             </button>
@@ -183,7 +185,7 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
       )}
 
       {/* Filter Chips Bar */}
-      <div className="p-4 rounded-3xl bg-white/85 dark:bg-[#161422]/85 backdrop-blur-xl border border-black/10 dark:border-white/12 shadow-pro flex items-center justify-between gap-4">
+      <div className="p-4 rounded-3xl luxury-glass border border-white/10 shadow-xl flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           {(['ALL', 'UNRESOLVED', 'RESOLVED'] as const).map((filter) => (
             <button
@@ -191,8 +193,8 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
               onClick={() => setStatusFilter(filter)}
               className={`px-4 py-1.5 rounded-full font-sans text-xs font-black uppercase tracking-wider border transition-all ${
                 statusFilter === filter
-                  ? 'bg-gradient-to-r from-[#181528] to-[#2B2344] text-white dark:from-sig-limon dark:to-[#FFA033] dark:text-sig-black border-transparent shadow-pro-sm scale-[1.02]'
-                  : 'bg-[#FAF8F2] dark:bg-[#201D2E] border-black/10 dark:border-white/10 text-sig-black dark:text-sig-cream hover:bg-black/5'
+                  ? 'bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border-amber-500/40 shadow-lg shadow-amber-500/20 scale-[1.02]'
+                  : 'bg-white/10 border-white/15 text-slate-200 hover:text-white hover:bg-white/20'
               }`}
             >
               {filter === 'ALL'
@@ -204,8 +206,8 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
           ))}
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-sig-black/60 dark:text-sig-cream/60">
-          <ShieldCheck className="w-4 h-4 text-emerald-500 fill-emerald-500" />
+        <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-purple-200/80">
+          <ShieldCheck className="w-4 h-4 text-emerald-400 fill-emerald-400" />
           <span>Residual Z-Score & Stock Delta Active</span>
         </div>
       </div>
@@ -214,16 +216,16 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
       {loading ? (
         <div className="space-y-4">
           {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-28 w-full rounded-3xl border-2 border-sig-black" />
+            <Skeleton key={i} className="h-28 w-full rounded-3xl border border-white/10" />
           ))}
         </div>
       ) : filteredAnomalies.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#18171F] border-2 border-sig-black shadow-sig">
-          <CheckCircle className="w-12 h-12 text-sig-lima fill-sig-lima text-sig-black mx-auto mb-3" />
-          <h3 className="font-display text-xl font-black text-sig-black dark:text-sig-cream">
+        <div className="p-12 text-center rounded-3xl luxury-glass border border-emerald-400/25 shadow-2xl">
+          <CheckCircle className="w-12 h-12 text-emerald-400 fill-emerald-400/20 mx-auto mb-3" />
+          <h3 className="font-display text-xl font-black text-white">
             All Pantry Wards Peaceful
           </h3>
-          <p className="font-sans text-xs font-bold text-sig-black/60 dark:text-sig-cream/60 mt-1">
+          <p className="font-sans text-xs font-semibold text-purple-200/80 mt-1">
             No active consumption anomalies or unrecorded stock losses in this scope.
           </p>
         </div>
@@ -238,53 +240,53 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
               <motion.div
                 key={anom.id}
                 layout
-                className={`p-5 rounded-3xl border-2 border-sig-black shadow-sig transition-all ${
+                className={`p-5 sm:p-6 rounded-3xl border transition-all ${
                   isResolved
-                    ? 'bg-sig-cream/60 dark:bg-[#18171F]/60 opacity-80'
-                    : 'bg-white dark:bg-[#18171F]'
+                    ? 'luxury-glass border-white/10 opacity-70'
+                    : 'luxury-glass border-rose-400/30 glow-magenta-card'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                  <div className="space-y-1.5 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-display font-black text-base text-sig-black dark:text-sig-cream">
+                  <div className="space-y-2 flex-1">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <span className="font-display font-black text-base text-white">
                         {anom.ingredient_name || 'Alchemical Reagent'}
                       </span>
 
                       <span
-                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black border border-sig-black uppercase ${
+                        className={`px-3 py-0.5 rounded-full text-[10px] font-sans font-black uppercase tracking-wider shadow-sm ${
                           isCritical
-                            ? 'bg-sig-fresa text-white'
-                            : 'bg-sig-limon text-sig-black'
+                            ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white'
+                            : 'bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950'
                         }`}
                       >
                         {anom.anomaly_type.replace('_', ' ')}
                       </span>
 
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-sig-cream dark:bg-[#2A253F] text-sig-black dark:text-sig-cream border border-sig-black">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white/10 text-purple-200 border border-white/15">
                         Date: {anom.detected_at.slice(0, 10)}
                       </span>
 
                       {isResolved && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-sans font-black bg-sig-lima text-sig-black border border-sig-black uppercase">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 uppercase">
                           ✓ Warded
                         </span>
                       )}
                     </div>
 
-                    <p className="font-sans text-xs font-bold text-sig-black/80 dark:text-sig-cream/80 leading-relaxed">
-                      Expected baseline consumption was {anom.expected_consumption.toFixed(1)}, but recorded {anom.actual_consumption.toFixed(1)}. Anomaly score: {anom.anomaly_score.toFixed(1)}.
+                    <p className="font-sans text-xs font-medium text-slate-200/90 leading-relaxed">
+                      Expected baseline consumption was <strong className="text-white font-bold">{anom.expected_consumption.toFixed(1)}</strong>, but recorded <strong className="text-amber-300 font-bold">{anom.actual_consumption.toFixed(1)}</strong>. Anomaly score: {anom.anomaly_score.toFixed(1)}.
                     </p>
 
-                    <div className="flex items-center gap-4 text-xs font-mono font-bold text-sig-black/60 dark:text-sig-cream/60 pt-1">
+                    <div className="flex items-center gap-4 text-xs font-mono font-bold text-purple-200/80 pt-1">
                       <span>
-                        Recorded: <strong className="text-sig-black dark:text-sig-cream">{anom.actual_consumption}</strong>
+                        Recorded: <strong className="text-rose-400 font-black">{anom.actual_consumption}</strong>
                       </span>
                       <span>
-                        Expected: <strong className="text-sig-black dark:text-sig-cream">{anom.expected_consumption}</strong>
+                        Expected: <strong className="text-slate-100 font-black">{anom.expected_consumption}</strong>
                       </span>
                       <span>
-                        Score: <strong className="text-sig-fresa">{anom.anomaly_score.toFixed(2)}</strong>
+                        Score: <strong className="text-amber-400 font-black">{anom.anomaly_score.toFixed(2)}</strong>
                       </span>
                     </div>
                   </div>
@@ -292,7 +294,7 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
                   {!isResolved && (
                     <button
                       onClick={() => setResolvingId(anom.id)}
-                      className="self-start sm:self-center px-4 py-2 rounded-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 border border-emerald-300/40 text-xs font-black uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+                      className="self-start sm:self-center px-4 py-2 rounded-full bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-300 text-slate-950 font-sans font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all border border-emerald-300/40 flex items-center gap-1.5"
                     >
                       <Wand2 className="w-3.5 h-3.5 stroke-[2.5]" />
                       <span>Ward & Resolve</span>
@@ -308,33 +310,33 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
       {/* RESOLVE DIALOGUE MODAL */}
       <AnimatePresence>
         {resolvingId && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sig-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-md rounded-3xl bg-white dark:bg-[#18171F] border-2 border-sig-black p-6 sm:p-7 shadow-sig-lg"
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="w-full max-w-md rounded-3xl luxury-glass border border-emerald-400/30 p-6 sm:p-7 shadow-2xl relative overflow-hidden"
             >
-              <div className="flex items-center justify-between pb-4 border-b-2 border-sig-black">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-sig-lima border-2 border-sig-black flex items-center justify-center">
-                    <Wand2 className="w-4 h-4 text-sig-black stroke-[2.5]" />
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-md shadow-emerald-500/30">
+                    <Wand2 className="w-4 h-4 text-slate-950 stroke-[2.5]" />
                   </div>
-                  <h3 className="font-display text-xl font-black text-sig-black dark:text-sig-cream">
+                  <h3 className="font-display text-xl font-black text-white">
                     Ward Anomaly
                   </h3>
                 </div>
                 <button
                   onClick={() => setResolvingId(null)}
-                  className="p-1 rounded-full border-2 border-sig-black hover:bg-sig-cream"
+                  className="p-1.5 rounded-full border border-white/15 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
                 >
-                  <X className="w-4 h-4 text-sig-black" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
               <form onSubmit={handleConfirmResolve} className="mt-5 space-y-4">
                 <div>
-                  <label className="block font-sans text-xs font-black text-sig-black dark:text-sig-cream uppercase tracking-wider mb-1.5">
+                  <label className="block font-sans text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5">
                     Resolution Notes & Audit Findings
                   </label>
                   <textarea
@@ -342,7 +344,7 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
                     placeholder="e.g. Confirmed unrecorded potion spill during the goblin festival..."
                     value={resolveNotes}
                     onChange={(e) => setResolveNotes(e.target.value)}
-                    className="w-full bg-sig-cream dark:bg-[#24222E] border-2 border-sig-black rounded-2xl p-3 text-sig-black dark:text-sig-cream font-bold text-xs shadow-sig-sm"
+                    className="w-full bg-[#1C1233]/90 border border-white/20 rounded-2xl p-3 text-white font-bold text-xs shadow-inner focus:outline-none focus:ring-2 focus:ring-emerald-400 placeholder:text-slate-400"
                   />
                 </div>
 
@@ -350,13 +352,13 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
                   <button
                     type="button"
                     onClick={() => setResolvingId(null)}
-                    className="flex-1 py-3 rounded-full border-2 border-sig-black bg-white dark:bg-[#24222E] text-sig-black dark:text-sig-cream font-sans text-xs font-black uppercase tracking-wider shadow-sig-sm"
+                    className="flex-1 py-3 rounded-full border border-white/15 bg-white/10 text-slate-200 font-sans text-xs font-black uppercase tracking-wider shadow-sm hover:bg-white/20 transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-3 rounded-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-sans text-xs font-black uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
+                    className="flex-1 py-3 rounded-full bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-300 text-slate-950 font-sans font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all"
                   >
                     Seal Ward
                   </button>

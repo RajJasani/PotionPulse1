@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Sparkles, Package, Eye, AlertTriangle, Moon, FlaskConical, SunMedium } from 'lucide-react';
 import { MoonPhaseIndicator } from './MoonPhaseIndicator';
 
@@ -42,25 +43,25 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 dark:bg-[#0E0C16]/95 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 px-3 sm:px-6 lg:px-8 py-2.5 transition-colors shadow-sm">
+    <header className="sticky top-0 z-50 bg-[#120B24]/90 backdrop-blur-2xl border-b border-amber-400/20 px-3 sm:px-6 lg:px-8 py-2.5 transition-colors shadow-2xl">
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo & Name - Clean Single Line */}
         <div
           onClick={() => onTabChange('dashboard')}
           className="flex items-center gap-2.5 cursor-pointer group select-none flex-shrink-0"
         >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#FFF59D] via-[#FEE214] to-[#FF9F06] border border-amber-500/40 shadow-sm flex items-center justify-center group-hover:scale-105 group-hover:rotate-[-3deg] transition-all flex-shrink-0">
-            <FlaskConical className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 border border-amber-300/40 shadow-lg shadow-amber-500/20 flex items-center justify-center group-hover:scale-105 group-hover:rotate-[-3deg] transition-all flex-shrink-0">
+            <FlaskConical className="w-4 h-4 sm:w-5 sm:h-5 text-white stroke-[2.5]" />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="font-display text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none whitespace-nowrap">
-              Potion<span className="text-amber-500 dark:text-amber-400">Pulse</span>
+            <span className="font-display text-xl sm:text-2xl font-black tracking-tight text-white leading-none whitespace-nowrap">
+              Potion<span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">Pulse</span>
             </span>
           </div>
         </div>
 
         {/* Navigation Tabs - High Contrast Single-Line Capsule */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-slate-100 dark:bg-[#181428] backdrop-blur-md p-1 rounded-full border border-slate-300 dark:border-white/15 shadow-inner flex-shrink-0">
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-[#1C1233]/90 backdrop-blur-md p-1 rounded-full border border-white/10 shadow-inner flex-shrink-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -68,25 +69,34 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`relative h-9 flex items-center gap-1.5 px-3 xl:px-3.5 2xl:px-4 rounded-full font-sans text-xs font-black uppercase tracking-wider transition-all duration-200 whitespace-nowrap ${
+                className={`relative h-9 flex items-center gap-1.5 px-3 xl:px-3.5 2xl:px-4 rounded-full font-sans text-xs font-black uppercase tracking-wider transition-colors duration-200 whitespace-nowrap ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black shadow-md border border-amber-500/40 scale-[1.02]'
+                    ? 'text-black'
                     : 'text-slate-900 dark:text-slate-100 hover:text-black dark:hover:text-amber-300 hover:bg-slate-200/90 dark:hover:bg-white/15'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? 'text-black stroke-[2.5]' : 'text-slate-700 dark:text-slate-200'}`} />
-                <span className="hidden 2xl:inline">{tab.label}</span>
-                <span className="2xl:hidden">{tab.shortLabel}</span>
-
-                {tab.badge && (
-                  <span className="px-1.5 py-0.5 rounded-full text-[10px] font-mono font-black bg-rose-500 text-white shadow-sm animate-pulse ml-0.5">
-                    {tab.badge}
-                  </span>
+                {isActive && (
+                  <motion.div
+                    layoutId="navTabActivePill"
+                    transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] border border-amber-500/40 shadow-md -z-0"
+                  />
                 )}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? 'text-black stroke-[2.5]' : 'text-slate-700 dark:text-slate-200'}`} />
+                  <span className="hidden 2xl:inline">{tab.label}</span>
+                  <span className="2xl:hidden">{tab.shortLabel}</span>
 
-                {tab.pulse && (
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping ml-0.5 flex-shrink-0" />
-                )}
+                  {tab.badge && (
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] font-mono font-black bg-rose-500 text-white shadow-sm animate-pulse ml-0.5">
+                      {tab.badge}
+                    </span>
+                  )}
+
+                  {tab.pulse && (
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping ml-0.5 flex-shrink-0" />
+                  )}
+                </span>
               </button>
             );
           })}
