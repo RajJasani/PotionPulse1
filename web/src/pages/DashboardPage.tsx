@@ -26,6 +26,7 @@ import { StatCard } from '../components/StatCard';
 import { Skeleton } from '../components/Skeleton';
 import { ArcaneSparkles } from '../components/ArcaneSparkles';
 import { BubblingCauldron } from '../components/BubblingCauldron';
+import { useShaderBackground } from '@/components/ui/animated-shader-hero';
 
 interface DashboardPageProps {
   onNavigateTab: (tab: any) => void;
@@ -36,6 +37,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onNavigateTab,
   onShowToast,
 }) => {
+  const shaderCanvasRef = useShaderBackground();
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [prophecies, setProphecies] = useState<ProphecyStockout[]>([]);
   const [recommendations, setRecommendations] = useState<ReorderRecommendation[]>([]);
@@ -139,7 +141,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="space-y-8 pb-16">
       {/* 1. Luminous Professional Hero Masthead Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-[#20103C] via-[#2D1652] to-[#1C0D33] border border-amber-400/30 p-6 sm:p-8 shadow-2xl overflow-hidden luxury-glass">
+      <div className="relative rounded-3xl bg-gradient-to-br from-[#20103C]/95 via-[#2D1652]/90 to-[#1C0D33]/95 border border-amber-400/30 p-6 sm:p-8 shadow-2xl overflow-hidden luxury-glass">
+        {/* Interactive WebGL Shader Canvas Animation */}
+        <canvas
+          ref={shaderCanvasRef}
+          className="absolute inset-0 w-full h-full object-cover touch-none opacity-45 mix-blend-screen pointer-events-auto"
+        />
+
         {/* Soft Ambient Radiance Blooms */}
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gradient-to-br from-amber-500/25 via-orange-500/20 to-purple-600/20 blur-3xl pointer-events-none animate-aurora-drift" />
         <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-gradient-to-tr from-emerald-500/20 via-teal-500/15 to-transparent blur-2xl pointer-events-none animate-glow-pulse" />
