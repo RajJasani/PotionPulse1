@@ -1,7 +1,6 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar, NavTab } from './components/Navbar';
-import { SiglitosTicker } from './components/SiglitosTicker';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { Skeleton } from './components/Skeleton';
 import Hero from './components/ui/animated-shader-hero';
@@ -57,10 +56,7 @@ export function App() {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark text-slate-100' : 'text-slate-900'} flex flex-col transition-colors duration-200 selection:bg-amber-400 selection:text-black`}>
-      {/* 1. Signature Siglitos Running Marquee */}
-      <SiglitosTicker unresolvedCount={2} hasActiveEvent={true} />
-
-      {/* 2. Siglitos Header Navigation */}
+      {/* 1. Header Navigation */}
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}
