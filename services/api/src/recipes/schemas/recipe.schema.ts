@@ -61,3 +61,4 @@ export const RecipeSchema = SchemaFactory.createForClass(Recipe);
 RecipeSchema.index({ tenantId: 1, name: 1 });
 RecipeSchema.index({ tenantId: 1, category: 1 });
 RecipeSchema.index({ tenantId: 1, isActive: 1 });
+

@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 # ----------------- SHELVES -----------------
 class ShelfBase(BaseModel):
@@ -24,8 +24,7 @@ class ShelfOut(ShelfBase):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ----------------- INGREDIENTS -----------------
 class IngredientBase(BaseModel):
@@ -59,8 +58,7 @@ class IngredientOut(IngredientBase):
     updated_at: datetime
     shelf_name: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ----------------- SALES -----------------
 class SaleCreate(BaseModel):
@@ -80,8 +78,7 @@ class SaleOut(BaseModel):
     warning: Optional[str] = None
     sold_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ----------------- STOCK MOVEMENTS / ADJUSTMENTS -----------------
 class StockAdjustCreate(BaseModel):
@@ -108,15 +105,14 @@ class StockMovementOut(BaseModel):
     reason: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ----------------- EVENTS -----------------
 class EventCreate(BaseModel):
     name: str = Field(..., min_length=1)
     event_type: str = Field(default="FESTIVAL")
     multiplier: float = Field(..., gt=0.0, description="Demand multiplier, e.g. 3.0 for 3x")
-    affected_ingredient_ids: List[str] = Field(..., min_items=1)
+    affected_ingredient_ids: List[str] = Field(..., min_length=1)
     starts_at: datetime
     ends_at: datetime
     is_active: bool = True
@@ -132,8 +128,7 @@ class EventOut(BaseModel):
     is_active: bool
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ----------------- ANOMALIES -----------------
 class AnomalyResolve(BaseModel):
@@ -154,8 +149,7 @@ class AnomalyOut(BaseModel):
     status: str
     detected_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # ----------------- DEMAND HISTORY & FORECASTS -----------------
 class DailySalesHistoryItem(BaseModel):

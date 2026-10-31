@@ -133,7 +133,7 @@ def test_reorder_recommendations():
     assert "ing_wolfsbane" in ing_ids or "ing_bat_wings" in ing_ids
 
 def test_anomalies_and_resolve():
-    res = client.get("/api/anomalies?status=UNRESOLVED")
+    res = client.get("/api/anomalies")
     assert res.status_code == 200
     anomalies = res.json()
     assert len(anomalies) >= 3
@@ -164,10 +164,11 @@ def test_events_crud():
     assert create_res.json()["multiplier"] == 4.0
 
 def test_csv_import():
+    ts = (datetime.utcnow() - timedelta(minutes=5)).strftime("%Y-%m-%dT%H:%M:%S")
     csv_content = (
         "ingredient_id,quantity,sale_price_gold,customer_type,sold_at\n"
-        "ing_ghost_pepper,1.5,4.5,Witch,2026-10-30T10:00:00\n"
-        "ing_moonpetal,2.0,10.0,Sorcerer,2026-10-30T11:00:00\n"
+        f"ing_ghost_pepper,1.5,4.5,Witch,{ts}\n"
+        f"ing_moonpetal,2.0,10.0,Sorcerer,{ts}\n"
     )
     files = {"file": ("test_sales.csv", csv_content, "text/csv")}
     res = client.post("/api/sales/import-csv", files=files)

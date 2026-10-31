@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Madam Hexley's Potion Pantry — "Apothecary Meets Neon Laboratory"
+   Custom Design System CSS Variables & Utility Classes
+   ========================================================================== */
+
+:root {
+  /* Dark Cosmic Canvas */
+  --bg-ink-deep: #08070D;
+  --bg-ink-surface: #0F0E17;
+  --bg-ink-elevated: #171524;
+  --bg-ink-subtle: #1F1B30;
+
+  /* Alchemical Accents */
+  --color-brass: #C6A15B;
+  --color-brass-light: #E5C378;
+  --color-brass-border: rgba(198, 161, 91, 0.28);
+  
+  /* Arcane Luminescence */
+  --color-toxic-lime: #2EFFA3;
+  --color-pumpkin-amber: #FF7A00;
+  --color-witchy-violet: #9D4EDD;
+  --color-candy-magenta: #FF1389;
+  --color-moonlight-cream: #FAF6EE;
+  --color-moonlight-muted: #B8AF9F;
+
+  /* Motion Timings */
+  --ease-witching: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* Background Noise Texture */
+.bg-grain {
+  background-image: radial-gradient(rgba(198, 161, 91, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Alchemical Glassmorphism Panel */
+.panel-glass {
+  background: rgba(15, 14, 23, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(198, 161, 91, 0.22);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(250, 246, 238, 0.08);
+}
+
+.panel-glass:hover {
+  border-color: rgba(198, 161, 91, 0.40);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55), 0 0 15px rgba(198, 161, 91, 0.15);
+}
+
+/* Glowing Neon Borders */
+.border-glow-lime {
+  border: 1px solid rgba(46, 255, 163, 0.45);
+  box-shadow: 0 0 12px rgba(46, 255, 163, 0.25);
+}
+
+.border-glow-amber {
+  border: 1px solid rgba(255, 122, 0, 0.45);
+  box-shadow: 0 0 12px rgba(255, 122, 0, 0.25);
+}
+
+.border-glow-magenta {
+  border: 1px solid rgba(255, 19, 137, 0.50);
+  box-shadow: 0 0 14px rgba(255, 19, 137, 0.30);
+}
+
+/* Respect Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

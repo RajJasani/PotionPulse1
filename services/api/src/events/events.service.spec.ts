@@ -117,3 +117,4 @@ describe('EventsService — Midnight Curse & Seasonal Events', () => {
     expect(impact.impact[0]?.impactDelta).toBeDefined();
   });
 });
+

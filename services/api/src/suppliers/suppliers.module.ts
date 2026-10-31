@@ -17,3 +17,4 @@ import { Ingredient, IngredientSchema } from '../ingredients/schemas/ingredient.
   exports: [SuppliersService],
 })
 export class SuppliersModule {}
+

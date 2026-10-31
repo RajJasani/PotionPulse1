@@ -65,3 +65,4 @@ export const ProductionBatchSchema = SchemaFactory.createForClass(ProductionBatc
 
 ProductionBatchSchema.index({ tenantId: 1, batchNumber: 1 }, { unique: true });
 ProductionBatchSchema.index({ tenantId: 1, recipeId: 1, brewedAt: -1 });
+

@@ -143,7 +143,9 @@ async def import_sales_csv(
 
     reader = csv.DictReader(io.StringIO(decoded))
     imported_count = 0
+    duplicates_skipped = 0
     errors = []
+    seen_in_batch = set()
 
     for row_idx, row in enumerate(reader, start=2):
         ing_id = row.get("ingredient_id", "").strip()
@@ -163,6 +165,23 @@ async def import_sales_csv(
             sold_at = datetime.fromisoformat(sold_at_str) if sold_at_str else datetime.utcnow()
         except Exception as e:
             errors.append(f"Row {row_idx}: Parsing error: {str(e)}")
+            continue
+
+        # Check for duplicate record within this CSV batch
+        dedup_key = (ing.id, sold_at.isoformat(), round(qty, 4))
+        if dedup_key in seen_in_batch:
+            duplicates_skipped += 1
+            continue
+        seen_in_batch.add(dedup_key)
+
+        # Check if identical sale already exists in DB
+        existing_sale = (
+            db.query(Sale)
+            .filter(Sale.ingredient_id == ing.id, Sale.sold_at == sold_at, Sale.quantity == qty)
+            .first()
+        )
+        if existing_sale:
+            duplicates_skipped += 1
             continue
 
         sale = Sale(
@@ -191,9 +210,23 @@ async def import_sales_csv(
         imported_count += 1
 
     db.commit()
+
+    # Automatically retrain demand models so forecasts reflect new data immediately
+    retrained = False
+    try:
+        from backend.app.ml.forecaster import DemandForecaster
+        DemandForecaster.clear_cache()
+        forecaster = DemandForecaster(db)
+        forecaster.train_and_evaluate()
+        retrained = True
+    except Exception:
+        pass
+
     return {
         "success": True,
         "imported_rows": imported_count,
+        "duplicates_skipped": duplicates_skipped,
+        "retrained_pipeline": retrained,
         "errors_count": len(errors),
         "errors": errors[:10]  # preview first 10 errors
     }

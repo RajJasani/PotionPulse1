@@ -142,3 +142,4 @@ export class UpdateSupplierDto {
   @IsOptional()
   notes?: string;
 }
+

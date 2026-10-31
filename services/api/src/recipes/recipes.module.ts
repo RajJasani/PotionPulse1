@@ -25,3 +25,4 @@ import { Location, LocationSchema } from '../inventory/schemas/location.schema';
   exports: [RecipesService],
 })
 export class RecipesModule {}
+

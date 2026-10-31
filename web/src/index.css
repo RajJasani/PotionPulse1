@@ -1,0 +1,135 @@
+@import '../../shared/src/theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FBF9F2;
+    color: #111019;
+    font-family: 'Golos Text', 'Space Grotesk', system-ui, sans-serif;
+    background-image: 
+      radial-gradient(circle at 10% 8%, rgba(254, 226, 20, 0.16) 0%, transparent 40%),
+      radial-gradient(circle at 90% 12%, rgba(252, 74, 170, 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(28, 189, 244, 0.08) 0%, transparent 55%),
+      radial-gradient(circle at 80% 85%, rgba(162, 247, 8, 0.10) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-color: #0B0A10;
+    color: #FDFBF7;
+    background-image: 
+      radial-gradient(circle at 15% 10%, rgba(157, 78, 221, 0.22) 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(46, 255, 163, 0.16) 0%, transparent 45%),
+      radial-gradient(circle at 50% 60%, rgba(252, 74, 170, 0.12) 0%, transparent 55%),
+      radial-gradient(circle at 20% 90%, rgba(254, 226, 20, 0.12) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Professional Glass & Gradient Card Utilities */
+.pro-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.78) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(17, 16, 25, 0.12);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px -8px rgba(17, 16, 25, 0.08), 0 4px 12px -2px rgba(17, 16, 25, 0.04);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pro-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px -10px rgba(17, 16, 25, 0.14), 0 8px 16px -3px rgba(17, 16, 25, 0.06);
+  border-color: rgba(17, 16, 25, 0.22);
+}
+
+.dark .pro-card {
+  background: linear-gradient(145deg, rgba(26, 24, 36, 0.85) 0%, rgba(16, 15, 24, 0.80) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.45);
+}
+
+.dark .pro-card:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.65);
+}
+
+/* Gradient Text Shimmer */
+.gradient-text-gold {
+  background: linear-gradient(135deg, #111019 0%, #D48806 60%, #FAAD14 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .gradient-text-gold {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFE58F 50%, #FFD666 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-purple {
+  background: linear-gradient(135deg, #722ED1 0%, #EB2F96 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtle Gradient Glow Badges */
+.pro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid rgba(17, 16, 25, 0.14);
+}
+
+.dark .pro-badge {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Continuous Buttery Smooth Ticker Animation (Right-to-Left) */
+@keyframes tickerScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FEE214 0%, #FC4AAA 100%);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #A2F708 0%, #1CBDF4 100%);
+}

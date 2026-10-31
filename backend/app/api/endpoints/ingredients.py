@@ -168,6 +168,12 @@ def delete_ingredient(id: str, db: Session = Depends(get_db)):
     ing = db.query(Ingredient).filter(Ingredient.id == id).first()
     if not ing:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Ingredient '{id}' not found.")
+    
+    from backend.app.models import Sale, StockMovement, Anomaly
+    db.query(Sale).filter(Sale.ingredient_id == id).delete(synchronize_session=False)
+    db.query(StockMovement).filter(StockMovement.ingredient_id == id).delete(synchronize_session=False)
+    db.query(Anomaly).filter(Anomaly.ingredient_id == id).delete(synchronize_session=False)
+
     db.delete(ing)
     db.commit()
     return {"success": True, "message": f"Ingredient '{ing.name}' banished from the pantry."}

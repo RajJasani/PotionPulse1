@@ -195,3 +195,4 @@ describe('RecipesService — Potion Formulation & Batch Brewing', () => {
     ).rejects.toThrow(BadRequestException);
   });
 });
+

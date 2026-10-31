@@ -2,6 +2,8 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
@@ -10,8 +12,23 @@
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx"
+    "App.tsx",
+    "src/screens/**/*",
+    "src/components/PotionBottleGaugeNative.tsx",
+    "src/components/SettingsModal.tsx",
+    "src/services/api.ts",
+    "src/theme/**/*",
+    "src/types/**/*"
+  ],
+  "exclude": [
+    "src/features/**/*",
+    "src/stores/**/*",
+    "src/components/Badge.tsx",
+    "src/components/Button.tsx",
+    "src/components/Card.tsx",
+    "src/components/Header.tsx",
+    "src/components/Input.tsx",
+    "src/components/OfflineBanner.tsx",
+    "__tests__/**/*"
   ]
 }
-

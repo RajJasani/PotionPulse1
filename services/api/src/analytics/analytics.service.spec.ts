@@ -118,3 +118,4 @@ describe('AnalyticsService — Reports, Wastage & Supplier Performance', () => {
     expect(result.comparison.revenueGrowthPercentage).toBeDefined();
   });
 });
+
