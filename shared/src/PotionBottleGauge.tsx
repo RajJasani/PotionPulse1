@@ -163,12 +163,58 @@ export const PotionBottleGauge: React.FC<PotionBottleGaugeProps> = ({
               />
             )}
 
-            {/* Arcane Bubbles Rising */}
-            {fillPercentage > 15 && (
-              <g className={isSloshing ? 'animate-bounce' : 'animate-bubble-float'}>
-                <circle cx="44" cy={liquidY + 22} r="2.2" fill="#FAF6EE" opacity="0.65" />
-                <circle cx="56" cy={liquidY + 12} r="1.6" fill="#FAF6EE" opacity="0.75" />
-                <circle cx="48" cy={liquidY + 34} r="2.8" fill="#FAF6EE" opacity="0.5" />
+            {/* Arcane Bubbles Rising Continuously */}
+            {fillPercentage > 10 && (
+              <g>
+                <circle cx="43" cy={liquidY + 20} r="2.2" fill="#FAF6EE" opacity="0.75">
+                  <animate
+                    attributeName="cy"
+                    from={Math.min(115, liquidY + currentLiquidHeight - 2)}
+                    to={liquidY + 2}
+                    dur="2.4s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.8;0.8;0"
+                    dur="2.4s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="56" cy={liquidY + 15} r="1.6" fill="#FAF6EE" opacity="0.7">
+                  <animate
+                    attributeName="cy"
+                    from={Math.min(116, liquidY + currentLiquidHeight)}
+                    to={liquidY + 1}
+                    dur="3.2s"
+                    begin="0.8s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.9;0.9;0"
+                    dur="3.2s"
+                    begin="0.8s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="49" cy={liquidY + 28} r="2.6" fill="#FAF6EE" opacity="0.6">
+                  <animate
+                    attributeName="cy"
+                    from={Math.min(116, liquidY + currentLiquidHeight - 1)}
+                    to={liquidY + 3}
+                    dur="2.8s"
+                    begin="1.5s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.7;0.7;0"
+                    dur="2.8s"
+                    begin="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
               </g>
             )}
           </g>

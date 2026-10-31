@@ -25,6 +25,7 @@ import { PotionBottleGauge } from '@shared/PotionBottleGauge';
 import { StatCard } from '../components/StatCard';
 import { Skeleton } from '../components/Skeleton';
 import { ArcaneSparkles } from '../components/ArcaneSparkles';
+import { BubblingCauldron } from '../components/BubblingCauldron';
 
 interface DashboardPageProps {
   onNavigateTab: (tab: any) => void;
@@ -153,36 +154,42 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </span>
         </div>
 
-        <div className="max-w-3xl relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] font-sans font-black uppercase tracking-widest mb-3 shadow-sm border border-amber-400/25">
-            <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
-            <span>REAL-TIME INVENTORY TELEMETRY</span>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] font-sans font-black uppercase tracking-widest mb-3 shadow-sm border border-amber-400/25">
+              <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
+              <span>REAL-TIME INVENTORY TELEMETRY</span>
+            </div>
+
+            <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight mb-2 drop-shadow-md">
+              The Cauldron View
+            </h2>
+
+            <p className="font-sans text-sm sm:text-base font-medium text-slate-200/90 max-w-2xl leading-relaxed mb-6">
+              Predictive demand prophecies, automated restock charms, and live anomaly sentinels for high-volume alchemical operations.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => onNavigateTab('events')}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#FF8800] via-[#FF5400] to-[#F72585] text-white font-sans font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/30 hover:scale-105 active:scale-95 transition-all border border-orange-400/40"
+              >
+                <Moon className="w-4 h-4 text-amber-200 fill-amber-200" />
+                <span>Full Moon Festival (3.0x Surge)</span>
+                <span className="w-2 h-2 rounded-full bg-yellow-300 animate-ping" />
+              </button>
+
+              <button
+                onClick={() => onNavigateTab('inventory')}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-amber-400/50 font-sans font-black text-xs uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all backdrop-blur-md"
+              >
+                <span>Audit Pantry Shelves &rarr;</span>
+              </button>
+            </div>
           </div>
 
-          <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight mb-2 drop-shadow-md">
-            The Cauldron View
-          </h2>
-
-          <p className="font-sans text-sm sm:text-base font-medium text-slate-200/90 max-w-2xl leading-relaxed mb-6">
-            Predictive demand prophecies, automated restock charms, and live anomaly sentinels for high-volume alchemical operations.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => onNavigateTab('events')}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#FF8800] via-[#FF5400] to-[#F72585] text-white font-sans font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/30 hover:scale-105 active:scale-95 transition-all border border-orange-400/40"
-            >
-              <Moon className="w-4 h-4 text-amber-200 fill-amber-200" />
-              <span>Full Moon Festival (3.0x Surge)</span>
-              <span className="w-2 h-2 rounded-full bg-yellow-300 animate-ping" />
-            </button>
-
-            <button
-              onClick={() => onNavigateTab('inventory')}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-amber-400/50 font-sans font-black text-xs uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all backdrop-blur-md"
-            >
-              <span>Audit Pantry Shelves &rarr;</span>
-            </button>
+          <div className="hidden lg:flex items-center justify-center animate-float flex-shrink-0 pr-4">
+            <BubblingCauldron size="lg" caption="Live Alchemical Brew" />
           </div>
         </div>
       </div>
