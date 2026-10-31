@@ -26,7 +26,6 @@ import { StatCard } from '../components/StatCard';
 import { Skeleton } from '../components/Skeleton';
 import { ArcaneSparkles } from '../components/ArcaneSparkles';
 import { BubblingCauldron } from '../components/BubblingCauldron';
-import { useShaderBackground } from '@/components/ui/animated-shader-hero';
 
 interface DashboardPageProps {
   onNavigateTab: (tab: any) => void;
@@ -37,7 +36,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onNavigateTab,
   onShowToast,
 }) => {
-  const shaderCanvasRef = useShaderBackground();
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [prophecies, setProphecies] = useState<ProphecyStockout[]>([]);
   const [recommendations, setRecommendations] = useState<ReorderRecommendation[]>([]);
@@ -140,65 +138,25 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   return (
     <div className="space-y-8 pb-16">
-      {/* 1. Luminous Professional Hero Masthead Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-[#20103C]/95 via-[#2D1652]/90 to-[#1C0D33]/95 border border-amber-400/30 p-6 sm:p-8 shadow-2xl overflow-hidden luxury-glass">
-        {/* Interactive WebGL Shader Canvas Animation */}
-        <canvas
-          ref={shaderCanvasRef}
-          className="absolute inset-0 w-full h-full object-cover touch-none opacity-45 mix-blend-screen pointer-events-auto"
-        />
-
-        {/* Soft Ambient Radiance Blooms */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gradient-to-br from-amber-500/25 via-orange-500/20 to-purple-600/20 blur-3xl pointer-events-none animate-aurora-drift" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-gradient-to-tr from-emerald-500/20 via-teal-500/15 to-transparent blur-2xl pointer-events-none animate-glow-pulse" />
-
-        {/* Floating playful stamps */}
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2">
-          <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-sans font-black bg-white/10 text-amber-300 border border-amber-400/30 uppercase tracking-wider -rotate-2 shadow-sm backdrop-blur-md animate-float">
-            ★ 100% ARTISANAL POTIONS ★
-          </span>
-          <span className="px-3.5 py-1 rounded-full text-xs font-sans font-black bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border border-amber-500/40 uppercase tracking-wider rotate-1 shadow-md animate-float-delayed">
-            EST. 2026
-          </span>
+      {/* Operational Overview Telemetry Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-white/10">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] font-sans font-black uppercase tracking-widest mb-1.5 shadow-sm border border-amber-400/25">
+            <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
+            <span>APOTHECARY TELEMETRY MATRIX</span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl font-black text-white drop-shadow-sm">
+            Live Inventory Intelligence
+          </h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] font-sans font-black uppercase tracking-widest mb-3 shadow-sm border border-amber-400/25">
-              <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
-              <span>REAL-TIME INVENTORY TELEMETRY</span>
-            </div>
-
-            <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight mb-2 drop-shadow-md">
-              The Cauldron View
-            </h2>
-
-            <p className="font-sans text-sm sm:text-base font-medium text-slate-200/90 max-w-2xl leading-relaxed mb-6">
-              Predictive demand prophecies, automated restock charms, and live anomaly sentinels for high-volume alchemical operations.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                onClick={() => onNavigateTab('events')}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#FF8800] via-[#FF5400] to-[#F72585] text-white font-sans font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/30 hover:scale-105 active:scale-95 transition-all border border-orange-400/40"
-              >
-                <Moon className="w-4 h-4 text-amber-200 fill-amber-200" />
-                <span>Full Moon Festival (3.0x Surge)</span>
-                <span className="w-2 h-2 rounded-full bg-yellow-300 animate-ping" />
-              </button>
-
-              <button
-                onClick={() => onNavigateTab('inventory')}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-amber-400/50 font-sans font-black text-xs uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all backdrop-blur-md"
-              >
-                <span>Audit Pantry Shelves &rarr;</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="hidden lg:flex items-center justify-center animate-float flex-shrink-0 pr-4">
-            <BubblingCauldron size="lg" caption="Live Alchemical Brew" />
-          </div>
+        <div className="flex items-center gap-2.5">
+          <span className="hidden sm:inline-block px-3.5 py-1.5 rounded-full text-xs font-sans font-black bg-white/10 text-amber-300 border border-amber-400/30 uppercase tracking-wider shadow-sm backdrop-blur-md">
+            ★ 100% ARTISANAL POTIONS ★
+          </span>
+          <span className="px-3.5 py-1.5 rounded-full text-xs font-sans font-black bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border border-amber-500/40 uppercase tracking-wider shadow-md">
+            EST. 2026
+          </span>
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { Navbar, NavTab } from './components/Navbar';
 import { SiglitosTicker } from './components/SiglitosTicker';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { Skeleton } from './components/Skeleton';
+import Hero from './components/ui/animated-shader-hero';
 
 // Lazy-loaded routes for performance & zero layout shift
 const DashboardPage = lazy(() =>
@@ -69,7 +70,33 @@ export function App() {
         onToggleDarkMode={toggleDarkMode}
       />
 
-      {/* 3. Main Stage Content */}
+      {/* 3. Grand Interactive WebGL Animated Shader Hero Section */}
+      {activeTab === 'dashboard' && (
+        <Hero
+          trustBadge={{
+            text: "EST. 2026 ✦ 100% ARTISANAL POTIONS ✦ REAL-TIME INVENTORY TELEMETRY",
+            icons: ["✨", "🧪", "⚡"],
+          }}
+          headline={{
+            line1: "The Cauldron View",
+            line2: "Predictive Demand Prophecies",
+          }}
+          subtitle="Automated restock charms, LightGBM runout forecasting, and live anomaly sentinels for high-volume alchemical operations."
+          buttons={{
+            primary: {
+              text: "Full Moon Festival (3.0x Surge)",
+              onClick: () => setActiveTab('events'),
+            },
+            secondary: {
+              text: "Audit Pantry Shelves →",
+              onClick: () => setActiveTab('inventory'),
+            },
+          }}
+          className="w-full min-h-[520px] lg:min-h-[580px] border-b border-amber-400/25 shadow-2xl relative"
+        />
+      )}
+
+      {/* 4. Main Stage Content */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Suspense
           fallback={
