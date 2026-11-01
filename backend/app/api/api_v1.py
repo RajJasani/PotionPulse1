@@ -9,9 +9,11 @@ from backend.app.api.endpoints import (
     forecasts,
     prophecies,
     recommendations,
+    auth,
 )
 
 api_router = APIRouter()
+api_router.include_router(auth.router)
 api_router.include_router(shelves.router)
 api_router.include_router(ingredients.router)
 api_router.include_router(sales.router)

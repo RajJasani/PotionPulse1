@@ -200,3 +200,31 @@ class ReorderRecommendationOut(BaseModel):
     projected_stockout_date: Optional[datetime] = None
     days_until_stockout: Optional[float] = None
     reasoning: str
+
+# ----------------- AUTHENTICATION -----------------
+class UserRegister(BaseModel):
+    email: str = Field(..., min_length=3, max_length=120)
+    password: str = Field(..., min_length=4, max_length=100)
+    username: str = Field(..., min_length=2, max_length=60)
+    role: Optional[str] = Field(default="Master Alchemist")
+    title: Optional[str] = Field(default="Keeper of the Cauldron")
+    avatar_emoji: Optional[str] = Field(default="🧙‍♀️")
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+class UserOut(BaseModel):
+    id: str
+    email: str
+    username: str
+    role: str
+    title: str
+    avatar_emoji: str
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+class AuthResponse(BaseModel):
+    token: str
+    user: UserOut

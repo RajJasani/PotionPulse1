@@ -153,3 +153,17 @@ class ReorderRecommendation(Base):
     ingredient = relationship("Ingredient", back_populates="reorder_recommendations")
 
 Index("idx_reorder_ingredient", ReorderRecommendation.ingredient_id)
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(String, primary_key=True, default=lambda: generate_id("usr"))
+    email = Column(String, nullable=False, unique=True, index=True)
+    username = Column(String, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    role = Column(String, nullable=False, default="Master Alchemist")  # 'Master Alchemist', 'Potion Brewer', 'Guild Apprentice'
+    title = Column(String, nullable=False, default="Keeper of the Cauldron")
+    avatar_emoji = Column(String, nullable=False, default="🧙‍♀️")
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+

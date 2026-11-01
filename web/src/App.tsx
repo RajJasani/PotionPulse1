@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar, NavTab } from './components/Navbar';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { Skeleton } from './components/Skeleton';
+import { AuthProvider } from './context/AuthContext';
+import { AuthModal } from './components/AuthModal';
 import Hero from './components/ui/animated-shader-hero';
 
 // Lazy-loaded routes for performance & zero layout shift
@@ -55,8 +57,12 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen text-black flex flex-col transition-colors duration-200 selection:bg-amber-400 selection:text-black">
-      {/* 1. Header Navigation */}
+    <AuthProvider>
+      <div className="min-h-screen text-black flex flex-col transition-colors duration-200 selection:bg-amber-400 selection:text-black">
+        {/* Auth Modal */}
+        <AuthModal />
+
+        {/* 1. Header Navigation */}
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -183,6 +189,7 @@ export function App() {
         </div>
       </footer>
     </div>
+  </AuthProvider>
   );
 }
 

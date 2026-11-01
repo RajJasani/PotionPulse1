@@ -19,10 +19,16 @@ import {
   ForecastResponse,
   ProphecyStockout,
   ReorderRecommendation,
+  User,
+  UserRegister,
+  UserLogin,
+  AuthResponse,
+  DemoUser,
 } from './api.types';
 
 export class PotionPantryClient {
   private baseUrl: string;
+  private token: string | null = null;
 
   constructor(baseUrl?: string) {
     if (baseUrl) {
@@ -30,9 +36,30 @@ export class PotionPantryClient {
     } else if (typeof window !== 'undefined') {
       const envUrl = (import.meta as any)?.env?.VITE_API_URL || (window as any)?.__POTION_API_URL__;
       this.baseUrl = envUrl ? envUrl.replace(/\/$/, '') : '';
+      // Hydrate token from localStorage if in browser
+      try {
+        this.token = localStorage.getItem('potion_auth_token');
+      } catch {}
     } else {
       this.baseUrl = 'http://localhost:8000';
     }
+  }
+
+  public setToken(token: string | null) {
+    this.token = token;
+    if (typeof window !== 'undefined') {
+      try {
+        if (token) {
+          localStorage.setItem('potion_auth_token', token);
+        } else {
+          localStorage.removeItem('potion_auth_token');
+        }
+      } catch {}
+    }
+  }
+
+  public getToken(): string | null {
+    return this.token;
   }
 
   public setBaseUrl(url: string) {
@@ -50,10 +77,11 @@ export class PotionPantryClient {
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseUrl}/api${endpoint}`;
-    const headers = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      ...(options.headers || {}),
+      ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
+      ...((options.headers as Record<string, string>) || {}),
     };
 
     try {
@@ -213,6 +241,41 @@ export class PotionPantryClient {
       method: 'PUT',
       body: JSON.stringify(data),
     });
+  }
+
+  // --- AUTHENTICATION ---
+  async login(data: UserLogin): Promise<AuthResponse> {
+    const res = await this.request<AuthResponse>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+    if (res && res.token) {
+      this.setToken(res.token);
+    }
+    return res;
+  }
+
+  async register(data: UserRegister): Promise<AuthResponse> {
+    const res = await this.request<AuthResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+    if (res && res.token) {
+      this.setToken(res.token);
+    }
+    return res;
+  }
+
+  async getMe(): Promise<User> {
+    return this.request<User>('/auth/me');
+  }
+
+  async getDemoUsers(): Promise<DemoUser[]> {
+    return this.request<DemoUser[]>('/auth/demo-users');
+  }
+
+  logout() {
+    this.setToken(null);
   }
 }
 

@@ -172,3 +172,43 @@ export interface ReorderRecommendation {
   days_until_stockout?: number | null;
   reasoning: string;
 }
+
+// ----------------- AUTHENTICATION -----------------
+export interface User {
+  id: string;
+  email: string;
+  username: string;
+  role: string;
+  title: string;
+  avatar_emoji: string;
+  created_at: string;
+}
+
+export interface UserRegister {
+  email: string;
+  password: string;
+  username: string;
+  role?: string;
+  title?: string;
+  avatar_emoji?: string;
+}
+
+export interface UserLogin {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
+export interface DemoUser {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  avatar: string;
+  badge: string;
+}
+

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Package, Eye, AlertTriangle, Moon, FlaskConical, SunMedium } from 'lucide-react';
+import { Sparkles, Package, Eye, AlertTriangle, Moon, FlaskConical, SunMedium, LogOut, ChevronDown } from 'lucide-react';
 import { MoonPhaseIndicator } from './MoonPhaseIndicator';
+import { useAuth } from '../context/AuthContext';
 
 export type NavTab = 'dashboard' | 'inventory' | 'crystal-ball' | 'anomalies' | 'events';
 
@@ -22,6 +23,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   isDarkMode = false,
   onToggleDarkMode,
 }) => {
+  const { user, openLogin, logout } = useAuth();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
   const tabs = [
     { id: 'dashboard' as NavTab, label: 'Cauldron View', shortLabel: 'Cauldron', icon: Sparkles },
     { id: 'inventory' as NavTab, label: 'The Shelves', shortLabel: 'Shelves', icon: Package },
@@ -102,7 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Right Actions: Moon Phase, Theme Switcher & Dispense Button - Clean Single Line */}
+        {/* Right Actions: Moon Phase, Theme Switcher, Auth & Dispense Button */}
         <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
           <div className="flex items-center flex-shrink-0">
             <MoonPhaseIndicator />
@@ -119,6 +123,62 @@ export const Navbar: React.FC<NavbarProps> = ({
               ) : (
                 <Moon className="w-4 h-4 text-amber-950" />
               )}
+            </button>
+          )}
+
+          {/* User Profile or Sign In Button */}
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="h-9 flex items-center gap-1.5 px-3 rounded-full bg-amber-200 hover:bg-amber-300 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer text-xs font-black text-black transition-all flex-shrink-0"
+                title={`${user.username} (${user.role})`}
+              >
+                <span className="text-base leading-none">{user.avatar_emoji || '🧙‍♀️'}</span>
+                <span className="hidden sm:inline font-black text-xs text-black max-w-[110px] truncate">
+                  {user.username}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-black" />
+              </button>
+
+              {isUserMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-60 p-3 bg-[#FFFDF7] border-2 border-black rounded-2xl shadow-[6px_6px_0px_rgba(0,0,0,1)] z-50 text-black text-left animate-fade-in-down">
+                  <div className="pb-2.5 mb-2 border-b-2 border-black/10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-2xl p-1 bg-amber-100 rounded-xl border border-black/30">
+                        {user.avatar_emoji || '🧙‍♀️'}
+                      </span>
+                      <div className="overflow-hidden">
+                        <p className="font-display font-black text-xs text-black truncate">
+                          {user.username}
+                        </p>
+                        <p className="text-[10px] text-neutral-600 truncate">{user.email}</p>
+                      </div>
+                    </div>
+                    <span className="inline-block mt-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-amber-400 text-black border border-black shadow-[1px_1px_0px_rgba(0,0,0,1)]">
+                      {user.role}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      logout();
+                    }}
+                    className="w-full text-left px-2.5 py-2 rounded-xl text-xs font-black text-rose-700 hover:bg-rose-100 transition-all cursor-pointer flex items-center gap-2 border border-transparent hover:border-rose-300"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Log Out of Grimoire</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={openLogin}
+              className="h-9 flex items-center gap-1.5 px-3.5 rounded-full bg-amber-300 hover:bg-amber-200 text-black border-2 border-black font-sans font-black text-xs uppercase tracking-wider shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 active:translate-y-0 transition-all whitespace-nowrap flex-shrink-0 cursor-pointer"
+            >
+              <span className="text-sm">🔮</span>
+              <span>Sign In</span>
             </button>
           )}
 
