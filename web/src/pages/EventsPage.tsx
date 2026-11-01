@@ -133,10 +133,10 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
               MIDNIGHT CURSE MODULATOR
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-slate-900 flex items-center gap-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-black flex items-center gap-3">
             <span>Celestial Surge Engine</span>
           </h2>
-          <p className="font-sans text-xs font-semibold text-slate-600 mt-1">
+          <p className="font-sans text-xs font-bold text-black/80 mt-1">
             Injects ritual gatherings, full moons, and seasonal spikes directly into ML forecasts and reorder spells.
           </p>
         </div>

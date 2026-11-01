@@ -145,7 +145,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <Zap className="w-3.5 h-3.5 text-amber-600 fill-amber-500 animate-pulse" />
             <span>APOTHECARY TELEMETRY MATRIX</span>
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-black text-slate-900">
+          <h2 className="font-display text-2xl sm:text-3xl font-black text-black">
             Live Inventory Intelligence
           </h2>
         </div>
@@ -202,7 +202,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-amber-200/80 relative z-10">
           <div>
             <div className="flex items-center gap-2.5">
-              <h3 className="font-display text-xl sm:text-2xl font-black text-slate-900">
+              <h3 className="font-display text-xl sm:text-2xl font-black text-black">
                 Lowest-Stock Potion Flash Tubes
               </h3>
               <span className="px-3 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-rose-500 to-pink-600 text-white uppercase shadow-md shadow-rose-500/30 animate-pulse tracking-wider">
@@ -282,7 +282,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <div>
             <div className="flex items-center justify-between mb-5 pb-4 border-b border-amber-200/80">
               <div>
-                <h3 className="font-display text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2.5">
+                <h3 className="font-display text-xl sm:text-2xl font-black text-black flex items-center gap-2.5">
                   <Clock className="w-5 h-5 text-amber-600" />
                   <span>The Prophecy Engine</span>
                 </h3>

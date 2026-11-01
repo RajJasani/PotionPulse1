@@ -212,10 +212,10 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
               ALCHEMICAL DIVINATION
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-slate-900 flex items-center gap-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-black flex items-center gap-3">
             <span>The Crystal Ball</span>
           </h2>
-          <p className="font-sans text-xs font-semibold text-slate-600 mt-1">
+          <p className="font-sans text-xs font-bold text-black/80 mt-1">
             Divines future consumption curves using Histogram Gradient Boosting, lag features, and event multipliers.
           </p>
         </div>

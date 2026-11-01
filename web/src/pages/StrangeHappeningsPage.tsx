@@ -136,10 +136,10 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
               SURVEILLANCE SENTINEL
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-slate-900 flex items-center gap-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-black flex items-center gap-3">
             <span>Strange Happenings</span>
           </h2>
-          <p className="font-sans text-xs font-semibold text-slate-600 mt-1">
+          <p className="font-sans text-xs font-bold text-black/80 mt-1">
             Flags unexplained stock depletion, physical theft, sudden volume surges, and seasonal shifts.
           </p>
         </div>

@@ -55,7 +55,7 @@ export function App() {
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark text-slate-100' : 'text-slate-900'} flex flex-col transition-colors duration-200 selection:bg-amber-400 selection:text-black`}>
+    <div className="min-h-screen text-black flex flex-col transition-colors duration-200 selection:bg-amber-400 selection:text-black">
       {/* 1. Header Navigation */}
       <Navbar
         activeTab={activeTab}

@@ -211,17 +211,17 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
   return (
     <div className="space-y-6 pb-16">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-amber-300/80">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border border-amber-500/40 uppercase tracking-wider shadow-sm">
               INVENTORY VAULT
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-black tracking-tight text-black flex items-center gap-3">
             <span>The Pantry Shelves</span>
           </h2>
-          <p className="font-sans text-xs font-semibold text-slate-600 dark:text-slate-300 mt-1">
+          <p className="font-sans text-xs font-bold text-black/80 mt-1">
             Manage raw reagents, monitor physical tiers, dispense potion sales, and audit levels.
           </p>
         </div>
