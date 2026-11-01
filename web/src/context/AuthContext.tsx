@@ -16,6 +16,7 @@ interface AuthContextType {
   logout: () => void;
   demoUsers: DemoUser[];
   loginAsDemo: (demo: DemoUser) => Promise<void>;
+  switchRole: (role: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -114,6 +115,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const switchRole = (newRole: string) => {
+    if (user) {
+      let avatar = user.avatar_emoji;
+      let title = user.title;
+      if (newRole === 'Guild Apprentice') {
+        avatar = '🧪';
+        title = 'Keeper of the Vials';
+      } else if (newRole === 'Potions Master') {
+        avatar = '🦇';
+        title = 'Celestial Demand Seer';
+      } else {
+        avatar = '🧙‍♀️';
+        title = 'High Priestess of the Cauldron';
+      }
+      const updated: User = {
+        ...user,
+        role: newRole,
+        avatar_emoji: avatar,
+        title,
+      };
+      setUser(updated);
+      try {
+        localStorage.setItem('potion_auth_user', JSON.stringify(updated));
+      } catch {}
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -130,6 +158,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logout,
         demoUsers,
         loginAsDemo,
+        switchRole,
       }}
     >
       {children}
