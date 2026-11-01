@@ -415,27 +415,27 @@ const Hero: React.FC<HeroProps> = ({
   const stickerStyles = [
     {
       bg: 'bg-amber-400 text-neutral-950',
-      border: 'border-2 border-black/80',
+      border: 'border-[1.5px] border-black/90',
+      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
+      rotate: 'rotate-1',
+    },
+    {
+      bg: 'bg-rose-500 text-white',
+      border: 'border-[1.5px] border-black/90',
       shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
       rotate: '-rotate-2',
     },
     {
-      bg: 'bg-rose-500 text-white',
-      border: 'border-2 border-black/80',
+      bg: 'bg-emerald-400 text-neutral-950',
+      border: 'border-[1.5px] border-black/90',
       shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
       rotate: 'rotate-2',
     },
     {
-      bg: 'bg-emerald-400 text-neutral-950',
-      border: 'border-2 border-black/80',
+      bg: 'bg-violet-400 text-neutral-950',
+      border: 'border-[1.5px] border-black/90',
       shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
       rotate: '-rotate-1',
-    },
-    {
-      bg: 'bg-violet-400 text-neutral-950',
-      border: 'border-2 border-black/80',
-      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
-      rotate: 'rotate-3',
     },
   ];
 
@@ -507,17 +507,17 @@ const Hero: React.FC<HeroProps> = ({
         style={{ background: 'black' }}
       />
       
-      {/* Top Left Sticker Badges */}
+      {/* Top Right Sticker Badges */}
       {parsedStickers && parsedStickers.length > 0 && (
-        <div className="absolute top-4 sm:top-6 left-4 sm:left-8 z-20 flex flex-wrap gap-2 sm:gap-2.5 items-start max-w-xs sm:max-w-md pointer-events-auto animate-fade-in-down">
+        <div className="absolute top-3.5 sm:top-5 right-3.5 sm:right-6 z-20 flex flex-wrap justify-end gap-1.5 sm:gap-2 max-w-[280px] sm:max-w-md pointer-events-auto animate-fade-in-down">
           {parsedStickers.map((sticker, idx) => {
             const style = stickerStyles[idx % stickerStyles.length];
             return (
               <div
                 key={idx}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-black text-[11px] sm:text-xs tracking-wider uppercase ${style.bg} ${style.border} ${style.shadow} ${style.rotate} hover:rotate-0 hover:scale-105 active:scale-95 transition-all duration-200 cursor-default select-none`}
+                className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full font-black text-[10px] sm:text-[11px] tracking-wide uppercase ${style.bg} ${style.border} ${style.shadow} ${style.rotate} hover:rotate-0 hover:scale-105 active:scale-95 transition-all duration-200 cursor-default select-none`}
               >
-                {sticker.icon && <span className="text-sm select-none">{sticker.icon}</span>}
+                {sticker.icon && <span className="text-xs select-none">{sticker.icon}</span>}
                 <span>{sticker.text}</span>
               </div>
             );
@@ -534,7 +534,7 @@ const Hero: React.FC<HeroProps> = ({
         </div>
       ) : (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white pointer-events-none">
-          <div className="text-center space-y-6 max-w-5xl mx-auto px-4 pointer-events-auto pt-16 sm:pt-6">
+          <div className="text-center space-y-4 sm:space-y-6 max-w-5xl mx-auto px-4 pointer-events-auto pt-16 sm:pt-12 md:pt-8">
             {/* Main Heading with Animation */}
             <div className="space-y-2">
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
