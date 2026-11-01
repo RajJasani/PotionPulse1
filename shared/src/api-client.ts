@@ -24,8 +24,15 @@ import {
 export class PotionPantryClient {
   private baseUrl: string;
 
-  constructor(baseUrl: string = 'http://localhost:8000') {
-    this.baseUrl = baseUrl.replace(/\/$/, '');
+  constructor(baseUrl?: string) {
+    if (baseUrl) {
+      this.baseUrl = baseUrl.replace(/\/$/, '');
+    } else if (typeof window !== 'undefined') {
+      const envUrl = (import.meta as any)?.env?.VITE_API_URL || (window as any)?.__POTION_API_URL__;
+      this.baseUrl = envUrl ? envUrl.replace(/\/$/, '') : '';
+    } else {
+      this.baseUrl = 'http://localhost:8000';
+    }
   }
 
   public setBaseUrl(url: string) {
@@ -34,6 +41,11 @@ export class PotionPantryClient {
 
   public getBaseUrl(): string {
     return this.baseUrl;
+  }
+
+  // --- SYSTEM HEALTH ---
+  async checkHealth(): Promise<{ status: string; service: string; version?: string }> {
+    return this.request<{ status: string; service: string; version?: string }>('/health');
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

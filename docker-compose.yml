@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  potionpulse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: potionpulse-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - DATABASE_URL=sqlite:////app/data/pantry.db
+    volumes:
+      - potionpulse_data:/app/data
+
+volumes:
+  potionpulse_data:
