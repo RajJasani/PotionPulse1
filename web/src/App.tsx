@@ -71,8 +71,11 @@ export function App() {
         <div className="relative">
           <Hero
             trustBadge={{
-              text: "EST. 2026 ✦ 100% ARTISANAL POTIONS ✦ REAL-TIME INVENTORY TELEMETRY",
-              icons: ["✨", "🧪", "⚡"],
+              stickers: [
+                { text: "EST. 2026", icon: "✨" },
+                { text: "100% ARTISANAL POTIONS", icon: "🧪" },
+                { text: "REAL-TIME INVENTORY TELEMETRY", icon: "⚡" },
+              ],
             }}
             headline={{
               line1: "The Cauldron View",

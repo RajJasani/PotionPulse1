@@ -3,8 +3,12 @@ import React, { useRef, useEffect } from 'react';
 // Types for component props
 export interface HeroProps {
   trustBadge?: {
-    text: string;
+    text?: string;
     icons?: string[];
+    stickers?: Array<{
+      text: string;
+      icon?: string;
+    }>;
   };
   headline: {
     line1: string;
@@ -398,6 +402,43 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   const canvasRef = useShaderBackground();
 
+  // Extract stickers if provided directly or parse from text separated by ✦
+  const parsedStickers = trustBadge?.stickers || (trustBadge?.text ? (
+    trustBadge.text.includes('✦') 
+      ? trustBadge.text.split('✦').map((s, idx) => ({
+          text: s.trim(),
+          icon: trustBadge.icons?.[idx] || (idx === 0 ? '✨' : idx === 1 ? '🧪' : '⚡'),
+        }))
+      : [{ text: trustBadge.text, icon: trustBadge.icons?.[0] }]
+  ) : []);
+
+  const stickerStyles = [
+    {
+      bg: 'bg-amber-400 text-neutral-950',
+      border: 'border-2 border-black/80',
+      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
+      rotate: '-rotate-2',
+    },
+    {
+      bg: 'bg-rose-500 text-white',
+      border: 'border-2 border-black/80',
+      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
+      rotate: 'rotate-2',
+    },
+    {
+      bg: 'bg-emerald-400 text-neutral-950',
+      border: 'border-2 border-black/80',
+      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
+      rotate: '-rotate-1',
+    },
+    {
+      bg: 'bg-violet-400 text-neutral-950',
+      border: 'border-2 border-black/80',
+      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
+      rotate: 'rotate-3',
+    },
+  ];
+
   return (
     <div className={`relative w-full min-h-[500px] overflow-hidden bg-black ${className}`}>
       <style>{`
@@ -466,6 +507,24 @@ const Hero: React.FC<HeroProps> = ({
         style={{ background: 'black' }}
       />
       
+      {/* Top Left Sticker Badges */}
+      {parsedStickers && parsedStickers.length > 0 && (
+        <div className="absolute top-4 sm:top-6 left-4 sm:left-8 z-20 flex flex-wrap gap-2 sm:gap-2.5 items-start max-w-xs sm:max-w-md pointer-events-auto animate-fade-in-down">
+          {parsedStickers.map((sticker, idx) => {
+            const style = stickerStyles[idx % stickerStyles.length];
+            return (
+              <div
+                key={idx}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-black text-[11px] sm:text-xs tracking-wider uppercase ${style.bg} ${style.border} ${style.shadow} ${style.rotate} hover:rotate-0 hover:scale-105 active:scale-95 transition-all duration-200 cursor-default select-none`}
+              >
+                {sticker.icon && <span className="text-sm select-none">{sticker.icon}</span>}
+                <span>{sticker.text}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* Content Overlay */}
       {children ? (
         <div className="relative z-10 w-full h-full pointer-events-none">
@@ -475,25 +534,7 @@ const Hero: React.FC<HeroProps> = ({
         </div>
       ) : (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white pointer-events-none">
-          {/* Trust Badge */}
-          {trustBadge && (
-            <div className="mb-8 animate-fade-in-down pointer-events-auto">
-              <div className="flex items-center gap-2 px-6 py-3 bg-orange-500/10 backdrop-blur-md border border-orange-300/30 rounded-full text-sm">
-                {trustBadge.icons && (
-                  <div className="flex">
-                    {trustBadge.icons.map((icon, index) => (
-                      <span key={index} className={`text-${index === 0 ? 'yellow' : index === 1 ? 'orange' : 'amber'}-300`}>
-                        {icon}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <span className="text-orange-100">{trustBadge.text}</span>
-              </div>
-            </div>
-          )}
-
-          <div className="text-center space-y-6 max-w-5xl mx-auto px-4 pointer-events-auto">
+          <div className="text-center space-y-6 max-w-5xl mx-auto px-4 pointer-events-auto pt-16 sm:pt-6">
             {/* Main Heading with Animation */}
             <div className="space-y-2">
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
