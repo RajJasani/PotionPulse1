@@ -533,8 +533,8 @@ const Hero: React.FC<HeroProps> = ({
           </div>
         </div>
       ) : (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white pointer-events-none">
-          <div className="text-center space-y-4 sm:space-y-6 max-w-5xl mx-auto px-4 pointer-events-auto pt-16 sm:pt-12 md:pt-8">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white pointer-events-none px-4 pt-16 sm:pt-14 pb-24 sm:pb-32">
+          <div className="text-center space-y-4 sm:space-y-6 max-w-5xl mx-auto pointer-events-auto">
             {/* Main Heading with Animation */}
             <div className="space-y-2">
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
@@ -547,14 +547,14 @@ const Hero: React.FC<HeroProps> = ({
             
             {/* Subtitle with Animation */}
             <div className="max-w-3xl mx-auto animate-fade-in-up animation-delay-600">
-              <p className="text-lg md:text-xl lg:text-2xl text-orange-100/90 font-light leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-amber-100 font-medium leading-relaxed drop-shadow-sm">
                 {subtitle}
               </p>
             </div>
             
             {/* CTA Buttons with Animation */}
             {buttons && (
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-8 sm:mt-10 animate-fade-in-up animation-delay-800">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-6 sm:mt-8 animate-fade-in-up animation-delay-800">
                 {buttons.primary && (
                   <button 
                     onClick={buttons.primary.onClick}

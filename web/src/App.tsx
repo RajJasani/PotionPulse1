@@ -92,10 +92,16 @@ export function App() {
                 onClick: () => setActiveTab('inventory'),
               },
             }}
-            className="w-full min-h-[520px] lg:min-h-[580px] shadow-2xl relative"
+            className="w-full min-h-[580px] sm:min-h-[630px] lg:min-h-[660px] shadow-2xl relative"
           />
-          {/* Subtle bottom fade to blend the fiery shader smoothly into the colorful light theme below */}
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FBF8F1] via-[#FBF8F1]/40 to-transparent pointer-events-none z-20" />
+          {/* Ultra-smooth background transition starting safely below the buttons */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-24 sm:h-28 pointer-events-none z-20"
+            style={{
+              background:
+                'linear-gradient(to bottom, transparent 0%, rgba(251, 248, 241, 0.06) 35%, rgba(251, 248, 241, 0.35) 65%, rgba(251, 248, 241, 0.75) 88%, #FBF8F1 100%)',
+            }}
+          />
         </div>
       )}
 
