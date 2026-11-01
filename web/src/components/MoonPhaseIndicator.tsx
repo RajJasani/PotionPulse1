@@ -69,9 +69,9 @@ export const MoonPhaseIndicator: React.FC = () => {
           />
         </svg>
 
-        <span className="font-sans font-bold text-slate-900 dark:text-white text-xs whitespace-nowrap flex items-center gap-1">
-          <span className="hidden 2xl:inline">{moonInfo.phaseName}</span>
-          <span className="text-[11px] text-amber-600 dark:text-amber-300 font-mono font-black">
+        <span className="font-sans font-black text-black text-xs whitespace-nowrap flex items-center gap-1">
+          <span className="hidden 2xl:inline text-black">{moonInfo.phaseName}</span>
+          <span className="text-xs text-black font-mono font-black">
             {moonInfo.illumination}%
           </span>
         </span>
