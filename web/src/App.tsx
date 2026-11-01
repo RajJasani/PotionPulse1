@@ -84,11 +84,11 @@ export function App() {
             subtitle="Automated restock charms, LightGBM runout forecasting, and live anomaly sentinels for high-volume alchemical operations."
             buttons={{
               primary: {
-                text: "Full Moon Festival (3.0x Surge)",
+                text: "🌕 Full Moon Festival (3.0x Surge)",
                 onClick: () => setActiveTab('events'),
               },
               secondary: {
-                text: "Audit Pantry Shelves →",
+                text: "📦 Audit Pantry Shelves →",
                 onClick: () => setActiveTab('inventory'),
               },
             }}

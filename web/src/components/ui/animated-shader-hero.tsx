@@ -554,11 +554,11 @@ const Hero: React.FC<HeroProps> = ({
             
             {/* CTA Buttons with Animation */}
             {buttons && (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate-fade-in-up animation-delay-800">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-8 sm:mt-10 animate-fade-in-up animation-delay-800">
                 {buttons.primary && (
                   <button 
                     onClick={buttons.primary.onClick}
-                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-black rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/25 cursor-pointer"
+                    className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 hover:from-amber-300 hover:via-orange-300 hover:to-rose-300 text-black rounded-full font-black text-base sm:text-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
                   >
                     {buttons.primary.text}
                   </button>
@@ -566,7 +566,7 @@ const Hero: React.FC<HeroProps> = ({
                 {buttons.secondary && (
                   <button 
                     onClick={buttons.secondary.onClick}
-                    className="px-8 py-4 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-300/30 hover:border-orange-300/50 text-orange-100 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer"
+                    className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-amber-300 hover:bg-amber-200 text-black rounded-full font-black text-base sm:text-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
                   >
                     {buttons.secondary.text}
                   </button>
