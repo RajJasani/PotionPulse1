@@ -152,11 +152,11 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
     const isForecast = data.type === 'forecast';
 
     return (
-      <div className="rounded-2xl luxury-glass border border-amber-400/30 p-4 shadow-2xl text-xs font-sans">
-        <div className="font-mono text-[11px] font-black border-b border-white/10 pb-1.5 mb-2 flex items-center justify-between gap-4">
-          <span className="text-white">Date: {data.fullDate}</span>
+      <div className="rounded-2xl bg-slate-950 text-white border-2 border-slate-900 p-4 shadow-[4px_4px_0px_0px_#0F0E17] text-xs font-sans max-w-xs select-none">
+        <div className="font-mono text-[11px] font-black border-b border-white/20 pb-1.5 mb-2 flex items-center justify-between gap-4">
+          <span className="text-amber-300">Date: {data.fullDate}</span>
           <span className={`uppercase text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-sm ${
-            isForecast ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950 font-black' : 'bg-cyan-500 text-slate-950 font-black'
+            isForecast ? 'bg-[#FEE214] text-slate-950 font-black' : 'bg-[#1CBDF4] text-slate-950 font-black'
           }`}>
             {isForecast ? 'ML Forecast' : 'Historical Sales'}
           </span>
@@ -164,8 +164,8 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
 
         {data.actualDemand !== null && (
           <div className="flex items-center justify-between gap-4 py-0.5 font-bold">
-            <span className="text-purple-200/80">Actual Sold:</span>
-            <span className="font-mono text-sm text-cyan-300 font-black">
+            <span className="text-purple-200">Actual Sold:</span>
+            <span className="font-mono text-sm text-[#1CBDF4] font-black">
               {data.actualDemand.toFixed(1)} {currentIngredient?.unit}
             </span>
           </div>
@@ -175,12 +175,12 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
           <div className="space-y-1 font-bold">
             <div className="flex items-center justify-between gap-4 py-0.5">
               <span className="text-white">Prophesied Demand:</span>
-              <span className="font-mono text-sm text-amber-300 font-black">
+              <span className="font-mono text-sm text-[#FEE214] font-black">
                 {data.predictedDemand.toFixed(1)} {currentIngredient?.unit}
               </span>
             </div>
             {data.lowerBound !== null && (
-              <div className="flex items-center justify-between gap-4 text-[10px] text-purple-200/70">
+              <div className="flex items-center justify-between gap-4 text-[10px] text-purple-200">
                 <span>95% Confidence Aura:</span>
                 <span className="font-mono font-bold text-slate-200">
                   [{data.lowerBound.toFixed(1)} – {data.upperBound.toFixed(1)}]
@@ -191,8 +191,8 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
         )}
 
         {data.eventMultiplier > 1.0 && (
-          <div className="mt-2 pt-1.5 border-t border-white/10 flex items-center gap-1.5 text-rose-400 font-black text-[10px]">
-            <Moon className="w-3.5 h-3.5 fill-rose-400" />
+          <div className="mt-2 pt-1.5 border-t border-white/20 flex items-center gap-1.5 text-[#FF5A51] font-black text-[10px]">
+            <Moon className="w-3.5 h-3.5 fill-[#FF5A51]" />
             <span>
               {data.appliedEventName || 'Event Surge'}: {data.eventMultiplier}x Multiplier Applied
             </span>
@@ -238,17 +238,17 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
         </div>
       </div>
 
-      {/* Control Strip & Product Selector */}
-      <div className="p-5 rounded-3xl luxury-glass border border-amber-300/80 shadow-xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      {/* Control Strip & Product Selector in Cartoon Card */}
+      <div className="p-5 rounded-3xl cartoon-card flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Ingredient Picker */}
         <div className="flex items-center gap-3">
-          <label className="font-sans text-xs font-black text-amber-950 uppercase tracking-wider whitespace-nowrap">
+          <label className="font-sans text-xs font-black text-slate-950 uppercase tracking-wider whitespace-nowrap">
             Scry Reagent:
           </label>
           <select
             value={selectedIngredientId}
             onChange={(e) => setSelectedIngredientId(e.target.value)}
-            className="bg-amber-50/70 border border-amber-300 text-slate-900 font-sans text-xs font-bold rounded-full px-4 py-2.5 shadow-inner min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="bg-[#FAF5FF] border-2 border-slate-950 text-slate-950 font-sans text-xs font-black rounded-full px-4 py-2.5 shadow-[2px_2px_0px_0px_#0F0E17] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
           >
             {ingredients.map((ing) => (
               <option key={ing.id} value={ing.id}>
@@ -260,7 +260,7 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
 
         {/* Current Reagent Snapshot */}
         {currentIngredient && (
-          <div className="flex items-center gap-4 bg-amber-50/90 px-4 py-2.5 rounded-2xl border border-amber-300/80 shadow-sm">
+          <div className="flex items-center gap-4 bg-[#FFFBEB] px-4 py-2.5 rounded-2xl border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]">
             <PotionBottleGauge
               currentStock={currentIngredient.current_stock}
               unit={currentIngredient.unit}
@@ -269,7 +269,7 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
             />
             <div className="text-xs">
               <span className="text-slate-600 font-bold">Current Stock: </span>
-              <strong className="font-mono text-slate-900 font-black text-sm">
+              <strong className="font-mono text-slate-950 font-black text-sm">
                 {currentIngredient.current_stock.toFixed(1)} {currentIngredient.unit}
               </strong>
               <div className="text-[10px] text-amber-800 font-mono font-bold mt-0.5">
@@ -282,7 +282,7 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
 
       {/* Event Surge Alert Callout */}
       {activeEvent && (
-        <div className="p-5 rounded-3xl bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 text-white border border-amber-400 shadow-xl flex items-center justify-between">
+        <div className="p-5 rounded-3xl bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 text-white border-2 border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] flex items-center justify-between">
           <div className="flex items-center gap-3.5">
             <div className="p-2.5 rounded-2xl bg-white/20 backdrop-blur-md text-white border border-white/20 shadow-sm">
               <Moon className="w-5 h-5 fill-current" />
@@ -290,7 +290,7 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
             <div>
               <h4 className="font-sans font-black text-sm flex items-center gap-2">
                 <span>{activeEvent.name}</span>
-                <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-950 font-black shadow-sm">
+                <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-[#FEE214] text-slate-950 border border-slate-950 font-black shadow-sm">
                   {activeEvent.multiplier}x Multiplier Active
                 </span>
               </h4>
@@ -305,7 +305,7 @@ export const CrystalBallPage: React.FC<CrystalBallPageProps> = ({ onShowToast })
       )}
 
       {/* Main Chart Card */}
-      <div className="rounded-3xl luxury-glass border border-amber-300/80 p-6 sm:p-8 shadow-xl relative overflow-hidden">
+      <div className="rounded-3xl cartoon-card p-6 sm:p-8 relative overflow-hidden">
         <div className="flex items-center justify-between mb-5 pb-4 border-b border-amber-200/80">
           <div>
             <h3 className="font-display text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">

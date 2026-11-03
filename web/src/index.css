@@ -6,46 +6,83 @@
 
 @layer base {
   body {
-    background-color: #FBF8F1;
-    color: #000000;
+    background-color: #FAF5FF;
+    color: #0F0E17;
     font-family: 'Golos Text', 'Space Grotesk', system-ui, sans-serif;
     background-image: 
-      radial-gradient(circle at 15% 10%, rgba(245, 158, 11, 0.22) 0%, transparent 45%),
-      radial-gradient(circle at 85% 12%, rgba(249, 115, 22, 0.18) 0%, transparent 50%),
-      radial-gradient(circle at 50% 55%, rgba(244, 63, 94, 0.12) 0%, transparent 55%),
-      radial-gradient(circle at 10% 85%, rgba(16, 185, 129, 0.14) 0%, transparent 45%),
-      radial-gradient(circle at 80% 90%, rgba(251, 191, 36, 0.18) 0%, transparent 50%);
+      radial-gradient(circle at 10% 15%, rgba(245, 158, 11, 0.25) 0%, transparent 40%),
+      radial-gradient(circle at 90% 12%, rgba(168, 85, 247, 0.28) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.16) 0%, transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(16, 185, 129, 0.22) 0%, transparent 42%),
+      radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.24) 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(56, 189, 248, 0.18) 0%, transparent 40%);
     background-attachment: fixed;
   }
 
   .dark body, body.dark, html.dark body {
-    background-color: #FBF8F1;
-    color: #000000;
+    background-color: #FAF5FF;
+    color: #0F0E17;
     background-image: 
-      radial-gradient(circle at 15% 10%, rgba(245, 158, 11, 0.22) 0%, transparent 45%),
-      radial-gradient(circle at 85% 12%, rgba(249, 115, 22, 0.18) 0%, transparent 50%),
-      radial-gradient(circle at 50% 55%, rgba(244, 63, 94, 0.12) 0%, transparent 55%),
-      radial-gradient(circle at 10% 85%, rgba(16, 185, 129, 0.14) 0%, transparent 45%),
-      radial-gradient(circle at 80% 90%, rgba(251, 191, 36, 0.18) 0%, transparent 50%);
+      radial-gradient(circle at 10% 15%, rgba(245, 158, 11, 0.25) 0%, transparent 40%),
+      radial-gradient(circle at 90% 12%, rgba(168, 85, 247, 0.28) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.16) 0%, transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(16, 185, 129, 0.22) 0%, transparent 42%),
+      radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.24) 0%, transparent 45%);
     background-attachment: fixed;
   }
 }
 
+/* Eye-Catching Cartoon Neo-Brutalist & Magical Apothecary Utilities */
+.cartoon-card {
+  background: #FFFFFF;
+  border: 2.5px solid #0F0E17;
+  border-radius: 1.5rem;
+  box-shadow: 4px 4px 0px 0px #0F0E17;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cartoon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px 0px #0F0E17;
+}
+
+.cartoon-btn {
+  border: 2.5px solid #0F0E17;
+  border-radius: 1rem;
+  font-weight: 900;
+  box-shadow: 3.5px 3.5px 0px 0px #0F0E17;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cartoon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px 0px #0F0E17;
+}
+
+.cartoon-btn:active {
+  transform: translateY(1.5px);
+  box-shadow: 1.5px 1.5px 0px 0px #0F0E17;
+}
+
+.cartoon-badge {
+  border: 2px solid #0F0E17;
+  border-radius: 9999px;
+  font-weight: 900;
+  box-shadow: 2px 2px 0px 0px #0F0E17;
+}
+
 /* Award-Winning Luxury Arcane Glass & Card Styles (Light & Colourful) */
 .luxury-glass {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(254, 250, 240, 0.90) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(245, 158, 11, 0.28);
-  border-top: 1.5px solid rgba(245, 158, 11, 0.55);
-  box-shadow: 0 16px 40px -10px rgba(180, 83, 9, 0.10), 0 4px 12px -2px rgba(180, 83, 9, 0.05);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #FFFFFF;
+  border: 2.5px solid #0F0E17;
+  box-shadow: 4px 4px 0px 0px #0F0E17;
+  border-radius: 1.5rem;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .luxury-glass:hover {
   transform: translateY(-3px);
-  border-color: rgba(245, 158, 11, 0.60);
-  box-shadow: 0 22px 50px -10px rgba(180, 83, 9, 0.16), 0 0 25px rgba(251, 191, 36, 0.25);
+  box-shadow: 7px 7px 0px 0px #0F0E17;
 }
 
 .glow-amber-card {

@@ -11,20 +11,12 @@ export interface Forecaster {
 export function applyEventMultiplier(
   baseValue: number,
   dateStr: string,
-  eventWindows: SeasonalEventWindow[] = [],
-  ingredientId?: string,
+  eventWindows: SeasonalEventWindow[] = []
 ): { value: number; multiplier: number } {
   let multiplier = 1.0;
   for (const window of eventWindows) {
     if (dateStr >= window.startDate && dateStr <= window.endDate) {
-      if (
-        !ingredientId ||
-        !window.affectedIngredientIds ||
-        window.affectedIngredientIds.length === 0 ||
-        window.affectedIngredientIds.includes(ingredientId)
-      ) {
-        multiplier *= window.multiplier;
-      }
+      multiplier *= window.multiplier;
     }
   }
   return {

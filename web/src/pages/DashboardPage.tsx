@@ -282,7 +282,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* ========================================================================= */}
       {/* ROLE PERSPECTIVE SWITCHER & HERO BANNER                                    */}
       {/* ========================================================================= */}
-      <div className="bg-gradient-to-r from-amber-100 via-[#FFF9EE] to-orange-100 border-3 border-black rounded-3xl p-5 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,1)] flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-amber-100 via-[#FFF9EE] to-orange-100 border-[2.5px] border-slate-950 rounded-3xl p-5 sm:p-6 shadow-[4px_4px_0px_0px_#0F0E17] flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative overflow-hidden">
         <div className="flex items-center gap-3.5 relative z-10">
           <span className="text-3xl sm:text-4xl p-2.5 bg-white rounded-2xl border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,1)] flex-shrink-0">
             {activeRole === 'Guild Apprentice'
@@ -564,7 +564,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {activeRole === 'Guild Apprentice' && (
         <div className="space-y-8">
           {/* Apprentice Daily Chore Checklist */}
-          <div className="p-6 rounded-3xl bg-[#FFFDF7] border-3 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] space-y-4">
+          <div className="p-6 rounded-3xl bg-[#FFFDF7] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] space-y-4">
             <div className="flex items-center justify-between pb-3 border-b-2 border-black/10">
               <div className="flex items-center gap-2.5">
                 <span className="text-2xl p-1 bg-amber-100 rounded-xl border border-black">📋</span>
@@ -678,7 +678,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </div>
 
           {/* Apprentice Interactive Flash Tube Workbench */}
-          <div className="p-6 rounded-3xl bg-white border-3 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] space-y-5">
+          <div className="p-6 rounded-3xl bg-white border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] space-y-5">
             <div className="flex items-center justify-between pb-3 border-b-2 border-black/10">
               <div>
                 <div className="flex items-center gap-2">
@@ -747,7 +747,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {activeRole === 'Potions Master' && (
         <div className="space-y-8">
           {/* Seer's Machine Learning Telemetry Matrix */}
-          <div className="p-6 rounded-3xl bg-[#13111C] text-white border-3 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] space-y-5">
+          <div className="p-6 rounded-3xl bg-[#13111C] text-white border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-purple-500/30">
               <div className="flex items-center gap-3">
                 <span className="text-3xl p-2 bg-purple-950 rounded-2xl border border-purple-400">🔮</span>
@@ -800,7 +800,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </div>
 
           {/* Active Strange Happenings Sentinel Radar */}
-          <div className="p-6 rounded-3xl bg-[#FFFDF7] border-3 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] space-y-4">
+          <div className="p-6 rounded-3xl bg-[#FFFDF7] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] space-y-4">
             <div className="flex items-center justify-between pb-3 border-b-2 border-black/10">
               <div className="flex items-center gap-2">
                 <span className="text-2xl p-1 bg-rose-100 rounded-xl border border-black">⚠️</span>

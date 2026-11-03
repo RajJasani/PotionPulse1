@@ -4,28 +4,22 @@ import {
   Get,
   Headers,
   Param,
-  Patch,
   Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiHeader,
-  ApiOperation,
-  ApiParam,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiHeader, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { SalesService } from './sales.service';
-import { CreateCustomerDto, CreateSaleDto, RefundSaleDto, UpdateCustomerDto } from './dto/sale.dto';
+import { CreateSaleDto, RefundSaleDto } from './dto/sale.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { TenantGuard } from '../auth/guards/tenant.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/guards/roles.decorator';
+import { CurrentUser, AuthenticatedUser } from '../auth/decorators/current-user.decorator';
 import { ActiveTenant, ActiveTenantContext } from '../auth/decorators/active-tenant.decorator';
-import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { UserRole } from '@potionpulse/contracts';
 
-@ApiTags('Sales & Customers')
+@ApiTags('Sales & Deductions')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, TenantGuard, RolesGuard)
 @ApiHeader({ name: 'x-tenant-id', required: false, description: 'Target tenant workspace ID' })
@@ -34,131 +28,58 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Record a new potion/ingredient sale and deduct stock' })
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.STAFF)
+  @ApiOperation({ summary: 'Record sale and automatically deduct inventory balances atomically' })
   @ApiHeader({
-    name: 'x-idempotency-key',
+    name: 'Idempotency-Key',
     required: false,
-    description: 'Unique client-supplied idempotency key',
+    description: 'Unique client operation key preventing duplicate writes',
   })
   async createSale(
     @ActiveTenant() tenant: ActiveTenantContext,
-    @CurrentUser() user: any,
+    @CurrentUser() user: AuthenticatedUser,
     @Body() dto: CreateSaleDto,
-    @Headers('x-idempotency-key') idempotencyKey?: string,
+    @Headers('idempotency-key') headerIdempotencyKey?: string,
   ) {
     const data = await this.salesService.createSale(
       tenant.tenantId,
       user.userId,
       dto,
-      idempotencyKey,
+      headerIdempotencyKey,
     );
     return { data };
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get paginated sales history with optional date and customer filters' })
-  @ApiQuery({ name: 'startDate', required: false })
-  @ApiQuery({ name: 'endDate', required: false })
-  @ApiQuery({ name: 'customerId', required: false })
+  @ApiOperation({ summary: 'List tenant sales with pagination' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
-  @ApiQuery({ name: 'offset', required: false, type: Number })
   async getSales(
     @ActiveTenant() tenant: ActiveTenantContext,
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-    @Query('customerId') customerId?: string,
+    @Query('page') page?: number,
     @Query('limit') limit?: number,
-    @Query('offset') offset?: number,
   ) {
-    const res = await this.salesService.getSales(tenant.tenantId, {
-      startDate,
-      endDate,
-      customerId,
-      limit,
-      offset,
-    });
-    return { data: res.data, meta: res.meta };
-  }
-
-  // --- Customer Endpoints ---
-
-  @Get('customers/insights')
-  @ApiOperation({ summary: 'Get customer analytics, top spenders, and repeat purchase rates' })
-  async getCustomerInsights(@ActiveTenant() tenant: ActiveTenantContext) {
-    const data = await this.salesService.getCustomerInsights(tenant.tenantId);
-    return { data };
-  }
-
-  @Get('customers')
-  @ApiOperation({ summary: 'List customer profiles for active tenant' })
-  @ApiQuery({ name: 'tier', required: false, enum: ['standard', 'vip', 'guild', 'wholesale'] })
-  async listCustomers(
-    @ActiveTenant() tenant: ActiveTenantContext,
-    @Query('tier') tier?: string,
-  ) {
-    const data = await this.salesService.listCustomers(tenant.tenantId, tier);
-    return { data };
-  }
-
-  @Post('customers')
-  @ApiOperation({ summary: 'Create a new customer profile' })
-  async createCustomer(
-    @ActiveTenant() tenant: ActiveTenantContext,
-    @Body() dto: CreateCustomerDto,
-  ) {
-    const data = await this.salesService.createCustomer(tenant.tenantId, dto);
-    return { data };
-  }
-
-  @Get('customers/:id')
-  @ApiOperation({ summary: 'Get customer profile details and recent purchase orders' })
-  @ApiParam({ name: 'id', description: 'Customer ID' })
-  async getCustomer(
-    @ActiveTenant() tenant: ActiveTenantContext,
-    @Param('id') id: string,
-  ): Promise<{ data: any }> {
-    const data = await this.salesService.getCustomer(tenant.tenantId, id);
-    return { data };
-  }
-
-  @Patch('customers/:id')
-  @ApiOperation({ summary: 'Update customer profile' })
-  @ApiParam({ name: 'id', description: 'Customer ID' })
-  async updateCustomer(
-    @ActiveTenant() tenant: ActiveTenantContext,
-    @Param('id') id: string,
-    @Body() dto: UpdateCustomerDto,
-  ) {
-    const data = await this.salesService.updateCustomer(tenant.tenantId, id, dto);
-    return { data };
+    const res = await this.salesService.getSales(tenant.tenantId, { page, limit });
+    return { data: res.items, meta: res.meta };
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get sale details by ID including line items and customer' })
-  @ApiParam({ name: 'id', description: 'Sale record ID' })
-  async getSaleById(
-    @ActiveTenant() tenant: ActiveTenantContext,
-    @Param('id') id: string,
-  ): Promise<{ data: any }> {
+  @ApiOperation({ summary: 'Get sale detail with line items and movement references' })
+  async getSaleById(@ActiveTenant() tenant: ActiveTenantContext, @Param('id') id: string) {
     const data = await this.salesService.getSaleById(tenant.tenantId, id);
     return { data };
   }
 
-  @Post(':id/refund')
-  @ApiOperation({ summary: 'Process a full refund with optional restock of returned ingredients' })
-  @ApiParam({ name: 'id', description: 'Sale record ID' })
+  @Post(':id/refunds')
+  @Roles(UserRole.OWNER, UserRole.MANAGER)
+  @ApiOperation({ summary: 'Record sale refund with optional inventory restocking' })
   async refundSale(
     @ActiveTenant() tenant: ActiveTenantContext,
-    @CurrentUser() user: any,
+    @CurrentUser() user: AuthenticatedUser,
     @Param('id') id: string,
     @Body() dto: RefundSaleDto,
   ) {
-    const data = await this.salesService.refundSale(
-      tenant.tenantId,
-      user.userId,
-      id,
-      dto,
-    );
+    const data = await this.salesService.refundSale(tenant.tenantId, user.userId, id, dto);
     return { data };
   }
 }

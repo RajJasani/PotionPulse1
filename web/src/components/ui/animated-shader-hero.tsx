@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
-// Types for component props
 export interface HeroProps {
   trustBadge?: {
     text?: string;
@@ -29,495 +28,251 @@ export interface HeroProps {
   children?: React.ReactNode;
 }
 
-const defaultShaderSource = `#version 300 es
-/*********
-* made by Matthias Hurrle (@atzedent)
-*
-*	To explore strange new worlds, to seek out new life
-*	and new civilizations, to boldly go where no man has
-*	gone before.
-*/
-precision highp float;
-out vec4 O;
-uniform vec2 resolution;
-uniform float time;
-#define FC gl_FragCoord.xy
-#define T time
-#define R resolution
-#define MN min(R.x,R.y)
-// Returns a pseudo random number for a given point (white noise)
-float rnd(vec2 p) {
-  p=fract(p*vec2(12.9898,78.233));
-  p+=dot(p,p+34.56);
-  return fract(p.x*p.y);
-}
-// Returns a pseudo random number for a given point (value noise)
-float noise(in vec2 p) {
-  vec2 i=floor(p), f=fract(p), u=f*f*(3.-2.*f);
-  float
-  a=rnd(i),
-  b=rnd(i+vec2(1,0)),
-  c=rnd(i+vec2(0,1)),
-  d=rnd(i+1.);
-  return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
-}
-// Returns a pseudo random number for a given point (fractal noise)
-float fbm(vec2 p) {
-  float t=.0, a=1.; mat2 m=mat2(1.,-.5,.2,1.2);
-  for (int i=0; i<5; i++) {
-    t+=a*noise(p);
-    p*=2.*m;
-    a*=.5;
-  }
-  return t;
-}
-float clouds(vec2 p) {
-	float d=1., t=.0;
-	for (float i=.0; i<3.; i++) {
-		float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);
-		t=mix(t,d,a);
-		d=a;
-		p*=2./(i+1.);
-	}
-	return t;
-}
-void main(void) {
-	vec2 uv=(FC-.5*R)/MN,st=uv*vec2(2,1);
-	vec3 col=vec3(0);
-	float bg=clouds(vec2(st.x+T*.5,-st.y));
-	uv*=1.-.3*(sin(T*.2)*.5+.5);
-	for (float i=1.; i<12.; i++) {
-		uv+=.1*cos(i*vec2(.1+.01*i, .8)+i*i+T*.5+.1*uv.x);
-		vec2 p=uv;
-		float d=length(p);
-		col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);
-		float b=noise(i+p+bg*1.731);
-		col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
-		col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);
-	}
-	O=vec4(col,1);
-}`;
-
-// Reusable Shader Background Hook
-export const useShaderBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>();
-  const rendererRef = useRef<WebGLRenderer | null>(null);
-  const pointersRef = useRef<PointerHandler | null>(null);
-
-  // WebGL Renderer class
-  class WebGLRenderer {
-    private canvas: HTMLCanvasElement;
-    private gl: WebGL2RenderingContext;
-    private program: WebGLProgram | null = null;
-    private vs: WebGLShader | null = null;
-    private fs: WebGLShader | null = null;
-    private buffer: WebGLBuffer | null = null;
-    private scale: number;
-    private shaderSource: string;
-    private mouseMove = [0, 0];
-    private mouseCoords = [0, 0];
-    private pointerCoords = [0, 0];
-    private nbrOfPointers = 0;
-
-    private vertexSrc = `#version 300 es
-precision highp float;
-in vec4 position;
-void main(){gl_Position=position;}`;
-
-    private vertices = [-1, 1, -1, -1, 1, 1, 1, -1];
-
-    constructor(canvas: HTMLCanvasElement, scale: number) {
-      this.canvas = canvas;
-      this.scale = scale;
-      this.gl = canvas.getContext('webgl2')!;
-      this.gl.viewport(0, 0, canvas.width * scale, canvas.height * scale);
-      this.shaderSource = defaultShaderSource;
-    }
-
-    updateShader(source: string) {
-      this.reset();
-      this.shaderSource = source;
-      this.setup();
-      this.init();
-    }
-
-    updateMove(deltas: number[]) {
-      this.mouseMove = deltas;
-    }
-
-    updateMouse(coords: number[]) {
-      this.mouseCoords = coords;
-    }
-
-    updatePointerCoords(coords: number[]) {
-      this.pointerCoords = coords;
-    }
-
-    updatePointerCount(nbr: number) {
-      this.nbrOfPointers = nbr;
-    }
-
-    updateScale(scale: number) {
-      this.scale = scale;
-      this.gl.viewport(0, 0, this.canvas.width * scale, this.canvas.height * scale);
-    }
-
-    compile(shader: WebGLShader, source: string) {
-      const gl = this.gl;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        const error = gl.getShaderInfoLog(shader);
-        console.error('Shader compilation error:', error);
-      }
-    }
-
-    test(source: string) {
-      let result = null;
-      const gl = this.gl;
-      const shader = gl.createShader(gl.FRAGMENT_SHADER)!;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        result = gl.getShaderInfoLog(shader);
-      }
-      gl.deleteShader(shader);
-      return result;
-    }
-
-    reset() {
-      const gl = this.gl;
-      if (this.program && !gl.getProgramParameter(this.program, gl.DELETE_STATUS)) {
-        if (this.vs) {
-          gl.detachShader(this.program, this.vs);
-          gl.deleteShader(this.vs);
-        }
-        if (this.fs) {
-          gl.detachShader(this.program, this.fs);
-          gl.deleteShader(this.fs);
-        }
-        gl.deleteProgram(this.program);
-      }
-    }
-
-    setup() {
-      const gl = this.gl;
-      this.vs = gl.createShader(gl.VERTEX_SHADER)!;
-      this.fs = gl.createShader(gl.FRAGMENT_SHADER)!;
-      this.compile(this.vs, this.vertexSrc);
-      this.compile(this.fs, this.shaderSource);
-      this.program = gl.createProgram()!;
-      gl.attachShader(this.program, this.vs);
-      gl.attachShader(this.program, this.fs);
-      gl.linkProgram(this.program);
-
-      if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
-        console.error(gl.getProgramInfoLog(this.program));
-      }
-    }
-
-    init() {
-      const gl = this.gl;
-      const program = this.program!;
-      
-      this.buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.vertices), gl.STATIC_DRAW);
-
-      const position = gl.getAttribLocation(program, 'position');
-      gl.enableVertexAttribArray(position);
-      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-      (program as any).resolution = gl.getUniformLocation(program, 'resolution');
-      (program as any).time = gl.getUniformLocation(program, 'time');
-      (program as any).move = gl.getUniformLocation(program, 'move');
-      (program as any).touch = gl.getUniformLocation(program, 'touch');
-      (program as any).pointerCount = gl.getUniformLocation(program, 'pointerCount');
-      (program as any).pointers = gl.getUniformLocation(program, 'pointers');
-    }
-
-    render(now = 0) {
-      const gl = this.gl;
-      const program = this.program;
-      
-      if (!program || gl.getProgramParameter(program, gl.DELETE_STATUS)) return;
-
-      gl.clearColor(0, 0, 0, 1);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.useProgram(program);
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
-      
-      gl.uniform2f((program as any).resolution, this.canvas.width, this.canvas.height);
-      gl.uniform1f((program as any).time, now * 1e-3);
-      gl.uniform2f((program as any).move, this.mouseMove[0] ?? 0, this.mouseMove[1] ?? 0);
-      gl.uniform2f((program as any).touch, this.mouseCoords[0] ?? 0, this.mouseCoords[1] ?? 0);
-      gl.uniform1i((program as any).pointerCount, this.nbrOfPointers);
-      gl.uniform2fv((program as any).pointers, this.pointerCoords);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    }
-  }
-
-  // Pointer Handler class
-  class PointerHandler {
-    private scale: number;
-    private active = false;
-    private pointers = new Map<number, number[]>();
-    private lastCoords = [0, 0];
-    private moves = [0, 0];
-
-    constructor(element: HTMLCanvasElement, scale: number) {
-      this.scale = scale;
-      
-      const map = (element: HTMLCanvasElement, scale: number, x: number, y: number) => 
-        [x * scale, element.height - y * scale];
-
-      element.addEventListener('pointerdown', (e) => {
-        this.active = true;
-        this.pointers.set(e.pointerId, map(element, this.getScale(), e.clientX, e.clientY));
-      });
-
-      element.addEventListener('pointerup', (e) => {
-        if (this.count === 1) {
-          this.lastCoords = this.first;
-        }
-        this.pointers.delete(e.pointerId);
-        this.active = this.pointers.size > 0;
-      });
-
-      element.addEventListener('pointerleave', (e) => {
-        if (this.count === 1) {
-          this.lastCoords = this.first;
-        }
-        this.pointers.delete(e.pointerId);
-        this.active = this.pointers.size > 0;
-      });
-
-      element.addEventListener('pointermove', (e) => {
-        if (!this.active) return;
-        this.lastCoords = [e.clientX, e.clientY];
-        this.pointers.set(e.pointerId, map(element, this.getScale(), e.clientX, e.clientY));
-        this.moves = [this.moves[0] + e.movementX, this.moves[1] + e.movementY];
-      });
-    }
-
-    getScale() {
-      return this.scale;
-    }
-
-    updateScale(scale: number) {
-      this.scale = scale;
-    }
-
-    get count() {
-      return this.pointers.size;
-    }
-
-    get move() {
-      return this.moves;
-    }
-
-    get coords() {
-      return this.pointers.size > 0 
-        ? Array.from(this.pointers.values()).flat() 
-        : [0, 0];
-    }
-
-    get first() {
-      return this.pointers.values().next().value || this.lastCoords;
-    }
-  }
-
-  const resize = () => {
-    if (!canvasRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
-    
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    
-    if (rendererRef.current) {
-      rendererRef.current.updateScale(dpr);
-    }
-  };
-
-  const loop = (now: number) => {
-    if (!rendererRef.current || !pointersRef.current) return;
-    
-    rendererRef.current.updateMouse(pointersRef.current.first);
-    rendererRef.current.updatePointerCount(pointersRef.current.count);
-    rendererRef.current.updatePointerCoords(pointersRef.current.coords);
-    rendererRef.current.updateMove(pointersRef.current.move);
-    rendererRef.current.render(now);
-    animationFrameRef.current = requestAnimationFrame(loop);
-  };
-
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
-    
-    rendererRef.current = new WebGLRenderer(canvas, dpr);
-    pointersRef.current = new PointerHandler(canvas, dpr);
-    
-    rendererRef.current.setup();
-    rendererRef.current.init();
-    
-    resize();
-    
-    if (rendererRef.current.test(defaultShaderSource) === null) {
-      rendererRef.current.updateShader(defaultShaderSource);
-    }
-    
-    loop(0);
-    
-    window.addEventListener('resize', resize);
-    
-    return () => {
-      window.removeEventListener('resize', resize);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      if (rendererRef.current) {
-        rendererRef.current.reset();
-      }
-    };
-  }, []);
-
-  return canvasRef;
-};
-
-// Reusable Hero Component
-const Hero: React.FC<HeroProps> = ({
+export const Hero: React.FC<HeroProps> = ({
   trustBadge,
   headline,
   subtitle,
   buttons,
-  className = "",
+  className = '',
   children,
 }) => {
-  const canvasRef = useShaderBackground();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [bubbles, setBubbles] = useState<any[]>([]);
 
-  // Extract stickers if provided directly or parse from text separated by ✦
-  const parsedStickers = trustBadge?.stickers || (trustBadge?.text ? (
-    trustBadge.text.includes('✦') 
-      ? trustBadge.text.split('✦').map((s, idx) => ({
-          text: s.trim(),
-          icon: trustBadge.icons?.[idx] || (idx === 0 ? '✨' : idx === 1 ? '🧪' : '⚡'),
-        }))
-      : [{ text: trustBadge.text, icon: trustBadge.icons?.[0] }]
-  ) : []);
+  // Interactive Cartoon Potion Canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.offsetWidth);
+    let height = (canvas.height = canvas.offsetHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Bubble palette (Toxic Lime, Bubblegum Pink, Sun Yellow, Mana Cyan, Mystic Purple)
+    const colors = [
+      { r: 162, g: 247, b: 8 },   // Toxic Lime
+      { r: 252, g: 74, b: 170 },  // Potion Pink
+      { r: 254, g: 226, b: 20 },  // Star Yellow
+      { r: 28, g: 189, b: 244 },  // Mana Cyan
+      { r: 199, g: 125, b: 255 }, // Violet
+      { r: 255, g: 122, b: 0 },   // Pumpkin
+    ];
+
+    interface Particle {
+      x: number;
+      y: number;
+      radius: number;
+      speedY: number;
+      speedX: number;
+      color: { r: number; g: number; b: number };
+      alpha: number;
+      wobble: number;
+      wobbleSpeed: number;
+    }
+
+    const particles: Particle[] = [];
+    const maxParticles = 45;
+
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 14 + 6,
+        speedY: Math.random() * 1.2 + 0.6,
+        speedX: (Math.random() - 0.5) * 0.8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.45 + 0.35,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.04 + 0.015,
+      });
+    }
+
+    // Sparkles
+    interface Sparkle {
+      x: number;
+      y: number;
+      size: number;
+      alpha: number;
+      pulseSpeed: number;
+    }
+    const sparkles: Sparkle[] = [];
+    for (let i = 0; i < 24; i++) {
+      sparkles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 3 + 2,
+        alpha: Math.random(),
+        pulseSpeed: Math.random() * 0.03 + 0.01,
+      });
+    }
+
+    // Mouse interactive bubble spawner
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      if (Math.random() < 0.35) {
+        particles.push({
+          x: mouseX + (Math.random() - 0.5) * 20,
+          y: mouseY + (Math.random() - 0.5) * 20,
+          radius: Math.random() * 10 + 4,
+          speedY: Math.random() * 2 + 1,
+          speedX: (Math.random() - 0.5) * 1.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 0.8,
+          wobble: 0,
+          wobbleSpeed: 0.05,
+        });
+        if (particles.length > maxParticles + 15) {
+          particles.shift();
+        }
+      }
+    };
+    canvas.addEventListener('mousemove', handleMouseMove);
+
+    const render = () => {
+      // Draw rich cartoon alchemical backdrop
+      const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+      bgGrad.addColorStop(0, '#240046');   // Deep Royal Purple
+      bgGrad.addColorStop(0.45, '#3C096C'); // Mystic Violet
+      bgGrad.addColorStop(0.85, '#5A189A'); // Rich Amethyst
+      bgGrad.addColorStop(1, '#7B2CBF');   // Potion Plum
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Radial Cauldron Glow in Center Bottom
+      const cauldronGlow = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.9,
+        10,
+        width * 0.5,
+        height * 0.9,
+        width * 0.6
+      );
+      cauldronGlow.addColorStop(0, 'rgba(162, 247, 8, 0.40)');  // Lime toxic core
+      cauldronGlow.addColorStop(0.35, 'rgba(254, 226, 20, 0.25)'); // Golden vapor
+      cauldronGlow.addColorStop(0.7, 'rgba(252, 74, 170, 0.15)');  // Pink mist
+      cauldronGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = cauldronGlow;
+      ctx.fillRect(0, 0, width, height);
+
+      // Render Sparkles
+      sparkles.forEach((s) => {
+        s.alpha += s.pulseSpeed;
+        const currentAlpha = (Math.sin(s.alpha) + 1) * 0.4 + 0.2;
+        ctx.fillStyle = `rgba(255, 247, 0, ${currentAlpha})`;
+        ctx.beginPath();
+        // 4-point cartoon star
+        const cx = s.x;
+        const cy = s.y;
+        const sz = s.size;
+        ctx.moveTo(cx, cy - sz * 2);
+        ctx.lineTo(cx + sz * 0.6, cy - sz * 0.6);
+        ctx.lineTo(cx + sz * 2, cy);
+        ctx.lineTo(cx + sz * 0.6, cy + sz * 0.6);
+        ctx.lineTo(cx, cy + sz * 2);
+        ctx.lineTo(cx - sz * 0.6, cy + sz * 0.6);
+        ctx.lineTo(cx - sz * 2, cy);
+        ctx.lineTo(cx - sz * 0.6, cy - sz * 0.6);
+        ctx.closePath();
+        ctx.fill();
+      });
+
+      // Render Rising Cartoon Potion Bubbles
+      particles.forEach((p, idx) => {
+        p.y -= p.speedY;
+        p.wobble += p.wobbleSpeed;
+        p.x += Math.sin(p.wobble) * 0.7 + p.speedX;
+
+        // Wrap around
+        if (p.y + p.radius < 0) {
+          p.y = height + p.radius;
+          p.x = Math.random() * width;
+        }
+
+        // Draw outer bubble with thick cartoon outline
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.alpha})`;
+        ctx.fill();
+        ctx.lineWidth = 1.8;
+        ctx.strokeStyle = `rgba(15, 14, 23, 0.85)`;
+        ctx.stroke();
+
+        // Cartoon crescent highlight inside the bubble
+        ctx.beginPath();
+        ctx.arc(
+          p.x - p.radius * 0.3,
+          p.y - p.radius * 0.3,
+          p.radius * 0.35,
+          0,
+          Math.PI * 2
+        );
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha + 0.3})`;
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   const stickerStyles = [
-    {
-      bg: 'bg-amber-400 text-neutral-950',
-      border: 'border-[1.5px] border-black/90',
-      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
-      rotate: 'rotate-1',
-    },
-    {
-      bg: 'bg-rose-500 text-white',
-      border: 'border-[1.5px] border-black/90',
-      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
-      rotate: '-rotate-2',
-    },
-    {
-      bg: 'bg-emerald-400 text-neutral-950',
-      border: 'border-[1.5px] border-black/90',
-      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
-      rotate: 'rotate-2',
-    },
-    {
-      bg: 'bg-violet-400 text-neutral-950',
-      border: 'border-[1.5px] border-black/90',
-      shadow: 'shadow-[2px_2px_0px_rgba(0,0,0,0.85)]',
-      rotate: '-rotate-1',
-    },
+    { bg: 'bg-[#FEE214]', text: 'text-slate-950', rotate: '-rotate-3' },
+    { bg: 'bg-[#A2F708]', text: 'text-slate-950', rotate: 'rotate-2' },
+    { bg: 'bg-[#1CBDF4]', text: 'text-slate-950', rotate: '-rotate-1' },
+    { bg: 'bg-[#FC4AAA]', text: 'text-slate-950', rotate: 'rotate-3' },
+    { bg: 'bg-[#FF7A00]', text: 'text-slate-950', rotate: '-rotate-2' },
   ];
 
   return (
-    <div className={`relative w-full min-h-[500px] overflow-hidden bg-black ${className}`}>
-      <style>{`
-        @keyframes fade-in-down {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in-down {
-          animation: fade-in-down 0.8s ease-out forwards;
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-          opacity: 0;
-        }
-        
-        .animation-delay-200 {
-          animation-delay: 0.2s;
-        }
-        
-        .animation-delay-400 {
-          animation-delay: 0.4s;
-        }
-        
-        .animation-delay-600 {
-          animation-delay: 0.6s;
-        }
-        
-        .animation-delay-800 {
-          animation-delay: 0.8s;
-        }
-        
-        @keyframes gradient-shift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient-shift 3s ease infinite;
-        }
-      `}</style>
-      
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Cartoon Canvas Backdrop */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full object-cover touch-none pointer-events-auto"
-        style={{ background: 'black' }}
       />
-      
-      {/* Top Right Sticker Badges */}
-      {parsedStickers && parsedStickers.length > 0 && (
-        <div className="absolute top-3.5 sm:top-5 right-3.5 sm:right-6 z-20 flex flex-wrap justify-end gap-1.5 sm:gap-2 max-w-[280px] sm:max-w-md pointer-events-auto animate-fade-in-down">
-          {parsedStickers.map((sticker, idx) => {
+
+      {/* Top Left Cartoon Shop Badge */}
+      <div className="absolute top-4 sm:top-5 left-4 sm:left-6 z-20 hidden md:flex items-center gap-2 select-none pointer-events-auto">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-black text-xs bg-[#FFFDF7] text-slate-950 border-2 border-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] -rotate-1">
+          <span>🧙‍♀️</span>
+          <span>MADAM HEXLEY'S GRIMOIRE</span>
+        </div>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-black text-xs bg-[#A2F708] text-slate-950 border-2 border-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] rotate-2">
+          <span>🔮</span>
+          <span>LIGHTGBM FORECASTER</span>
+        </div>
+      </div>
+
+      {/* Top Right Cartoon Sticker Badges */}
+      {trustBadge?.stickers && trustBadge.stickers.length > 0 && (
+        <div className="absolute top-3.5 sm:top-5 right-3.5 sm:right-6 z-20 flex flex-wrap justify-end gap-2 max-w-[280px] sm:max-w-md pointer-events-auto select-none">
+          {trustBadge.stickers.map((sticker, idx) => {
             const style = stickerStyles[idx % stickerStyles.length];
             return (
               <div
                 key={idx}
-                className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full font-black text-[10px] sm:text-[11px] tracking-wide uppercase ${style.bg} ${style.border} ${style.shadow} ${style.rotate} hover:rotate-0 hover:scale-105 active:scale-95 transition-all duration-200 cursor-default select-none`}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-black text-xs uppercase tracking-wide border-2 border-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] ${style.bg} ${style.text} ${style.rotate} hover:rotate-0 hover:scale-105 active:scale-95 transition-all duration-150 cursor-default`}
               >
-                {sticker.icon && <span className="text-xs select-none">{sticker.icon}</span>}
+                {sticker.icon && <span className="text-sm">{sticker.icon}</span>}
                 <span>{sticker.text}</span>
               </div>
             );
@@ -525,54 +280,71 @@ const Hero: React.FC<HeroProps> = ({
         </div>
       )}
 
-      {/* Content Overlay */}
+      {/* Main Content Stage */}
       {children ? (
         <div className="relative z-10 w-full h-full pointer-events-none">
-          <div className="pointer-events-auto w-full h-full">
-            {children}
-          </div>
+          <div className="pointer-events-auto w-full h-full">{children}</div>
         </div>
       ) : (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white pointer-events-none px-4 pt-16 sm:pt-14 pb-24 sm:pb-32">
-          <div className="text-center space-y-4 sm:space-y-6 max-w-5xl mx-auto pointer-events-auto">
-            {/* Main Heading with Animation */}
-            <div className="space-y-2">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
-                {headline.line1}
-              </h1>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-fade-in-up animation-delay-400">
-                {headline.line2}
-              </h1>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-16 sm:pt-20 pb-20 sm:pb-28 max-w-5xl mx-auto select-none pointer-events-auto">
+          {/* Eyebrow Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FEE214] text-slate-950 border-2 border-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] text-xs font-black uppercase tracking-wider mb-5 animate-bounce" style={{ animationDuration: '2.5s' }}>
+            <span>⚡</span>
+            <span>ALCHEMICAL INVENTORY INTELLIGENCE PLATFORM</span>
+            <span>⚡</span>
+          </div>
+
+          {/* Chunky Cartoon Headings */}
+          <div className="space-y-1 sm:space-y-2 mb-4">
+            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#FFFDF7] drop-shadow-[4px_4px_0px_#0F0E17]">
+              {headline.line1} <span className="inline-block animate-pulse">🧪</span>
+            </h1>
+            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#FEE214] drop-shadow-[4px_4px_0px_#0F0E17]">
+              {headline.line2}
+            </h2>
+          </div>
+
+          {/* Subtitle */}
+          <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl font-bold text-purple-100 drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)] leading-relaxed mb-8">
+            {subtitle}
+          </p>
+
+          {/* High-Contrast Chunky Cartoon Action Buttons */}
+          {buttons && (
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-lg mx-auto">
+              {buttons.primary && (
+                <button
+                  onClick={buttons.primary.onClick}
+                  className="w-full sm:w-auto px-7 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#FEE214] via-[#FFB800] to-[#FF7A00] text-slate-950 font-black text-base sm:text-lg border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17] hover:-translate-y-1 active:translate-y-1 active:shadow-[1px_1px_0px_0px_#0F0E17] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  {buttons.primary.text}
+                </button>
+              )}
+              {buttons.secondary && (
+                <button
+                  onClick={buttons.secondary.onClick}
+                  className="w-full sm:w-auto px-7 py-3.5 sm:py-4 rounded-2xl bg-[#A2F708] hover:bg-[#85D400] text-slate-950 font-black text-base sm:text-lg border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17] hover:-translate-y-1 active:translate-y-1 active:shadow-[1px_1px_0px_0px_#0F0E17] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  {buttons.secondary.text}
+                </button>
+              )}
             </div>
-            
-            {/* Subtitle with Animation */}
-            <div className="max-w-3xl mx-auto animate-fade-in-up animation-delay-600">
-              <p className="text-base sm:text-lg md:text-xl text-amber-100 font-medium leading-relaxed drop-shadow-sm">
-                {subtitle}
-              </p>
-            </div>
-            
-            {/* CTA Buttons with Animation */}
-            {buttons && (
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-6 sm:mt-8 animate-fade-in-up animation-delay-800">
-                {buttons.primary && (
-                  <button 
-                    onClick={buttons.primary.onClick}
-                    className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 hover:from-amber-300 hover:via-orange-300 hover:to-rose-300 text-black rounded-full font-black text-base sm:text-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    {buttons.primary.text}
-                  </button>
-                )}
-                {buttons.secondary && (
-                  <button 
-                    onClick={buttons.secondary.onClick}
-                    className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-amber-300 hover:bg-amber-200 text-black rounded-full font-black text-base sm:text-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    {buttons.secondary.text}
-                  </button>
-                )}
-              </div>
-            )}
+          )}
+
+          {/* Quick Problem Statement Highlights Pills */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs font-black">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/90 text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]">
+              <span>🌿</span> 15 Core Reagents Tracked
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#FFFBEB] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]">
+              <span>🦇</span> Bat Wings: Stockout Sentinel
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#FFF1F2] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]">
+              <span>🌕</span> Midnight Curse: 3.0× Surge
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#ECFEFF] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]">
+              <span>🛡️</span> Zero Negative Inventory Guarantee
+            </span>
           </div>
         </div>
       )}

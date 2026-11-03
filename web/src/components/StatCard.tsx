@@ -23,46 +23,40 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
   const variantStyles = {
     brass: {
-      cardBg: 'bg-gradient-to-br from-[#FFFBEB] via-[#FEF3C7]/70 to-white border border-amber-300/80 shadow-lg shadow-amber-500/10 glow-amber-card',
-      iconBg: 'bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500 text-slate-950 shadow-md shadow-amber-500/30',
-      accentColor: 'text-amber-950 font-black drop-shadow-sm',
-      badgeBg: 'bg-gradient-to-r from-amber-400 to-yellow-400 text-black',
-      glow: 'shadow-xl hover:shadow-2xl hover:border-amber-400/90',
+      cardBg: 'bg-[#FFFBEB] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17]',
+      iconBg: 'bg-[#FEE214] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]',
+      accentColor: 'text-slate-950 font-black',
+      badgeBg: 'bg-[#FEE214] text-slate-950 border border-slate-950',
     },
     lime: {
-      cardBg: 'bg-gradient-to-br from-[#ECFDF5] via-[#D1FAE5]/70 to-white border border-emerald-300/80 shadow-lg shadow-emerald-500/10 glow-emerald-card',
-      iconBg: 'bg-gradient-to-br from-emerald-400 via-teal-500 to-emerald-600 text-slate-950 shadow-md shadow-emerald-500/30',
-      accentColor: 'text-emerald-950 font-black drop-shadow-sm',
-      badgeBg: 'bg-gradient-to-r from-emerald-400 to-teal-400 text-black',
-      glow: 'shadow-xl hover:shadow-2xl hover:border-emerald-400/90',
+      cardBg: 'bg-[#ECFDF5] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17]',
+      iconBg: 'bg-[#A2F708] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]',
+      accentColor: 'text-slate-950 font-black',
+      badgeBg: 'bg-[#A2F708] text-slate-950 border border-slate-950',
     },
     amber: {
-      cardBg: 'bg-gradient-to-br from-[#FFF7ED] via-[#FFEDD5]/70 to-white border border-orange-300/80 shadow-lg shadow-orange-500/10 glow-amber-card',
-      iconBg: 'bg-gradient-to-br from-orange-400 via-amber-500 to-red-500 text-white shadow-md shadow-orange-500/30',
-      accentColor: 'text-orange-950 font-black drop-shadow-sm',
-      badgeBg: 'bg-gradient-to-r from-orange-400 to-amber-500 text-black',
-      glow: 'shadow-xl hover:shadow-2xl hover:border-orange-400/90',
+      cardBg: 'bg-[#FFF7ED] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17]',
+      iconBg: 'bg-[#FF7A00] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]',
+      accentColor: 'text-slate-950 font-black',
+      badgeBg: 'bg-[#FF7A00] text-slate-950 border border-slate-950',
     },
     magenta: {
-      cardBg: 'bg-gradient-to-br from-[#FFF1F2] via-[#FFE4E6]/70 to-white border border-rose-300/80 shadow-lg shadow-rose-500/10 glow-magenta-card',
-      iconBg: 'bg-gradient-to-br from-rose-500 via-pink-500 to-purple-600 text-white shadow-md shadow-rose-500/30',
-      accentColor: 'text-rose-950 font-black drop-shadow-sm',
-      badgeBg: 'bg-gradient-to-r from-rose-500 to-pink-500 text-white',
-      glow: 'shadow-xl hover:shadow-2xl hover:border-rose-400/90',
+      cardBg: 'bg-[#FFF1F2] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17]',
+      iconBg: 'bg-[#FC4AAA] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]',
+      accentColor: 'text-slate-950 font-black',
+      badgeBg: 'bg-[#FC4AAA] text-slate-950 border border-slate-950',
     },
     violet: {
-      cardBg: 'bg-gradient-to-br from-[#FAF5FF] via-[#F3E8FF]/70 to-white border border-purple-300/80 shadow-lg shadow-purple-500/10 glow-violet-card',
-      iconBg: 'bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 text-white shadow-md shadow-purple-500/30',
-      accentColor: 'text-purple-950 font-black drop-shadow-sm',
-      badgeBg: 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white',
-      glow: 'shadow-xl hover:shadow-2xl hover:border-purple-400/90',
+      cardBg: 'bg-[#FAF5FF] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17]',
+      iconBg: 'bg-[#C77DFF] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]',
+      accentColor: 'text-slate-950 font-black',
+      badgeBg: 'bg-[#C77DFF] text-slate-950 border border-slate-950',
     },
     tropical: {
-      cardBg: 'bg-gradient-to-br from-[#ECFEFF] via-[#CFFAFE]/70 to-white border border-cyan-300/80 shadow-lg shadow-cyan-500/10',
-      iconBg: 'bg-gradient-to-br from-cyan-400 via-sky-500 to-blue-600 text-white shadow-md shadow-cyan-500/30',
-      accentColor: 'text-cyan-950 font-black drop-shadow-sm',
-      badgeBg: 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white',
-      glow: 'shadow-xl hover:shadow-2xl hover:border-cyan-400/90',
+      cardBg: 'bg-[#ECFEFF] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_0px_#0F0E17] hover:shadow-[6px_6px_0px_0px_#0F0E17]',
+      iconBg: 'bg-[#1CBDF4] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]',
+      accentColor: 'text-slate-950 font-black',
+      badgeBg: 'bg-[#1CBDF4] text-slate-950 border border-slate-950',
     },
   };
 
@@ -72,9 +66,9 @@ export const StatCard: React.FC<StatCardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative p-5 rounded-3xl backdrop-blur-2xl luxury-shimmer group cursor-default ${style.glow} ${style.cardBg} ${className}`}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative p-5 rounded-3xl transition-all duration-200 group cursor-default select-none ${style.cardBg} ${className}`}
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1">

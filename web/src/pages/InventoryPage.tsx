@@ -235,18 +235,18 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
         </button>
       </div>
 
-      {/* Filter & Search Bar in Glass Card */}
-      <div className="p-5 rounded-3xl luxury-glass border border-amber-300/80 shadow-xl space-y-4">
+      {/* Filter & Search Bar in Cartoon Card */}
+      <div className="p-5 rounded-3xl cartoon-card space-y-4">
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
           {/* Search Input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-amber-600 absolute left-4 top-3.5" />
+            <Search className="w-4 h-4 text-purple-700 absolute left-4 top-3.5" />
             <input
               type="text"
               placeholder="Search by reagent name, scent, or category..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-amber-50/70 border border-amber-300/80 text-slate-900 font-sans font-bold text-sm rounded-full pl-11 pr-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500 min-h-[44px] placeholder:text-slate-500"
+              className="w-full bg-[#FAF5FF] border-2 border-slate-950 text-slate-950 font-sans font-bold text-sm rounded-full pl-11 pr-4 py-2.5 shadow-[2px_2px_0px_0px_#0F0E17] focus:outline-none focus:ring-2 focus:ring-purple-500 min-h-[44px] placeholder:text-slate-500"
             />
           </div>
 
@@ -255,7 +255,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
             <select
               value={selectedShelf}
               onChange={(e) => setSelectedShelf(e.target.value)}
-              className="bg-amber-50/70 border border-amber-300/80 text-slate-900 font-sans font-bold text-xs rounded-full px-4 py-2.5 shadow-sm min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="bg-[#FAF5FF] border-2 border-slate-950 text-slate-950 font-sans font-black text-xs rounded-full px-4 py-2.5 shadow-[2px_2px_0px_0px_#0F0E17] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
             >
               <option value="ALL">All Shelves ({shelves.length})</option>
               {shelves.map((s) => (
@@ -269,10 +269,10 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
           {/* Low Stock Toggle */}
           <button
             onClick={() => setLowStockOnly(!lowStockOnly)}
-            className={`px-4 py-2 rounded-full font-sans text-xs font-black uppercase tracking-wider border transition-all min-h-[44px] flex items-center gap-2 shadow-sm ${
+            className={`px-4 py-2 rounded-full font-sans text-xs font-black uppercase tracking-wider border-2 border-slate-950 transition-all min-h-[44px] flex items-center gap-2 shadow-[2px_2px_0px_0px_#0F0E17] cursor-pointer ${
               lowStockOnly
-                ? 'bg-rose-500 text-white border-rose-400 shadow-md shadow-rose-500/30'
-                : 'bg-amber-50 border-amber-300 text-slate-800 hover:bg-amber-100'
+                ? 'bg-[#FF5A51] text-white shadow-[3px_3px_0px_0px_#0F0E17]'
+                : 'bg-white text-slate-900 hover:bg-amber-100'
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -286,20 +286,20 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-1.5 rounded-full font-sans text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all border min-h-[36px] ${
+              className={`px-4 py-1.5 rounded-full font-sans text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all border-2 border-slate-950 min-h-[36px] shadow-[2px_2px_0px_0px_#0F0E17] cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 text-slate-950 border-amber-500/40 shadow-md scale-[1.02]'
-                  : 'bg-amber-50/80 border-amber-200/80 text-slate-700 hover:text-slate-950 hover:bg-amber-100'
+                  ? 'bg-[#FEE214] text-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] scale-[1.02]'
+                  : 'bg-white text-slate-800 hover:text-slate-950 hover:bg-purple-100'
               }`}
             >
-              {cat === 'ALL' ? 'All Reagents' : cat}
+              {cat === 'ALL' ? 'All Reagents ✨' : cat}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Main Shelves Table in Glass Card */}
-      <div className="rounded-3xl luxury-glass border border-amber-300/80 shadow-xl overflow-hidden">
+      {/* Main Shelves Table in Cartoon Card */}
+      <div className="rounded-3xl cartoon-card overflow-hidden">
         {loading ? (
           <div className="p-6 space-y-4">
             {[...Array(6)].map((_, i) => (
@@ -319,7 +319,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ onShowToast }) => 
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left font-sans text-xs">
-              <thead className="bg-amber-100/90 border-b border-amber-300 text-amber-950 uppercase tracking-wider text-[11px] font-black">
+              <thead className="bg-[#FEE214] border-b-2 border-slate-950 text-slate-950 uppercase tracking-wider text-[11px] font-black">
                 <tr>
                   <th className="py-4 px-4">Flask</th>
                   <th

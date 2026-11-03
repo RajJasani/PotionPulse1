@@ -243,6 +243,12 @@ export class PotionPantryClient {
     });
   }
 
+  async deleteEvent(id: string): Promise<{ success: boolean; message: string }> {
+    return this.request<{ success: boolean; message: string }>(`/events/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
   // --- AUTHENTICATION ---
   async login(data: UserLogin): Promise<AuthResponse> {
     const res = await this.request<AuthResponse>('/auth/login', {

@@ -100,12 +100,12 @@ export function App() {
             }}
             className="w-full min-h-[580px] sm:min-h-[630px] lg:min-h-[660px] shadow-2xl relative"
           />
-          {/* Ultra-smooth background transition starting safely below the buttons */}
+          {/* Cartoon background transition blending down into the stage */}
           <div
-            className="absolute inset-x-0 bottom-0 h-24 sm:h-28 pointer-events-none z-20"
+            className="absolute inset-x-0 bottom-0 h-20 sm:h-24 pointer-events-none z-20"
             style={{
               background:
-                'linear-gradient(to bottom, transparent 0%, rgba(251, 248, 241, 0.06) 35%, rgba(251, 248, 241, 0.35) 65%, rgba(251, 248, 241, 0.75) 88%, #FBF8F1 100%)',
+                'linear-gradient(to bottom, transparent 0%, rgba(250, 245, 255, 0.3) 35%, rgba(250, 245, 255, 0.7) 70%, #FAF5FF 100%)',
             }}
           />
         </div>
@@ -159,31 +159,31 @@ export function App() {
 
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
-      {/* Siglitos Playful Footer */}
-      <footer className="border-t border-amber-200/80 bg-white/95 backdrop-blur-xl py-8 text-center text-xs font-sans mt-16 shadow-lg">
+      {/* Playful Cartoon Footer */}
+      <footer className="border-t-2 border-slate-950 bg-white/95 backdrop-blur-xl py-8 text-center text-xs font-sans mt-16 shadow-[0_-4px_0px_0px_rgba(15,14,23,0.06)]">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <span className="font-display font-black text-base tracking-tight text-slate-900">
-              Potion<span className="text-amber-500">Pulse</span>
+            <span className="font-display font-black text-xl tracking-tight text-slate-950">
+              Potion<span className="text-purple-600">Pulse</span>
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black bg-gradient-to-r from-[#FFD000] via-[#FFB800] to-[#FF9000] text-black border border-amber-500/40 uppercase tracking-wider -rotate-1 shadow-sm">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-black bg-[#FEE214] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17] uppercase tracking-wider -rotate-1">
               Smart Inventory OS
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] font-sans font-extrabold uppercase tracking-wider text-slate-700">
-            <span className="flex items-center gap-1.5 text-amber-700">
-              <span className="text-amber-500">✦</span> 100% Pure Magic
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] font-sans font-extrabold uppercase tracking-wider text-slate-800">
+            <span className="flex items-center gap-1.5 text-amber-700 bg-[#FFFBEB] px-2.5 py-1 rounded-full border border-slate-950 shadow-[1px_1px_0px_#0F0E17]">
+              <span>✦</span> 100% Pure Magic
             </span>
-            <span className="flex items-center gap-1.5 text-emerald-700">
-              <span className="text-emerald-500">✦</span> No Artificial Glitches
+            <span className="flex items-center gap-1.5 text-emerald-800 bg-[#ECFDF5] px-2.5 py-1 rounded-full border border-slate-950 shadow-[1px_1px_0px_#0F0E17]">
+              <span>✦</span> Zero Negative Stock
             </span>
-            <span className="flex items-center gap-1.5 text-violet-700">
-              <span className="text-violet-500">✦</span> FastAPI + LightGBM
+            <span className="flex items-center gap-1.5 text-purple-800 bg-[#FAF5FF] px-2.5 py-1 rounded-full border border-slate-950 shadow-[1px_1px_0px_#0F0E17]">
+              <span>✦</span> FastAPI + LightGBM
             </span>
           </div>
 
-          <div className="px-3 py-1 rounded-full bg-amber-100/80 border border-amber-300 font-mono text-[11px] font-black text-amber-950 tracking-wide shadow-sm">
+          <div className="px-3.5 py-1.5 rounded-full bg-[#A2F708] border-2 border-slate-950 font-mono text-[11px] font-black text-slate-950 tracking-wide shadow-[2px_2px_0px_0px_#0F0E17] rotate-1">
             Halloween Hackathon 2026
           </div>
         </div>

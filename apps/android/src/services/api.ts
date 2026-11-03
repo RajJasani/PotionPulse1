@@ -18,7 +18,6 @@ import {
   EventCreate,
   Shelf,
 } from '../types/api.types';
-import { networkService } from './network';
 
 export class OfflineWriteError extends Error {
   constructor(message = 'Network write error: backend unreachable.') {
@@ -36,18 +35,8 @@ export const setMobileApiBaseUrl = (url: string) => {
 
 export const getMobileApiBaseUrl = () => currentBaseUrl;
 
-const request = async <T>(endpoint: string, options: any = {}): Promise<T> => {
-  const method = (options.method || 'GET').toUpperCase();
-  if (!networkService.isOnline && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
-    throw new OfflineWriteError('Device is offline. Mutation operations are blocked.');
-  }
-
+const request = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
   const url = `${currentBaseUrl}/api${endpoint}`;
-  let bodyData = options.body;
-  if (bodyData && typeof bodyData === 'object' && !(bodyData instanceof FormData)) {
-    bodyData = JSON.stringify(bodyData);
-  }
-
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -60,7 +49,6 @@ const request = async <T>(endpoint: string, options: any = {}): Promise<T> => {
 
     const response = await fetch(url, {
       ...options,
-      body: bodyData,
       headers,
       signal: controller.signal,
     });
@@ -166,12 +154,6 @@ export const mobileApi = {
 
   testConnection: async () => {
     return request<{ status: string; service: string }>('/');
-  },
-
-  request: <T>(endpoint: string, options: any = {}) => request<T>(endpoint, options),
-
-  clearCache: () => {
-    // Cache clearing hook for mobile offline layer
   },
 };
 

@@ -1,11 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
-  IsEmail,
-  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -29,11 +27,6 @@ export class CreateSaleItemDto {
   @IsNumber()
   @Min(0)
   unitPrice!: number;
-
-  @ApiPropertyOptional({ example: '65f1a2b3c4d5e6f7a8b9c0d1', description: 'Optional recipe ID if selling formulated potion' })
-  @IsString()
-  @IsOptional()
-  recipeId?: string;
 }
 
 export class CreateSaleDto {
@@ -41,11 +34,6 @@ export class CreateSaleDto {
   @IsString()
   @IsOptional()
   saleNumber?: string;
-
-  @ApiPropertyOptional({ example: '65f1a2b3c4d5e6f7a8b9c0d9', description: 'Customer profile ID' })
-  @IsString()
-  @IsOptional()
-  customerId?: string;
 
   @ApiProperty({ type: [CreateSaleItemDto] })
   @IsArray()
@@ -74,58 +62,4 @@ export class RefundSaleDto {
   @IsString()
   @IsNotEmpty()
   reason!: string;
-}
-
-export class CreateCustomerDto {
-  @ApiProperty({ example: 'Alchemist Valen' })
-  @IsString()
-  @IsNotEmpty()
-  name!: string;
-
-  @ApiPropertyOptional({ example: 'valen@guildofmages.org' })
-  @IsEmail()
-  @IsOptional()
-  email?: string;
-
-  @ApiPropertyOptional({ example: '+1-555-0192' })
-  @IsString()
-  @IsOptional()
-  phone?: string;
-
-  @ApiPropertyOptional({ enum: ['standard', 'vip', 'guild', 'wholesale'], default: 'standard' })
-  @IsEnum(['standard', 'vip', 'guild', 'wholesale'])
-  @IsOptional()
-  tier?: string;
-
-  @ApiPropertyOptional({ example: 'Guildmaster of the Obsidian Circle' })
-  @IsString()
-  @IsOptional()
-  notes?: string;
-}
-
-export class UpdateCustomerDto {
-  @ApiPropertyOptional({ example: 'Alchemist Valen' })
-  @IsString()
-  @IsOptional()
-  name?: string;
-
-  @ApiPropertyOptional({ example: 'valen@guildofmages.org' })
-  @IsEmail()
-  @IsOptional()
-  email?: string;
-
-  @ApiPropertyOptional({ example: '+1-555-0192' })
-  @IsString()
-  @IsOptional()
-  phone?: string;
-
-  @ApiPropertyOptional({ enum: ['standard', 'vip', 'guild', 'wholesale'] })
-  @IsEnum(['standard', 'vip', 'guild', 'wholesale'])
-  @IsOptional()
-  tier?: string;
-
-  @ApiPropertyOptional({ example: 'Updated guild notes' })
-  @IsString()
-  @IsOptional()
-  notes?: string;
 }

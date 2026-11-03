@@ -147,7 +147,7 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
         <button
           onClick={handleScanNow}
           disabled={scanning}
-          className="flex items-center gap-2 bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 hover:from-amber-300 hover:to-orange-500 text-slate-950 border border-amber-500/40 px-5 py-2.5 rounded-full font-sans text-xs font-black uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all min-h-[44px] disabled:opacity-50"
+          className="flex items-center gap-2 bg-[#FEE214] hover:bg-[#E0C700] text-slate-950 border-2 border-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] hover:shadow-[4px_4px_0px_0px_#0F0E17] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#0F0E17] px-5 py-2.5 rounded-full font-sans text-xs font-black uppercase tracking-wider transition-all min-h-[44px] disabled:opacity-50 cursor-pointer"
         >
           <Radar className={`w-4 h-4 ${scanning ? 'animate-spin' : ''}`} />
           <span>{scanning ? 'Sweeping Wards...' : 'Scan For Anomalies'}</span>
@@ -156,27 +156,25 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
 
       {/* Suggested Recurring Spikes Banner */}
       {suggestions.length > 0 && (
-        <div className="p-6 rounded-3xl luxury-glass border border-amber-300/80 shadow-xl space-y-3 relative overflow-hidden bg-gradient-to-br from-amber-50 via-white to-orange-50/70">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-400/15 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="flex items-center justify-between pb-2 border-b border-amber-200/80 relative z-10">
+        <div className="p-6 rounded-3xl cartoon-card space-y-3 relative overflow-hidden bg-gradient-to-br from-[#FFFBEB] via-white to-[#FEF3C7]">
+          <div className="flex items-center justify-between pb-2 border-b-2 border-slate-950/15 relative z-10">
             <div className="flex items-center gap-2.5">
               <Sparkles className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <h3 className="font-display text-lg font-black text-slate-900">
+              <h3 className="font-display text-lg font-black text-slate-950">
                 Cluster Divination: Potential High Coven Festival
               </h3>
             </div>
-            <span className="text-[10px] font-mono font-black px-3 py-1 rounded-full bg-amber-100 text-amber-950 border border-amber-300">
+            <span className="text-[10px] font-mono font-black px-3 py-1 rounded-full bg-[#FEE214] text-slate-950 border border-slate-950 shadow-[1px_1px_0px_#0F0E17]">
               {suggestions.length} Co-Occurring Spikes
             </span>
           </div>
-          <p className="font-sans text-xs font-medium text-slate-700 relative z-10">
+          <p className="font-sans text-xs font-bold text-slate-800 relative z-10">
             The sentinel noticed concurrent consumption surges across multiple reagents. This pattern indicates an uncataloged ritual or festival.
           </p>
           <div className="flex flex-wrap items-center gap-2 pt-1 relative z-10">
             <button
               onClick={() => onNavigateTab('events')}
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 text-slate-950 font-sans text-xs font-black uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all"
+              className="px-4 py-2 rounded-full bg-[#A2F708] hover:bg-[#85D400] text-slate-950 font-sans text-xs font-black uppercase tracking-wider border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17] hover:shadow-[3px_3px_0px_0px_#0F0E17] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
             >
               Catalog Festival in Midnight Curse &rarr;
             </button>
@@ -185,16 +183,16 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
       )}
 
       {/* Filter Chips Bar */}
-      <div className="p-4 rounded-3xl luxury-glass border border-amber-300/80 shadow-md flex items-center justify-between gap-4">
+      <div className="p-4 rounded-3xl cartoon-card flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           {(['ALL', 'UNRESOLVED', 'RESOLVED'] as const).map((filter) => (
             <button
               key={filter}
               onClick={() => setStatusFilter(filter)}
-              className={`px-4 py-1.5 rounded-full font-sans text-xs font-black uppercase tracking-wider border transition-all ${
+              className={`px-4 py-1.5 rounded-full font-sans text-xs font-black uppercase tracking-wider border-2 border-slate-950 transition-all shadow-[2px_2px_0px_0px_#0F0E17] cursor-pointer ${
                 statusFilter === filter
-                  ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-orange-400 text-slate-950 border-amber-500/40 shadow-md scale-[1.02]'
-                  : 'bg-amber-50/80 border-amber-200/80 text-slate-700 hover:text-slate-950 hover:bg-amber-100'
+                  ? 'bg-[#FEE214] text-slate-950 shadow-[3px_3px_0px_0px_#0F0E17] scale-[1.02]'
+                  : 'bg-white text-slate-800 hover:text-slate-950 hover:bg-purple-100'
               }`}
             >
               {filter === 'ALL'
@@ -206,7 +204,7 @@ export const StrangeHappeningsPage: React.FC<StrangeHappeningsPageProps> = ({
           ))}
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-600">
+        <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-700">
           <ShieldCheck className="w-4 h-4 text-emerald-600 fill-emerald-500" />
           <span>Residual Z-Score & Stock Delta Active</span>
         </div>

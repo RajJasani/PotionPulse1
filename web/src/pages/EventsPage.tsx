@@ -150,21 +150,21 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
 
       {/* Main Grid: Form (Left) vs Live Impact Preview (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column (7 cols): Event Config Form */}
-        <div className="lg:col-span-7 rounded-3xl luxury-glass border border-amber-300/80 p-6 sm:p-7 shadow-xl">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-amber-200/80">
-            <h3 className="font-display text-xl font-black text-slate-900 flex items-center gap-2">
+        {/* Left Column (7 cols): Event Config Form in Cartoon Card */}
+        <div className="lg:col-span-7 rounded-3xl cartoon-card p-6 sm:p-7">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-slate-950/15">
+            <h3 className="font-display text-xl font-black text-slate-950 flex items-center gap-2">
               <Moon className="w-5 h-5 text-rose-500 fill-current" />
               <span>Configure Festival Ward</span>
             </h3>
-            <span className="font-mono text-xs font-black px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-950 border border-amber-300">
+            <span className="font-mono text-xs font-black px-2.5 py-0.5 rounded-full bg-[#FEE214] text-slate-950 border border-slate-950 shadow-[1px_1px_0px_#0F0E17]">
               Dynamic Horizon Modulator
             </span>
           </div>
 
           <form onSubmit={handleSaveEvent} className="space-y-4">
             <div>
-              <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1">
+              <label className="block font-sans text-xs font-black text-slate-950 uppercase tracking-wider mb-1">
                 Event Designation
               </label>
               <input
@@ -173,17 +173,17 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
                 placeholder="e.g. Full Moon Gathering, Solstice Bazaar"
-                className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-4 py-2.5 text-slate-900 font-bold text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder:text-slate-500"
+                className="w-full bg-[#FAF5FF] border-2 border-slate-950 rounded-2xl px-4 py-2.5 text-slate-950 font-bold text-sm shadow-[2px_2px_0px_0px_#0F0E17] focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-slate-500"
               />
             </div>
 
             {/* Multiplier Slider & Stepper */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="font-sans text-xs font-black text-amber-950 uppercase tracking-wider">
+                <label className="font-sans text-xs font-black text-slate-950 uppercase tracking-wider">
                   Demand Surge Factor
                 </label>
-                <span className="font-mono font-black text-base px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950 border border-amber-500/40 shadow-sm">
+                <span className="font-mono font-black text-base px-3 py-0.5 rounded-full bg-[#FEE214] text-slate-950 border-2 border-slate-950 shadow-[2px_2px_0px_0px_#0F0E17]">
                   {multiplier.toFixed(1)}x Normal Volume
                 </span>
               </div>
@@ -194,9 +194,9 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
                 step="0.5"
                 value={multiplier}
                 onChange={(e) => setMultiplier(parseFloat(e.target.value))}
-                className="w-full h-3 bg-amber-100 rounded-lg appearance-none cursor-pointer accent-amber-500 border border-amber-300"
+                className="w-full h-3 bg-purple-100 rounded-lg appearance-none cursor-pointer accent-purple-600 border-2 border-slate-950 shadow-[1px_1px_0px_#0F0E17]"
               />
-              <div className="flex justify-between text-[10px] font-mono font-bold text-slate-600 mt-1">
+              <div className="flex justify-between text-[10px] font-mono font-black text-slate-700 mt-1">
                 <span>1.0x (Baseline)</span>
                 <span>3.0x (Midnight Curse Standard)</span>
                 <span>5.0x (High Coven Peak)</span>
@@ -206,7 +206,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
             {/* Date Range Inputs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1">
+                <label className="block font-sans text-xs font-black text-slate-950 uppercase tracking-wider mb-1">
                   Surge Begins
                 </label>
                 <input
@@ -214,12 +214,12 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
                   required
                   value={startsAt.slice(0, 16)}
                   onChange={(e) => setStartsAt(e.target.value + ':00')}
-                  className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-mono font-bold text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full bg-[#FAF5FF] border-2 border-slate-950 rounded-2xl px-3 py-2 text-slate-950 font-mono font-bold text-xs shadow-[2px_2px_0px_0px_#0F0E17] focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
               <div>
-                <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-1">
+                <label className="block font-sans text-xs font-black text-slate-950 uppercase tracking-wider mb-1">
                   Surge Concludes
                 </label>
                 <input
@@ -227,22 +227,22 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onShowToast }) => {
                   required
                   value={endsAt.slice(0, 16)}
                   onChange={(e) => setEndsAt(e.target.value + ':00')}
-                  className="w-full bg-amber-50/70 border border-amber-300 rounded-2xl px-3 py-2 text-slate-900 font-mono font-bold text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full bg-[#FAF5FF] border-2 border-slate-950 rounded-2xl px-3 py-2 text-slate-950 font-mono font-bold text-xs shadow-[2px_2px_0px_0px_#0F0E17] focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
             </div>
 
             {/* Affected Reagents Multi-Select Chips */}
             <div>
-              <label className="block font-sans text-xs font-black text-amber-950 uppercase tracking-wider mb-2">
+              <label className="block font-sans text-xs font-black text-slate-950 uppercase tracking-wider mb-2">
                 Target Reagents Affected ({selectedIngredientIds.length} Selected)
               </label>
 
               {loading ? (
                 <div className="flex gap-2">
-                  <Skeleton className="h-8 w-24 rounded-full border border-amber-200" />
-                  <Skeleton className="h-8 w-24 rounded-full border border-amber-200" />
-                  <Skeleton className="h-8 w-24 rounded-full border border-amber-200" />
+                  <Skeleton className="h-8 w-24 rounded-full border border-purple-200" />
+                  <Skeleton className="h-8 w-24 rounded-full border border-purple-200" />
+                  <Skeleton className="h-8 w-24 rounded-full border border-purple-200" />
                 </div>
               ) : (
                 <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
