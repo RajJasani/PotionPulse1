@@ -46,6 +46,14 @@ def adjust_stock(adjust_in: StockAdjustCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(movement)
 
+    # Invalidate ML caches so prophecies and restock spells reflect new inventory instantly
+    from backend.app.ml.forecaster import DemandForecaster
+    from backend.app.ml.prophecy import ProphecyEngine
+    from backend.app.ml.restock import RestockSpellEngine
+    DemandForecaster.clear_cache(ingredient.id)
+    ProphecyEngine.clear_cache()
+    RestockSpellEngine.clear_cache()
+
     return StockMovementOut(
         movement_id=movement.id,
         ingredient_id=ingredient.id,

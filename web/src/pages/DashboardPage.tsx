@@ -73,18 +73,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [ings, prophs, recs, anoms, evts] = await Promise.all([
+      const [ingsRes, prophsRes, recsRes, anomsRes, evtsRes] = await Promise.allSettled([
         api.getIngredients(),
         api.getStockoutProphecies(),
         api.getReorderRecommendations(),
         api.getAnomalies('UNRESOLVED'),
         api.getEvents(true),
       ]);
-      setIngredients(ings);
-      setProphecies(prophs);
-      setRecommendations(recs);
-      setAnomalies(anoms);
-      setEvents(evts);
+
+      if (ingsRes.status === 'fulfilled') setIngredients(ingsRes.value);
+      if (prophsRes.status === 'fulfilled') setProphecies(prophsRes.value);
+      if (recsRes.status === 'fulfilled') setRecommendations(recsRes.value);
+      if (anomsRes.status === 'fulfilled') setAnomalies(anomsRes.value);
+      if (evtsRes.status === 'fulfilled') setEvents(evtsRes.value);
     } catch (err: any) {
       onShowToast({
         id: Date.now().toString(),

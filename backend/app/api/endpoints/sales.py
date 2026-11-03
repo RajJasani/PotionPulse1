@@ -60,6 +60,14 @@ def record_sale(sale_in: SaleCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(sale)
 
+    # Invalidate ML caches so stockouts and prophecies update immediately
+    from backend.app.ml.forecaster import DemandForecaster
+    from backend.app.ml.prophecy import ProphecyEngine
+    from backend.app.ml.restock import RestockSpellEngine
+    DemandForecaster.clear_cache(ingredient.id)
+    ProphecyEngine.clear_cache()
+    RestockSpellEngine.clear_cache()
+
     warning = None
     if new_stock == 0:
         warning = "STOCK_DEPLETED"

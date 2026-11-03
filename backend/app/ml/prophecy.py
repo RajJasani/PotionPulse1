@@ -10,6 +10,12 @@ class ProphecyEngine:
     Projects exact stockout date, fractional days remaining, and confidence bounds
     by simulating inventory depletion against ML forecast curves.
     """
+    _PROPHECIES_CACHE: Optional[tuple] = None
+
+    @classmethod
+    def clear_cache(cls):
+        cls._PROPHECIES_CACHE = None
+
     def __init__(self, db: Session, forecaster: Optional[DemandForecaster] = None):
         self.db = db
         self.forecaster = forecaster or DemandForecaster(db)
@@ -99,7 +105,14 @@ class ProphecyEngine:
         return days + (remaining / last_demand)
 
     def get_all_stockout_prophecies(self) -> List[Dict]:
+        now = datetime.utcnow()
+        if ProphecyEngine._PROPHECIES_CACHE:
+            cached_time, cached_data = ProphecyEngine._PROPHECIES_CACHE
+            if (now - cached_time).total_seconds() < 60:
+                return cached_data
+
         ingredients = self.db.query(Ingredient).all()
         prophecies = [self.calculate_stockout(ing) for ing in ingredients]
         prophecies.sort(key=lambda p: (0 if p["is_stocked_out"] else 1, p["days_until_stockout"]))
+        ProphecyEngine._PROPHECIES_CACHE = (now, prophecies)
         return prophecies

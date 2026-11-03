@@ -6,7 +6,18 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from backend.app.models import Ingredient, Sale, Event
+
+def _to_date(val):
+    if hasattr(val, "date"):
+        return val.date()
+    if isinstance(val, str):
+        try:
+            return datetime.fromisoformat(val.replace("Z", "+00:00")).date()
+        except Exception:
+            return datetime.utcnow().date()
+    return val
 
 class DemandForecaster:
     """
@@ -16,6 +27,7 @@ class DemandForecaster:
     _MODELS_CACHE: Dict[str, HistGradientBoostingRegressor] = {}
     _METRICS_CACHE: Dict[str, Dict[str, float]] = {}
     _RMSE_CACHE: Dict[str, float] = {}
+    _PREDICTIONS_CACHE: Dict[str, Tuple[datetime, List[Dict]]] = {}
 
     def __init__(self, db: Session):
         self.db = db
@@ -30,46 +42,35 @@ class DemandForecaster:
             cls._MODELS_CACHE.pop(ingredient_id, None)
             cls._METRICS_CACHE.pop(ingredient_id, None)
             cls._RMSE_CACHE.pop(ingredient_id, None)
+            # Remove any prediction cache keys for this ingredient
+            keys_to_remove = [k for k in cls._PREDICTIONS_CACHE if k.startswith(f"{ingredient_id}_")]
+            for k in keys_to_remove:
+                cls._PREDICTIONS_CACHE.pop(k, None)
         else:
             cls._MODELS_CACHE.clear()
             cls._METRICS_CACHE.clear()
             cls._RMSE_CACHE.clear()
+            cls._PREDICTIONS_CACHE.clear()
 
     def _load_daily_sales(self, ingredient_id: str) -> pd.DataFrame:
         """
         Loads all sales for an ingredient and aggregates to complete daily continuous time series.
-        Robust to:
-        - Missing sales / empty tables
-        - Missing dates / zero-sales days (filled with 0.0)
-        - Corrupted / negative values (sanitized)
-        - Duplicate records (safely aggregated by date)
+        Uses fast SQL group-by aggregation.
         """
-        sales = (
-            self.db.query(Sale)
+        agg = (
+            self.db.query(func.date(Sale.sold_at).label("date"), func.sum(Sale.quantity).label("quantity"))
             .filter(Sale.ingredient_id == ingredient_id)
-            .order_by(Sale.sold_at.asc())
+            .group_by(func.date(Sale.sold_at))
+            .order_by(func.date(Sale.sold_at).asc())
             .all()
         )
-        if not sales:
+        if not agg:
             return pd.DataFrame(columns=["date", "quantity"])
 
-        records = []
-        for s in sales:
-            if s.quantity is not None and s.sold_at is not None:
-                records.append({
-                    "date": s.sold_at.date(),
-                    "quantity": max(0.0, float(s.quantity))
-                })
-
-        if not records:
-            return pd.DataFrame(columns=["date", "quantity"])
-
-        df = pd.DataFrame(records)
-        df_daily = df.groupby("date")["quantity"].sum().reset_index()
+        df_daily = pd.DataFrame(agg, columns=["date", "quantity"])
         df_daily["date"] = pd.to_datetime(df_daily["date"])
-        df_daily = df_daily.sort_values("date").reset_index(drop=True)
+        df_daily["quantity"] = df_daily["quantity"].astype(float)
 
-        # Fill potential missing days with 0 demand
         min_date = df_daily["date"].min()
         max_date = df_daily["date"].max()
         idx = pd.date_range(min_date, max_date, freq="D")
@@ -196,17 +197,17 @@ class DemandForecaster:
         train_df = featured_df.iloc[:split_idx]
         test_df = featured_df.iloc[split_idx:]
 
-        X_train = train_df[feature_cols]
-        y_train = train_df["quantity"]
-        X_test = test_df[feature_cols]
-        y_test = test_df["quantity"]
-        y_baseline = test_df["baseline_seasonal_naive"]
+        X_train = train_df[feature_cols].values
+        y_train = train_df["quantity"].values
+        X_test = test_df[feature_cols].values
+        y_test = test_df["quantity"].values
+        y_baseline = test_df["baseline_seasonal_naive"].values
 
         model = HistGradientBoostingRegressor(
-            max_iter=120,
+            max_iter=30,
             learning_rate=0.08,
-            max_leaf_nodes=31,
-            min_samples_leaf=5,
+            max_leaf_nodes=15,
+            min_samples_leaf=3,
             random_state=42
         )
         model.fit(X_train, y_train)
@@ -237,6 +238,13 @@ class DemandForecaster:
         Predicts future demand for the next `horizon_days` days,
         applying any active Event multipliers (Full Moon Festival / Midnight Curse).
         """
+        cache_key = f"{ingredient_id}_{horizon_days}"
+        now_utc = datetime.utcnow()
+        if cache_key in DemandForecaster._PREDICTIONS_CACHE:
+            cached_time, cached_res = DemandForecaster._PREDICTIONS_CACHE[cache_key]
+            if (now_utc - cached_time).total_seconds() < 120:
+                return cached_res
+
         if ingredient_id not in DemandForecaster._MODELS_CACHE:
             self.train_ingredient(ingredient_id)
 
@@ -262,32 +270,31 @@ class DemandForecaster:
         )
 
         forecasts = []
-        last_date = df["date"].max()
+        base_date = max(now.date(), df["date"].max().date())
 
         for step in range(1, horizon_days + 1):
-            next_date = last_date + timedelta(days=step)
-            dow = next_date.dayofweek
+            next_date = base_date + timedelta(days=step)
+            dow = next_date.weekday()
             is_wknd = 1 if dow in [4, 5, 6] else 0
 
-            # Construct feature row dynamically
-            features = {
-                "lag_1": recent_quantities[-1] if len(recent_quantities) >= 1 else 3.0,
-                "lag_2": recent_quantities[-2] if len(recent_quantities) >= 2 else 3.0,
-                "lag_3": recent_quantities[-3] if len(recent_quantities) >= 3 else 3.0,
-                "lag_7": recent_quantities[-7] if len(recent_quantities) >= 7 else 3.0,
-                "lag_14": recent_quantities[-14] if len(recent_quantities) >= 14 else 3.0,
-                "roll_mean_7": float(np.mean(recent_quantities[-7:])),
-                "roll_std_7": float(np.std(recent_quantities[-7:])) if len(recent_quantities) >= 7 else 0.5,
-                "roll_mean_14": float(np.mean(recent_quantities[-14:])),
-                "roll_mean_28": float(np.mean(recent_quantities[-28:])),
-                "day_of_week": dow,
-                "is_weekend": is_wknd,
-                "month": next_date.month,
-                "day_of_month": next_date.day,
-                "is_halloween_season": 1 if (next_date.month == 10 and next_date.day >= 15) else 0
-            }
-            feat_df = pd.DataFrame([features])
-            base_pred = float(model.predict(feat_df)[0])
+            # Construct feature row dynamically (fast 2D numpy array)
+            feat_values = np.array([[
+                recent_quantities[-1] if len(recent_quantities) >= 1 else 3.0,
+                recent_quantities[-2] if len(recent_quantities) >= 2 else 3.0,
+                recent_quantities[-3] if len(recent_quantities) >= 3 else 3.0,
+                recent_quantities[-7] if len(recent_quantities) >= 7 else 3.0,
+                recent_quantities[-14] if len(recent_quantities) >= 14 else 3.0,
+                float(np.mean(recent_quantities[-7:])),
+                float(np.std(recent_quantities[-7:])) if len(recent_quantities) >= 7 else 0.5,
+                float(np.mean(recent_quantities[-14:])),
+                float(np.mean(recent_quantities[-28:])),
+                dow,
+                is_wknd,
+                next_date.month,
+                next_date.day,
+                1 if (next_date.month == 10 and next_date.day >= 15) else 0
+            ]], dtype=np.float64)
+            base_pred = float(model.predict(feat_values)[0])
             base_pred = max(0.2, base_pred)
 
             # Check Event Multiplier (Midnight Curse)
@@ -298,7 +305,7 @@ class DemandForecaster:
                     affected = json.loads(ev.affected_ingredient_ids)
                 except Exception:
                     affected = []
-                if ingredient_id in affected and ev.starts_at.date() <= next_date.date() <= ev.ends_at.date():
+                if ingredient_id in affected and _to_date(ev.starts_at) <= _to_date(next_date) <= _to_date(ev.ends_at):
                     if ev.multiplier > multiplier:
                         multiplier = ev.multiplier
                         event_name = ev.name
@@ -319,6 +326,7 @@ class DemandForecaster:
             # Append prediction to simulate multi-step lag
             recent_quantities.append(final_pred)
 
+        DemandForecaster._PREDICTIONS_CACHE[cache_key] = (now_utc, forecasts)
         return forecasts
 
     def _fallback_projection(self, ingredient_id: str, horizon_days: int) -> List[Dict]:
@@ -360,7 +368,7 @@ class DemandForecaster:
                     affected = json.loads(ev.affected_ingredient_ids)
                 except Exception:
                     affected = []
-                if ingredient_id in affected and ev.starts_at.date() <= next_date.date() <= ev.ends_at.date():
+                if ingredient_id in affected and _to_date(ev.starts_at) <= _to_date(next_date) <= _to_date(ev.ends_at):
                     if ev.multiplier > multiplier:
                         multiplier = ev.multiplier
                         event_name = ev.name

@@ -4,8 +4,10 @@ from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.core.config import settings
-from backend.app.core.database import engine, Base
+from backend.app.core.database import engine, Base, SessionLocal
 from backend.app.api.api_v1 import api_router
+from backend.app.ml.prophecy import ProphecyEngine
+from backend.app.ml.restock import RestockSpellEngine
 
 # Initialize database tables
 Base.metadata.create_all(bind=engine)
@@ -53,6 +55,17 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": f"An arcane disturbance occurred: {str(exc)}"}
     )
 
+@app.on_event("startup")
+def prewarm_arcane_cache():
+    """Prime ML models, prophecies, and restock engine into memory on startup."""
+    try:
+        db = SessionLocal()
+        ProphecyEngine(db).get_all_stockout_prophecies()
+        RestockSpellEngine(db).get_all_recommendations()
+        db.close()
+    except Exception as exc:
+        print(f"[Warning] ML pre-warming cache encountered: {exc}")
+
 # Static files / SPA support for production full-stack deployment
 frontend_dist = os.getenv(
     "FRONTEND_DIST",
@@ -65,9 +78,13 @@ if os.path.isdir(frontend_dist):
         app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
     @app.get("/{full_path:path}")
-    async def serve_spa(full_path: str):
+    async def serve_spa(request: Request, full_path: str):
         if full_path.startswith("api") or full_path.startswith("docs") or full_path.startswith("redoc") or full_path == "openapi.json":
             return JSONResponse(status_code=404, content={"detail": "Not found"})
+        
+        # When called by API clients or test suite on root without text/html
+        if full_path == "" and "text/html" not in request.headers.get("accept", ""):
+            return health_check()
         
         file_path = os.path.join(frontend_dist, full_path)
         if os.path.isfile(file_path):

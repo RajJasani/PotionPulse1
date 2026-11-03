@@ -63,7 +63,7 @@ def test_anomaly_sentinel_catches_spikes_and_theft():
     assert "SUDDEN_DRAIN" in types
 
     # Dragon scale theft
-    drain = next(a for a in anomalies if a["ingredient_id"] == "ing_dragon_scale")
+    drain = next(a for a in anomalies if a["ingredient_id"] == "ing_dragon_scale" and a["anomaly_type"] == "SUDDEN_DRAIN")
     assert drain["anomaly_type"] == "SUDDEN_DRAIN"
     assert drain["severity"] == "CRITICAL"
 

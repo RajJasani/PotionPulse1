@@ -69,6 +69,14 @@ def create_event(evt_in: EventCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(event)
 
+    # Invalidate ML caches so forecasts, prophecies, and restock spells recalculate with new event
+    from backend.app.ml.forecaster import DemandForecaster
+    from backend.app.ml.prophecy import ProphecyEngine
+    from backend.app.ml.restock import RestockSpellEngine
+    DemandForecaster.clear_cache()
+    ProphecyEngine.clear_cache()
+    RestockSpellEngine.clear_cache()
+
     return EventOut(
         id=event.id,
         name=event.name,
@@ -104,6 +112,14 @@ def update_event(id: str, evt_in: EventCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(event)
 
+    # Invalidate ML caches so updated event parameters reflect immediately
+    from backend.app.ml.forecaster import DemandForecaster
+    from backend.app.ml.prophecy import ProphecyEngine
+    from backend.app.ml.restock import RestockSpellEngine
+    DemandForecaster.clear_cache()
+    ProphecyEngine.clear_cache()
+    RestockSpellEngine.clear_cache()
+
     return EventOut(
         id=event.id,
         name=event.name,
@@ -115,3 +131,22 @@ def update_event(id: str, evt_in: EventCreate, db: Session = Depends(get_db)):
         is_active=event.is_active,
         created_at=event.created_at
     )
+
+@router.delete("/{id}")
+def delete_event(id: str, db: Session = Depends(get_db)):
+    event = db.query(Event).filter(Event.id == id).first()
+    if not event:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Event '{id}' not found.")
+
+    db.delete(event)
+    db.commit()
+
+    # Invalidate ML caches on event removal
+    from backend.app.ml.forecaster import DemandForecaster
+    from backend.app.ml.prophecy import ProphecyEngine
+    from backend.app.ml.restock import RestockSpellEngine
+    DemandForecaster.clear_cache()
+    ProphecyEngine.clear_cache()
+    RestockSpellEngine.clear_cache()
+
+    return {"success": True, "message": f"Event '{id}' dispelled successfully."}

@@ -11,6 +11,12 @@ class RestockSpellEngine:
     Calculates optimal replenishment batches using Lead-Time Demand Integration,
     Statistical Safety Stock (Z-score * RMSE * sqrt(L)), and event surge allowances.
     """
+    _RECOMMENDATIONS_CACHE: Optional[tuple] = None
+
+    @classmethod
+    def clear_cache(cls):
+        cls._RECOMMENDATIONS_CACHE = None
+
     def __init__(self, db: Session, forecaster: Optional[DemandForecaster] = None):
         self.db = db
         self.forecaster = forecaster or DemandForecaster(db)
@@ -113,6 +119,12 @@ class RestockSpellEngine:
         }
 
     def get_all_recommendations(self) -> List[Dict]:
+        now = datetime.utcnow()
+        if RestockSpellEngine._RECOMMENDATIONS_CACHE:
+            cached_time, cached_data = RestockSpellEngine._RECOMMENDATIONS_CACHE
+            if (now - cached_time).total_seconds() < 60:
+                return cached_data
+
         ingredients = self.db.query(Ingredient).all()
         recommendations = []
         for ing in ingredients:
@@ -126,4 +138,5 @@ class RestockSpellEngine:
                 r["days_until_stockout"] or 999
             )
         )
+        RestockSpellEngine._RECOMMENDATIONS_CACHE = (now, recommendations)
         return recommendations
