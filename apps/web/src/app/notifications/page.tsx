@@ -33,7 +33,7 @@ export default function NotificationsPage() {
       type: 'STOCK_ALERT',
       title: 'Critical Stockout Risk: Ghost Pepper Essence',
       message: 'On-hand balance is down to 4 ml (&le;24 hours of cover). Recommended reorder: 40 ml.',
-      timestamp: new Date(Date.now() - 3600000 * 1).toISOString(),
+      timestamp: '2026-11-03T15:00:00.000Z',
       isRead: false,
       linkHref: '/restock',
     },
@@ -42,7 +42,7 @@ export default function NotificationsPage() {
       type: 'SEASONAL_SPIKE',
       title: 'Midnight Curse 3.0x Multiplier Engaged',
       message: 'Demand models have recalculated safety stock targets for Bat Wings and Mandrake Root.',
-      timestamp: new Date(Date.now() - 3600000 * 5).toISOString(),
+      timestamp: '2026-11-03T11:00:00.000Z',
       isRead: false,
       linkHref: '/forecasting',
     },
@@ -51,7 +51,7 @@ export default function NotificationsPage() {
       type: 'PO_STATUS',
       title: 'Purchase Order Delivered: PO-2026-079',
       message: 'Obsidian Cavern Miners Co. fulfilled 100g Obsidian Dust. Ledger updated automatically.',
-      timestamp: new Date(Date.now() - 3600000 * 20).toISOString(),
+      timestamp: '2026-11-02T20:00:00.000Z',
       isRead: true,
       linkHref: '/purchase-orders',
     },
@@ -60,7 +60,7 @@ export default function NotificationsPage() {
       type: 'SECURITY_AUDIT',
       title: 'New Staff Member Onboarded',
       message: 'User Apprentice Lyra was granted INVENTORY_STAFF permissions by Shop Owner.',
-      timestamp: new Date(Date.now() - 3600000 * 48).toISOString(),
+      timestamp: '2026-11-01T16:00:00.000Z',
       isRead: true,
       linkHref: '/team',
     },
@@ -147,7 +147,7 @@ export default function NotificationsPage() {
                       <span className="w-2 h-2 rounded-full bg-pumpkin animate-pulse" />
                     )}
                   </div>
-                  <span className="text-[11px] text-paleLavender/50 font-mono">
+                  <span suppressHydrationWarning className="text-[11px] text-paleLavender/50 font-mono">
                     {formatDateTime(notif.timestamp)}
                   </span>
                 </div>

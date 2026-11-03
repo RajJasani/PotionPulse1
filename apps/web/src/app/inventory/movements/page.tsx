@@ -144,7 +144,7 @@ export default function StockMovementsPage() {
                 ) : (
                   movements.map((m) => (
                     <tr key={m.id} className="hover:bg-sand/60 transition-colors">
-                      <td className="py-3 px-4 text-ink/75 whitespace-nowrap">
+                      <td suppressHydrationWarning className="py-3 px-4 text-ink/75 whitespace-nowrap">
                         {formatDateTime(m.occurredAt)}
                       </td>
                       <td className="py-3 px-4 font-sans font-black text-ink">

@@ -335,7 +335,7 @@ export default function DashboardPage() {
                   <tbody className="divide-y border-b-2 border-ink divide-sandDark font-medium">
                     {recentMovements.map((m) => (
                       <tr key={m.id} className="hover:bg-sand/60 transition-colors">
-                        <td className="py-3 px-3 font-mono font-bold text-mutedText">
+                        <td suppressHydrationWarning className="py-3 px-3 font-mono font-bold text-mutedText">
                           {formatDateTime(m.occurredAt || m.createdAt)}
                         </td>
                         <td className="py-3 px-3 font-black text-ink font-mono text-sm">

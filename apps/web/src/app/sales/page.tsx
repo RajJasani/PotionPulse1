@@ -286,7 +286,7 @@ export default function SalesPage() {
                       <td className="py-3 px-4 font-mono font-bold text-ink">
                         {sale.saleNumber}
                       </td>
-                      <td className="py-3 px-4 font-mono text-ink/75">
+                      <td suppressHydrationWarning className="py-3 px-4 font-mono text-ink/75">
                         {formatDateTime(sale.createdAt)}
                       </td>
                       <td className="py-3 px-4 font-mono">
@@ -401,7 +401,7 @@ export default function SalesPage() {
                   <div className="grid grid-cols-2 gap-2 text-xs bg-sand p-3.5 rounded-xl border-2 border-ink">
                     <div>
                       <span className="font-mono text-ink/70 block uppercase text-[10px]">Date</span>
-                      <span className="text-ink font-mono font-bold">{formatDateTime(selectedSale.createdAt)}</span>
+                      <span suppressHydrationWarning className="text-ink font-mono font-bold">{formatDateTime(selectedSale.createdAt)}</span>
                     </div>
                     <div>
                       <span className="font-mono text-ink/70 block uppercase text-[10px]">Status</span>

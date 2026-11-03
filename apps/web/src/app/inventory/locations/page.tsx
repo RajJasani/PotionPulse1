@@ -224,7 +224,7 @@ export default function LocationsPage() {
                               <span className="text-ink/40">—</span>
                             )}
                           </td>
-                          <td className="py-3 px-4 text-ink/70">{formatDateTime(loc.createdAt)}</td>
+                          <td suppressHydrationWarning className="py-3 px-4 text-ink/70">{formatDateTime(loc.createdAt)}</td>
                         </tr>
                       ))
                     )}

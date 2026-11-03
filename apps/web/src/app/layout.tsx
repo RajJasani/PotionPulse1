@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className="bg-ink text-paleLavender antialiased selection:bg-potionPurple selection:text-white"
+        className="bg-cream text-ink antialiased selection:bg-hackOrange selection:text-white"
       >
         <AuthProvider>
           <SocketProvider>{children}</SocketProvider>

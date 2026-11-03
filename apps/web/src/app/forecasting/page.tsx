@@ -17,6 +17,7 @@ import {
   Info,
   Zap,
 } from 'lucide-react';
+import { ClientOnly } from '@/components/ui/client-only';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -119,7 +120,7 @@ export default function ForecastingPage() {
     for (let i = 6; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
-      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
       const dayDemand = demandData.find((entry) => entry.date === d.toISOString().slice(0, 10));
       const actual = dayDemand ? Number(dayDemand.totalQuantity || 0) : Math.floor(45 + Math.sin(i) * 12);
       points.push({
@@ -136,7 +137,7 @@ export default function ForecastingPage() {
     for (let i = 1; i <= steps; i++) {
       const d = new Date(today);
       d.setDate(d.getDate() + i);
-      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
       const surgeMultiplier = midnightCurseActive ? 1.6 : 1.0;
       const forecastVal = Math.round(
         (lastActual + (i * 1.5)) * surgeMultiplier + Math.cos(i) * 8,
@@ -290,54 +291,62 @@ export default function ForecastingPage() {
           </div>
 
           <div className="h-72 w-full pt-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartSeries} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6320EE" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#6320EE" stopOpacity={0.0} />
-                  </linearGradient>
-                  <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FF5C00" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#FF5C00" stopOpacity={0.0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E2DCD5" />
-                <XAxis dataKey="date" stroke="#1A1523" fontSize={11} fontFamily="monospace" />
-                <YAxis stroke="#1A1523" fontSize={11} fontFamily="monospace" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#FFFFFF',
-                    border: '2px solid #1A1523',
-                    borderRadius: '8px',
-                    boxShadow: '4px 4px 0px #1A1523',
-                    fontSize: '12px',
-                    color: '#1A1523',
-                    fontFamily: 'monospace',
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px', fontFamily: 'monospace' }} />
-                <Area
-                  type="monotone"
-                  dataKey="ActualDemand"
-                  name="Historical Actuals"
-                  stroke="#6320EE"
-                  strokeWidth={2.5}
-                  fillOpacity={1}
-                  fill="url(#actualGrad)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="ForecastDemand"
-                  name={`Projected Demand (${horizon}d)`}
-                  stroke="#FF5C00"
-                  strokeWidth={2.5}
-                  strokeDasharray="4 4"
-                  fillOpacity={1}
-                  fill="url(#forecastGrad)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <ClientOnly
+              fallback={
+                <div className="h-full w-full flex items-center justify-center font-mono text-xs text-ink/50 bg-sand/30 rounded-xl border border-dashed border-ink/20">
+                  Rendering demand curves...
+                </div>
+              }
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartSeries} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#6320EE" stopOpacity={0.4} />
+                      <stop offset="95%" stopColor="#6320EE" stopOpacity={0.0} />
+                    </linearGradient>
+                    <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#FF5C00" stopOpacity={0.4} />
+                      <stop offset="95%" stopColor="#FF5C00" stopOpacity={0.0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2DCD5" />
+                  <XAxis dataKey="date" stroke="#1A1523" fontSize={11} fontFamily="monospace" />
+                  <YAxis stroke="#1A1523" fontSize={11} fontFamily="monospace" />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#FFFFFF',
+                      border: '2px solid #1A1523',
+                      borderRadius: '8px',
+                      boxShadow: '4px 4px 0px #1A1523',
+                      fontSize: '12px',
+                      color: '#1A1523',
+                      fontFamily: 'monospace',
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px', fontFamily: 'monospace' }} />
+                  <Area
+                    type="monotone"
+                    dataKey="ActualDemand"
+                    name="Historical Actuals"
+                    stroke="#6320EE"
+                    strokeWidth={2.5}
+                    fillOpacity={1}
+                    fill="url(#actualGrad)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="ForecastDemand"
+                    name={`Projected Demand (${horizon}d)`}
+                    stroke="#FF5C00"
+                    strokeWidth={2.5}
+                    strokeDasharray="4 4"
+                    fillOpacity={1}
+                    fill="url(#forecastGrad)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </ClientOnly>
           </div>
         </Card>
 

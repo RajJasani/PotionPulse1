@@ -33,7 +33,7 @@ export default function AuditPage() {
       resource: 'Ingredient #BatWings',
       status: 'SUCCESS',
       ipAddress: '192.168.1.104',
-      timestamp: new Date(Date.now() - 3600000 * 1).toISOString(),
+      timestamp: '2026-11-03T15:00:00.000Z',
       details: {
         movementType: 'MANUAL_ADJUSTMENT',
         quantityDelta: +20,
@@ -47,7 +47,7 @@ export default function AuditPage() {
       resource: 'Sale #SALE-2026-004',
       status: 'SUCCESS',
       ipAddress: '192.168.1.112',
-      timestamp: new Date(Date.now() - 3600000 * 3).toISOString(),
+      timestamp: '2026-11-03T13:00:00.000Z',
       details: {
         totalAmount: 185.5,
         itemsCount: 3,
@@ -61,7 +61,7 @@ export default function AuditPage() {
       resource: 'Ingredient #GhostPepper',
       status: 'BLOCKED',
       ipAddress: '10.0.4.88',
-      timestamp: new Date(Date.now() - 3600000 * 8).toISOString(),
+      timestamp: '2026-11-03T08:00:00.000Z',
       details: {
         requestedQty: 15,
         onHandAvailable: 4,
@@ -75,7 +75,7 @@ export default function AuditPage() {
       resource: 'User #ScholarVane',
       status: 'SUCCESS',
       ipAddress: '192.168.1.104',
-      timestamp: new Date(Date.now() - 3600000 * 24).toISOString(),
+      timestamp: '2026-11-02T10:00:00.000Z',
       details: {
         roleAssigned: 'ANALYST',
         permissions: ['READ_ONLY'],
@@ -144,7 +144,7 @@ export default function AuditPage() {
               <tbody className="divide-y divide-potionPurple/10">
                 {filtered.map((r) => (
                   <tr key={r.id} className="hover:bg-potionPurple/5 transition-colors">
-                    <td className="py-3 px-4 text-xs font-mono text-paleLavender/70">
+                    <td suppressHydrationWarning className="py-3 px-4 text-xs font-mono text-paleLavender/70">
                       {formatDateTime(r.timestamp)}
                     </td>
                     <td className="py-3 px-4 font-semibold text-white">{r.actor}</td>

@@ -5,66 +5,67 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { cn } from '@/lib/utils';
+import { ClientOnly } from '@/components/ui/client-only';
 import {
   LayoutDashboard,
   Package,
   Layers,
   ArrowLeftRight,
-  PlusCircle,
-  ShoppingCart,
   TrendingUp,
   AlertTriangle,
   Flame,
   Truck,
   FileText,
   FlaskConical,
-  BarChart3,
-  Bell,
+  ShoppingCart,
   Users,
-  Database,
-  History,
+  Shield,
+  FileSpreadsheet,
   Settings,
   ChevronDown,
 } from 'lucide-react';
 
-const NAV_SECTIONS = [
+interface NavItem {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+}
+
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+const NAV_SECTIONS: NavSection[] = [
   {
     title: 'Core Operations',
     items: [
-      { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-      { label: 'Inventory Catalog', href: '/inventory', icon: Package },
-      { label: 'Shelves & Locations', href: '/inventory/locations', icon: Layers },
-      { label: 'Stock Movements', href: '/inventory/movements', icon: ArrowLeftRight },
-      { label: 'Receive / Adjust', href: '/inventory/adjust', icon: PlusCircle },
-      { label: 'Sales Orders', href: '/sales', icon: ShoppingCart },
-      { label: 'Point of Sale', href: '/sales/new', icon: PlusCircle },
+      { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { label: 'Inventory Vault', href: '/inventory', icon: Package },
+      { label: 'Storage Shelves', href: '/inventory/locations', icon: Layers },
+      { label: 'Stock Movement Ledger', href: '/inventory/movements', icon: ArrowLeftRight },
+      { label: 'Point of Sale (POS)', href: '/sales', icon: ShoppingCart },
     ],
   },
   {
-    title: 'Inventory Intelligence',
+    title: 'Intelligence & Supply',
     items: [
       { label: 'Demand Forecasting', href: '/forecasting', icon: TrendingUp },
-      { label: 'Restock Engine', href: '/restock', icon: Package },
-      { label: 'Anomaly Center', href: '/anomalies', icon: AlertTriangle },
-      { label: 'Midnight Curse', href: '/events', icon: Flame, badge: '3X EVENT' },
-    ],
-  },
-  {
-    title: 'Procurement & Recipes',
-    items: [
-      { label: 'Suppliers', href: '/suppliers', icon: Truck },
+      { label: 'Restock Recommendations', href: '/restock', icon: AlertTriangle, badge: 'AUTO' },
+      { label: 'Midnight Curse Events', href: '/events', icon: Flame, badge: '3.0x' },
+      { label: 'Anomaly Radar', href: '/anomalies', icon: Shield },
+      { label: 'Suppliers Directory', href: '/suppliers', icon: Truck },
       { label: 'Purchase Orders', href: '/purchase-orders', icon: FileText },
-      { label: 'Potion Recipes', href: '/recipes', icon: FlaskConical },
+      { label: 'Potion Formulations', href: '/recipes', icon: FlaskConical },
     ],
   },
   {
-    title: 'System & Platform',
+    title: 'Administration',
     items: [
-      { label: 'Analytics & Reports', href: '/analytics', icon: BarChart3 },
-      { label: 'Notifications', href: '/notifications', icon: Bell },
-      { label: 'Team & RBAC', href: '/team', icon: Users },
-      { label: 'Import / Export', href: '/import-export', icon: Database },
-      { label: 'Audit Trail', href: '/audit', icon: History },
+      { label: 'Guild Team & RBAC', href: '/team', icon: Users },
+      { label: 'Audit Trail', href: '/audit', icon: Shield },
+      { label: 'Import / Export', href: '/import-export', icon: FileSpreadsheet },
       { label: 'Shop Settings', href: '/settings', icon: Settings },
     ],
   },
@@ -105,28 +106,36 @@ export function Sidebar({ className }: { className?: string }) {
 
       {/* Tenant Switcher Selector */}
       <div className="p-3 border-b-2 border-ink bg-white">
-        <div className="text-[10px] font-mono font-black uppercase tracking-wider text-mutedText px-1 mb-1.5 flex justify-between items-center">
-          <span className="flex items-center gap-1 text-ink font-bold">
-            <span>🏛️</span> Active Shop
-          </span>
-          <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#6320EE] text-white border border-ink font-mono font-black uppercase">
-            {activeTenant?.role || 'Staff'}
-          </span>
-        </div>
-        <div className="relative">
-          <select
-            value={activeTenant?.id || ''}
-            onChange={(e) => switchTenant(e.target.value)}
-            className="w-full text-xs font-mono font-bold bg-[#FAF5EE] border-2 border-ink text-ink rounded-lg px-2.5 py-1.5 appearance-none focus:outline-none focus:border-hackOrange cursor-pointer shadow-retro-xs"
-          >
-            {memberships.map((m) => (
-              <option key={m.tenantId} value={m.tenantId}>
-                {m.tenantName} ({m.role})
-              </option>
-            ))}
-          </select>
-          <ChevronDown className="w-4 h-4 text-ink absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-        </div>
+        <ClientOnly
+          fallback={
+            <div className="h-14 flex items-center justify-between px-1 text-xs font-mono font-bold text-ink/70">
+              <span>Loading workspace...</span>
+            </div>
+          }
+        >
+          <div className="text-[10px] font-mono font-black uppercase tracking-wider text-mutedText px-1 mb-1.5 flex justify-between items-center">
+            <span className="flex items-center gap-1 text-ink font-bold">
+              <span>🏛️</span> Active Shop
+            </span>
+            <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#6320EE] text-white border border-ink font-mono font-black uppercase">
+              {activeTenant?.role || 'Staff'}
+            </span>
+          </div>
+          <div className="relative">
+            <select
+              value={activeTenant?.id || ''}
+              onChange={(e) => switchTenant(e.target.value)}
+              className="w-full text-xs font-mono font-bold bg-[#FAF5EE] border-2 border-ink text-ink rounded-lg px-2.5 py-1.5 appearance-none focus:outline-none focus:border-hackOrange cursor-pointer shadow-retro-xs"
+            >
+              {memberships.map((m) => (
+                <option key={m.tenantId} value={m.tenantId}>
+                  {m.tenantName} ({m.role})
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-ink absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+        </ClientOnly>
       </div>
 
       {/* Navigation Sections */}

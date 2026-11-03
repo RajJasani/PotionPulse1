@@ -40,7 +40,7 @@ export default function AnomaliesPage() {
       type: 'CONSUMPTION_SPIKE',
       severity: 'CRITICAL',
       status: 'OPEN',
-      detectedAt: new Date(Date.now() - 3600000 * 2).toISOString(),
+      detectedAt: '2026-11-03T14:30:00.000Z',
       expectedValue: '12 units / day',
       observedValue: '68 units / 4 hours',
       deviation: '+466% (3.8σ spike)',
@@ -54,7 +54,7 @@ export default function AnomaliesPage() {
       type: 'SHRINKAGE',
       severity: 'WARNING',
       status: 'OPEN',
-      detectedAt: new Date(Date.now() - 3600000 * 14).toISOString(),
+      detectedAt: '2026-11-03T02:15:00.000Z',
       expectedValue: '25 units (ledger)',
       observedValue: '18 units (shelf audit)',
       deviation: '-28% discrepancy',
@@ -68,7 +68,7 @@ export default function AnomaliesPage() {
       type: 'NEGATIVE_PREVENTION',
       severity: 'CRITICAL',
       status: 'ACKNOWLEDGED',
-      detectedAt: new Date(Date.now() - 3600000 * 28).toISOString(),
+      detectedAt: '2026-11-02T18:45:00.000Z',
       expectedValue: '>= 0 balance constraint',
       observedValue: 'Deduction of 15 from 4 on-hand',
       deviation: 'Enforced Atomically',
@@ -82,7 +82,7 @@ export default function AnomaliesPage() {
       type: 'OFF_HOURS_MOVEMENT',
       severity: 'INFO',
       status: 'RESOLVED',
-      detectedAt: new Date(Date.now() - 3600000 * 48).toISOString(),
+      detectedAt: '2026-11-01T03:14:00.000Z',
       expectedValue: 'Business hours (08:00 - 20:00)',
       observedValue: 'Adjustment at 03:14 AM',
       deviation: 'Temporal anomaly',
@@ -289,7 +289,7 @@ export default function AnomaliesPage() {
 
                   {/* Actions & Timestamp */}
                   <div className="flex flex-col items-end justify-between shrink-0 space-y-3">
-                    <span className="text-[11px] text-ink/60 flex items-center gap-1 font-mono font-bold">
+                    <span suppressHydrationWarning className="text-[11px] text-ink/60 flex items-center gap-1 font-mono font-bold">
                       <Clock className="w-3.5 h-3.5 text-hackOrange" />
                       {formatDateTime(item.detectedAt)}
                     </span>

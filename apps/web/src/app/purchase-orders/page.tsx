@@ -40,7 +40,7 @@ export default function PurchaseOrdersPage() {
       poNumber: 'PO-2026-081',
       supplierName: 'Northern Foragers Guild',
       status: 'ORDERED',
-      orderedAt: new Date(Date.now() - 3600000 * 48).toISOString(),
+      orderedAt: '2026-11-01T10:00:00.000Z',
       expectedDelivery: '2026-11-03',
       totalCost: 1450.0,
       items: [
@@ -53,7 +53,7 @@ export default function PurchaseOrdersPage() {
       poNumber: 'PO-2026-080',
       supplierName: 'Midnight Aviary & Chiroptera',
       status: 'ORDERED',
-      orderedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
+      orderedAt: '2026-11-02T10:00:00.000Z',
       expectedDelivery: '2026-11-02',
       totalCost: 3200.0,
       items: [
@@ -65,7 +65,7 @@ export default function PurchaseOrdersPage() {
       poNumber: 'PO-2026-079',
       supplierName: 'Obsidian Cavern Miners Co.',
       status: 'RECEIVED',
-      orderedAt: new Date(Date.now() - 3600000 * 120).toISOString(),
+      orderedAt: '2026-10-29T10:00:00.000Z',
       expectedDelivery: '2026-10-29',
       totalCost: 2800.0,
       items: [
@@ -174,7 +174,7 @@ export default function PurchaseOrdersPage() {
                   <tr key={po.id} className="hover:bg-potionPurple/5 transition-colors">
                     <td className="py-3 px-4 font-mono font-medium text-white">{po.poNumber}</td>
                     <td className="py-3 px-4 text-white font-medium">{po.supplierName}</td>
-                    <td className="py-3 px-4 text-xs text-paleLavender/70">{formatDateTime(po.orderedAt)}</td>
+                    <td suppressHydrationWarning className="py-3 px-4 text-xs text-paleLavender/70">{formatDateTime(po.orderedAt)}</td>
                     <td className="py-3 px-4 text-xs font-mono text-white">{po.expectedDelivery}</td>
                     <td className="py-3 px-4 font-mono font-bold text-pumpkin">{formatCurrency(po.totalCost)}</td>
                     <td className="py-3 px-4">

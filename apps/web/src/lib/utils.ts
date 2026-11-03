@@ -14,6 +14,10 @@ export function formatCurrency(amount: number, currency = 'USD'): string {
   }).format(amount);
 }
 
+/**
+ * Deterministic date formatter that outputs identical strings on server (SSR) and client
+ * by pinning timeZone to UTC, preventing React hydration mismatches across different client timezones.
+ */
 export function formatDate(dateString: string | Date | undefined): string {
   if (!dateString) return '—';
   const d = new Date(dateString);
@@ -22,9 +26,13 @@ export function formatDate(dateString: string | Date | undefined): string {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 }
 
+/**
+ * Deterministic date & time formatter with UTC timezone lock to eliminate hydration errors.
+ */
 export function formatDateTime(dateString: string | Date | undefined): string {
   if (!dateString) return '—';
   const d = new Date(dateString);
@@ -34,5 +42,7 @@ export function formatDateTime(dateString: string | Date | undefined): string {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
+    hour12: true,
+    timeZone: 'UTC',
   });
 }
