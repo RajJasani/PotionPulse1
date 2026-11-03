@@ -28,3 +28,4 @@ export const CustomerSchema = SchemaFactory.createForClass(Customer);
 
 CustomerSchema.index({ tenantId: 1, name: 1 });
 CustomerSchema.index({ tenantId: 1, email: 1 });
+

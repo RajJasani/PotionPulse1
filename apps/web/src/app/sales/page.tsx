@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import Link from 'next/link';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,8 +17,6 @@ import {
   Eye,
   RotateCcw,
   CheckCircle2,
-  DollarSign,
-  TrendingUp,
   XCircle,
 } from 'lucide-react';
 
@@ -165,64 +162,67 @@ export default function SalesPage() {
         {/* Top Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              <ShoppingCart className="w-7 h-7 text-potionPurple" />
-              Sales & POS Transactions
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 border-2 border-orange-400/40 text-[11px] font-black text-amber-300 mb-2">
+              <span>🛒</span>
+              <span>Point of Sale & Register</span>
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2">
+              <span>🧙‍♀️</span> Sales & POS Transactions
             </h1>
-            <p className="text-sm text-paleLavender/60 mt-1">
-              Live transaction ledger with atomic stock deduction and refund processing.
+            <p className="text-xs text-purple-200/80 font-bold mt-1">
+              Live transaction ledger with atomic stock deduction and instant receipt issuance.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               onClick={fetchSales}
               disabled={loading}
-              className="flex items-center gap-1.5"
+              className="flex items-center gap-1.5 text-xs"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Sync
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <span>Sync</span>
             </Button>
-            <Button href="/sales/new" size="sm" className="flex items-center gap-1.5 bg-pumpkin hover:bg-pumpkin/90 text-white">
+            <Button href="/sales/new" size="sm" variant="orange" className="flex items-center gap-1.5 text-xs">
               <PlusCircle className="w-4 h-4" />
-              Point of Sale (POS)
+              <span>Open POS Register</span>
             </Button>
           </div>
         </div>
 
-        {/* KPI Metrics */}
+        {/* KPI Metrics - 3 Signature Cartoon Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-potionPurple/20 border border-potionPurple/30 flex items-center justify-center text-potionPurple">
-              <DollarSign className="w-6 h-6" />
+          <div className="rounded-3xl border-3 border-amber-500/30 bg-[#281E12]/80 backdrop-blur-xl p-5 shadow-[0_6px_0_0_#78350F] flex items-center gap-4 transition-transform hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border-2 border-amber-400/40 flex items-center justify-center text-amber-300 text-2xl shadow-sm">
+              💰
             </div>
             <div>
-              <p className="text-xs uppercase font-medium text-paleLavender/60">Batch Revenue (Page)</p>
-              <p className="text-2xl font-bold text-white">{formatCurrency(totalRevenue)}</p>
+              <p className="text-[11px] uppercase font-black text-amber-300 tracking-wider">Batch Revenue (Page)</p>
+              <p className="text-2xl font-black text-white">{formatCurrency(totalRevenue)}</p>
             </div>
-          </Card>
+          </div>
 
-          <Card className="p-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-cauldronGreen/20 border border-cauldronGreen/30 flex items-center justify-center text-cauldronGreen">
-              <TrendingUp className="w-6 h-6" />
+          <div className="rounded-3xl border-3 border-emerald-500/30 bg-[#142322]/80 backdrop-blur-xl p-5 shadow-[0_6px_0_0_#064E3B] flex items-center gap-4 transition-transform hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400/40 flex items-center justify-center text-emerald-300 text-2xl shadow-sm">
+              ✓
             </div>
             <div>
-              <p className="text-xs uppercase font-medium text-paleLavender/60">Completed Sales</p>
-              <p className="text-2xl font-bold text-white">{completedCount}</p>
+              <p className="text-[11px] uppercase font-black text-emerald-300 tracking-wider">Completed Sales</p>
+              <p className="text-2xl font-black text-white">{completedCount}</p>
             </div>
-          </Card>
+          </div>
 
-          <Card className="p-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amethyst/20 border border-amethyst/30 flex items-center justify-center text-amethyst">
-              <RotateCcw className="w-6 h-6" />
+          <div className="rounded-3xl border-3 border-rose-500/30 bg-[#25121E]/80 backdrop-blur-xl p-5 shadow-[0_6px_0_0_#881337] flex items-center gap-4 transition-transform hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border-2 border-rose-400/40 flex items-center justify-center text-rose-300 text-2xl shadow-sm">
+              ↺
             </div>
             <div>
-              <p className="text-xs uppercase font-medium text-paleLavender/60">Refunded Orders</p>
-              <p className="text-2xl font-bold text-white">{refundedCount}</p>
+              <p className="text-[11px] uppercase font-black text-rose-300 tracking-wider">Refunded Orders</p>
+              <p className="text-2xl font-black text-rose-300">{refundedCount}</p>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Search Bar */}

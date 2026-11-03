@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
@@ -47,10 +46,14 @@ export default function NewSalePage() {
 
   // Cart
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [saleNumber, setSaleNumber] = useState(`SALE-${Date.now().toString().slice(-6)}`);
+  const [saleNumber, setSaleNumber] = useState('SALE-000000');
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [saleSuccess, setSaleSuccess] = useState<any | null>(null);
+
+  useEffect(() => {
+    setSaleNumber(`SALE-${Date.now().toString().slice(-6)}`);
+  }, []);
 
   // Fetch ingredients
   useEffect(() => {
