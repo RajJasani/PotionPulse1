@@ -76,19 +76,15 @@ export default function InventoryListPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Link href="/inventory/adjust">
-              <Button variant="secondary" size="sm" className="text-xs flex items-center gap-1.5">
-                <PlusCircle className="w-3.5 h-3.5" />
-                Receive / Adjust Stock
-              </Button>
-            </Link>
+            <Button href="/inventory/adjust" variant="secondary" size="sm" className="text-xs flex items-center gap-1.5">
+              <PlusCircle className="w-3.5 h-3.5" />
+              Receive / Adjust Stock
+            </Button>
 
-            <Link href="/inventory/new">
-              <Button variant="primary" size="sm" className="text-xs flex items-center gap-1.5">
-                <Plus className="w-3.5 h-3.5" />
-                New Ingredient
-              </Button>
-            </Link>
+            <Button href="/inventory/new" variant="primary" size="sm" className="text-xs flex items-center gap-1.5">
+              <Plus className="w-3.5 h-3.5" />
+              New Ingredient
+            </Button>
           </div>
         </div>
 
@@ -189,11 +185,9 @@ export default function InventoryListPage() {
                       ) : (
                         <div className="space-y-3">
                           <p>No ingredients found matching the criteria.</p>
-                          <Link href="/inventory/new">
-                            <Button size="sm" variant="primary" className="text-xs">
-                              Add First Ingredient
-                            </Button>
-                          </Link>
+                          <Button href="/inventory/new" size="sm" variant="primary" className="text-xs">
+                            Add First Ingredient
+                          </Button>
                         </div>
                       )}
                     </td>
@@ -235,12 +229,10 @@ export default function InventoryListPage() {
                         )}
                       </td>
                       <td className="py-3 px-4 text-right">
-                        <Link href={`/inventory/${ing.id}`}>
-                          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
-                            Details
-                            <ArrowRight className="w-3 h-3 ml-1" />
-                          </Button>
-                        </Link>
+                        <Button href={`/inventory/${ing.id}`} variant="ghost" size="sm" className="h-7 text-xs px-2.5">
+                          Details
+                          <ArrowRight className="w-3 h-3 ml-1" />
+                        </Button>
                       </td>
                     </tr>
                   ))

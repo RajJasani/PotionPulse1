@@ -119,12 +119,10 @@ function AdjustStockPageContent() {
     <AppShell>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center gap-3">
-          <Link href="/inventory">
-            <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
-            </Button>
-          </Link>
+          <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back
+          </Button>
           <div>
             <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
               <PlusCircle className="w-5 h-5 text-violetGlow" />
@@ -265,11 +263,9 @@ function AdjustStockPageContent() {
               )}
 
               <div className="pt-4 flex justify-end gap-3 border-t border-white/10">
-                <Link href="/inventory">
-                  <Button type="button" variant="outline">
-                    Cancel
-                  </Button>
-                </Link>
+                <Button href="/inventory" type="button" variant="outline">
+                  Cancel
+                </Button>
                 <Button
                   type="submit"
                   variant="primary"

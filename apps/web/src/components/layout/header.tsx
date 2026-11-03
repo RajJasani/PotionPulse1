@@ -42,18 +42,14 @@ export function Header() {
 
       {/* Action Buttons & Profile */}
       <div className="flex items-center gap-3">
-        <Link href="/sales/new">
-          <Button size="sm" variant="primary" className="hidden md:flex items-center gap-1.5 text-xs">
-            <Plus className="w-3.5 h-3.5" />
-            Record Sale
-          </Button>
-        </Link>
+        <Button href="/sales/new" size="sm" variant="primary" className="hidden md:flex items-center gap-1.5 text-xs">
+          <Plus className="w-3.5 h-3.5" />
+          Record Sale
+        </Button>
 
-        <Link href="/inventory/adjust">
-          <Button size="sm" variant="secondary" className="hidden md:flex items-center gap-1.5 text-xs">
-            Receive Stock
-          </Button>
-        </Link>
+        <Button href="/inventory/adjust" size="sm" variant="secondary" className="hidden md:flex items-center gap-1.5 text-xs">
+          Receive Stock
+        </Button>
 
         <Link
           href="http://localhost:4000/api/docs"

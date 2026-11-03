@@ -108,12 +108,10 @@ export default function DashboardPage() {
               Refresh
             </Button>
 
-            <Link href="/sales/new">
-              <Button size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
-                <Plus className="w-3.5 h-3.5" />
-                Record Sale
-              </Button>
-            </Link>
+            <Button href="/sales/new" size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
+              <Plus className="w-3.5 h-3.5" />
+              Record Sale
+            </Button>
           </div>
         </div>
 
@@ -136,12 +134,10 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <Link href="/events">
-              <Button variant="outline" size="sm" className="text-xs text-emberOrange border-emberOrange/40 hover:bg-emberOrange/10 shrink-0">
-                Inspect Event Impact
-                <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-              </Button>
-            </Link>
+            <Button href="/events" variant="outline" size="sm" className="text-xs text-emberOrange border-emberOrange/40 hover:bg-emberOrange/10 shrink-0">
+              Inspect Event Impact
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+            </Button>
           </div>
         </div>
 
@@ -268,12 +264,10 @@ export default function DashboardPage() {
               </CardDescription>
             </div>
 
-            <Link href="/inventory/movements">
-              <Button variant="ghost" size="sm" className="text-xs">
-                View Full Ledger
-                <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </Button>
-            </Link>
+            <Button href="/inventory/movements" variant="ghost" size="sm" className="text-xs">
+              View Full Ledger
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </Button>
           </CardHeader>
           <CardContent>
             {recentMovements.length === 0 ? (

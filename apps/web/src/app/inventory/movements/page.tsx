@@ -53,12 +53,10 @@ export default function StockMovementsPage() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/inventory">
-              <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Inventory
-              </Button>
-            </Link>
+            <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Inventory
+            </Button>
             <div>
               <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
                 <ArrowLeftRight className="w-6 h-6 text-violetGlow" />
@@ -71,12 +69,10 @@ export default function StockMovementsPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Link href="/inventory/adjust">
-              <Button size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
-                <PlusCircle className="w-3.5 h-3.5" />
-                Post Movement
-              </Button>
-            </Link>
+            <Button href="/inventory/adjust" size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
+              <PlusCircle className="w-3.5 h-3.5" />
+              Post Movement
+            </Button>
 
             <Button
               variant="ghost"

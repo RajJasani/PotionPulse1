@@ -14,8 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-ink text-paleLavender antialiased selection:bg-potionPurple selection:text-white">
+    <html lang="en" suppressHydrationWarning>
+      <body
+        suppressHydrationWarning
+        className="bg-ink text-paleLavender antialiased selection:bg-potionPurple selection:text-white"
+      >
         <AuthProvider>
           <SocketProvider>{children}</SocketProvider>
         </AuthProvider>

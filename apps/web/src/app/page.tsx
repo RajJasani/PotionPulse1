@@ -60,17 +60,13 @@ export default function HomePage() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="/auth/login">
-              <Button variant="ghost" size="sm" className="text-xs">
-                Sign In
-              </Button>
-            </Link>
-            <Link href="/dashboard">
-              <Button size="sm" className="bg-potionPurple hover:bg-potionPurple/90 text-white text-xs flex items-center gap-1.5 shadow-md shadow-potionPurple/25">
-                <span>Enter Dashboard</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Button>
-            </Link>
+            <Button href="/auth/login" variant="ghost" size="sm" className="text-xs">
+              Sign In
+            </Button>
+            <Button href="/dashboard" size="sm" className="bg-potionPurple hover:bg-potionPurple/90 text-white text-xs flex items-center gap-1.5 shadow-md shadow-potionPurple/25">
+              <span>Enter Dashboard</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Button>
           </div>
         </div>
       </header>
@@ -79,7 +75,7 @@ export default function HomePage() {
       <main className="relative z-10 flex-1 max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col items-center text-center space-y-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-midnight/90 border border-potionPurple/30 text-xs font-medium text-pumpkin animate-pulse">
           <Flame className="w-3.5 h-3.5 fill-pumpkin" />
-          <span>The Midnight Curse is Active &bull; 3.0x Demand Surge Applied</span>
+          <span>The Midnight Curse is Active • 3.0x Demand Surge Applied</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
@@ -95,18 +91,14 @@ export default function HomePage() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
-          <Link href="/dashboard">
-            <Button size="lg" className="bg-gradient-to-r from-potionPurple to-amethyst hover:opacity-95 text-white font-bold px-8 py-3.5 text-sm shadow-xl shadow-potionPurple/30 flex items-center gap-2">
-              <Zap className="w-4 h-4" />
-              Launch Live Dashboard
-            </Button>
-          </Link>
-          <Link href="/sales/new">
-            <Button size="lg" variant="outline" className="border-pumpkin/40 text-pumpkin hover:bg-pumpkin/10 px-8 py-3.5 text-sm flex items-center gap-2">
-              <ShoppingCart className="w-4 h-4" />
-              Open POS Register
-            </Button>
-          </Link>
+          <Button href="/dashboard" size="lg" className="bg-gradient-to-r from-potionPurple to-amethyst hover:opacity-95 text-white font-bold px-8 py-3.5 text-sm shadow-xl shadow-potionPurple/30 flex items-center gap-2">
+            <Zap className="w-4 h-4" />
+            Launch Live Dashboard
+          </Button>
+          <Button href="/sales/new" size="lg" variant="outline" className="border-pumpkin/40 text-pumpkin hover:bg-pumpkin/10 px-8 py-3.5 text-sm flex items-center gap-2">
+            <ShoppingCart className="w-4 h-4" />
+            Open POS Register
+          </Button>
         </div>
 
         {/* Live Dashboard Preview Card */}
@@ -116,7 +108,7 @@ export default function HomePage() {
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-cauldronGreen animate-ping" />
                 <span className="text-xs uppercase font-mono tracking-widest text-paleLavender/70">
-                  PotionPulse Live Core v1.0.0 &bull; Connected to NestJS Realtime Gateway
+                  PotionPulse Live Core v1.0.0 • Connected to NestJS Realtime Gateway
                 </span>
               </div>
               <div className="flex gap-2">
@@ -147,7 +139,7 @@ export default function HomePage() {
                   Stockout Risk Alerts
                 </span>
                 <span className="text-2xl font-bold text-crimson mt-1 block">3 Critical</span>
-                <span className="text-[11px] text-pumpkin font-mono">&le; 48h cover</span>
+                <span className="text-[11px] text-pumpkin font-mono">≤ 48h cover</span>
               </div>
 
               <div className="p-4 rounded-xl bg-ink/70 border border-potionPurple/15">
@@ -243,7 +235,7 @@ export default function HomePage() {
               </div>
               <h3 className="font-bold text-base text-white">Anomaly Detection Guard</h3>
               <p className="text-xs text-paleLavender/70 leading-relaxed">
-                Flags unexplained shrinkage, consumption spikes (&gt;3.5&sigma;), and blocked negative balance attempts with full resolution workflows.
+                Flags unexplained shrinkage, consumption spikes (&gt;3.5σ), and blocked negative balance attempts with full resolution workflows.
               </p>
               <Link href="/anomalies" className="text-xs text-crimson hover:underline flex items-center gap-1 font-semibold pt-2">
                 <span>Open Anomaly Center</span>
@@ -298,7 +290,7 @@ export default function HomePage() {
       <footer className="relative z-10 border-t border-potionPurple/15 bg-midnight/80 px-6 py-6 text-xs text-paleLavender/50">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white">PotionPulse</span> &mdash; Predictive Inventory Intelligence for Modern Alchemists.
+            <span className="font-bold text-white">PotionPulse</span> — Predictive Inventory Intelligence for Modern Alchemists.
           </div>
           <div className="flex items-center gap-4">
             <Link href="/dashboard" className="hover:text-white transition-colors">

@@ -185,12 +185,10 @@ export default function SalesPage() {
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
               Sync
             </Button>
-            <Link href="/sales/new">
-              <Button size="sm" className="flex items-center gap-1.5 bg-pumpkin hover:bg-pumpkin/90 text-white">
-                <PlusCircle className="w-4 h-4" />
-                Point of Sale (POS)
-              </Button>
-            </Link>
+            <Button href="/sales/new" size="sm" className="flex items-center gap-1.5 bg-pumpkin hover:bg-pumpkin/90 text-white">
+              <PlusCircle className="w-4 h-4" />
+              Point of Sale (POS)
+            </Button>
           </div>
         </div>
 

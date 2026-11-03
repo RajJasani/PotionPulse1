@@ -80,12 +80,10 @@ export default function NewIngredientPage() {
     <AppShell>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center gap-3">
-          <Link href="/inventory">
-            <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back to Catalog
-            </Button>
-          </Link>
+          <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Catalog
+          </Button>
           <div>
             <h1 className="text-xl font-bold text-white tracking-tight">Add New Ingredient</h1>
             <p className="text-xs text-mutedText">Configure inventory tracking parameters and reorder rules.</p>
@@ -220,11 +218,9 @@ export default function NewIngredientPage() {
               </div>
 
               <div className="pt-4 flex justify-end gap-3 border-t border-white/10">
-                <Link href="/inventory">
-                  <Button type="button" variant="outline">
-                    Cancel
-                  </Button>
-                </Link>
+                <Button href="/inventory" type="button" variant="outline">
+                  Cancel
+                </Button>
                 <Button type="submit" variant="primary" isLoading={loading}>
                   <Save className="w-4 h-4 mr-2" />
                   Save Ingredient

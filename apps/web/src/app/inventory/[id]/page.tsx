@@ -84,11 +84,9 @@ export default function IngredientDetailPage() {
       <AppShell>
         <div className="max-w-md mx-auto py-16 text-center space-y-4">
           <p className="text-dangerRed text-sm">{error || 'Ingredient not found'}</p>
-          <Link href="/inventory">
-            <Button variant="secondary" size="sm">
-              Return to Catalog
-            </Button>
-          </Link>
+          <Button href="/inventory" variant="secondary" size="sm">
+            Return to Catalog
+          </Button>
         </div>
       </AppShell>
     );
@@ -100,12 +98,10 @@ export default function IngredientDetailPage() {
         {/* Navigation Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/inventory">
-              <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Back
-              </Button>
-            </Link>
+            <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Back
+            </Button>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-2xl font-black text-white tracking-tight">{ingredient.name}</h1>
@@ -124,12 +120,10 @@ export default function IngredientDetailPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Link href={`/inventory/adjust?ingredientId=${ingredient.id}`}>
-              <Button size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
-                <PlusCircle className="w-3.5 h-3.5" />
-                Adjust / Intake Stock
-              </Button>
-            </Link>
+            <Button href={`/inventory/adjust?ingredientId=${ingredient.id}`} size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
+              <PlusCircle className="w-3.5 h-3.5" />
+              Adjust / Intake Stock
+            </Button>
 
             <Button
               size="sm"

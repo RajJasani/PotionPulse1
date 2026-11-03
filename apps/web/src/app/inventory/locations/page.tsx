@@ -82,12 +82,10 @@ export default function LocationsPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/inventory">
-              <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Back
-              </Button>
-            </Link>
+            <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Back
+            </Button>
             <div>
               <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
                 <Layers className="w-6 h-6 text-violetGlow" />
