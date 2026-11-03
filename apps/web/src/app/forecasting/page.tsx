@@ -8,13 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient } from '@/lib/api-client';
 import {
-  TrendingUp,
   Calendar,
   Sparkles,
   Search,
   Filter,
   RefreshCw,
-  Info,
   Zap,
 } from 'lucide-react';
 import { ClientOnly } from '@/components/ui/client-only';

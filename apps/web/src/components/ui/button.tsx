@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink' | 'purple' | 'amber';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink' | 'purple' | 'amber' | 'mint';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   isLoading?: boolean;
   href?: string;
@@ -15,7 +15,7 @@ export const buttonVariants = ({
   size = 'md',
   className = '',
 }: {
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink' | 'purple' | 'amber';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink' | 'purple' | 'amber' | 'mint';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 } = {}) => {
@@ -27,6 +27,8 @@ export const buttonVariants = ({
     secondary:
       'bg-white text-ink hover:bg-[#FAF5EE] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-extrabold',
     success:
+      'bg-[#06D6A0] text-ink hover:bg-[#05BF8E] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
+    mint:
       'bg-[#06D6A0] text-ink hover:bg-[#05BF8E] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
     orange:
       'bg-[#FF5C00] text-white hover:bg-[#E55300] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',

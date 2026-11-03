@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -8,19 +6,13 @@ import {
   ShoppingCart,
   Zap,
   Package,
-  LineChart,
   ShieldCheck,
-  Sparkles,
-  Layers,
   CheckCircle2,
   AlertTriangle,
-  History,
-  Activity,
   Terminal,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 export default function HomePage() {
   return (

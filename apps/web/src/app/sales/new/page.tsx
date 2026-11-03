@@ -5,13 +5,11 @@ import { useRouter } from 'next/navigation';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient } from '@/lib/api-client';
 import { formatCurrency } from '@/lib/utils';
 import {
   ArrowLeft,
-  ShoppingCart,
   Search,
   Plus,
   Minus,

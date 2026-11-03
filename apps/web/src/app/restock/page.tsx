@@ -2,22 +2,18 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { AppShell } from '@/components/layout/app-shell';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient } from '@/lib/api-client';
 import { formatCurrency } from '@/lib/utils';
 import {
-  AlertTriangle,
   RefreshCw,
   Package,
   ShoppingCart,
-  CheckCircle2,
   Clock,
   ArrowRight,
   TrendingDown,
-  Info,
   X,
 } from 'lucide-react';
 

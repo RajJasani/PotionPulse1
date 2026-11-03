@@ -18,7 +18,6 @@ import {
   ArrowRight,
   Plus,
   RefreshCw,
-  Sparkles,
   Zap,
 } from 'lucide-react';
 
