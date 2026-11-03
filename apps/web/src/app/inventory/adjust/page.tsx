@@ -102,7 +102,6 @@ function AdjustStockPageContent() {
       setSuccess(res.data);
       setReason('');
 
-      // Refresh local ingredient list
       const updatedList = await apiClient<any[]>('/ingredients', {
         token: accessToken || undefined,
         tenantId: activeTenant?.id,
@@ -118,60 +117,66 @@ function AdjustStockPageContent() {
   return (
     <AppShell>
       <div className="max-w-2xl mx-auto space-y-6">
-        <div className="flex items-center gap-3">
-          <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+        <div className="flex items-center gap-3 border-b-2 border-ink pb-4">
+          <Button href="/inventory" variant="outline" size="sm" className="h-9 px-2.5 text-xs font-bold">
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back
           </Button>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-              <PlusCircle className="w-5 h-5 text-violetGlow" />
+            <div className="flex items-center gap-2 mb-1">
+              <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                LEDGER ENTRY
+              </span>
+              <span className="font-mono text-xs font-bold text-ink/70">
+                // STOCK RECEIPT & ADJUSTMENT
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+              <PlusCircle className="w-6 h-6 text-hackOrange" />
               Receive & Adjust Inventory
             </h1>
-            <p className="text-xs text-mutedText">
-              Post an immutable transactional ledger movement to update physical on-hand balances.
-            </p>
           </div>
         </div>
 
         {success && (
-          <div className="p-4 rounded-xl bg-successGreen/20 border border-successGreen/40 text-emerald-300 text-xs flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="p-4 rounded-xl bg-emerald-50 border-2 border-ink shadow-retro text-ink text-xs flex items-center justify-between">
+            <div className="flex items-center gap-2 font-mono">
+              <CheckCircle2 className="w-5 h-5 text-hackMint" />
               <span>
                 Movement committed! New balance for <strong>{success.ingredientName}</strong>:{' '}
                 <strong>{success.balanceAfter} {success.unit}</strong>.
               </span>
             </div>
-            <Link href="/inventory/movements" className="underline font-semibold text-white ml-2">
+            <Link href="/inventory/movements" className="underline font-mono font-black text-hackOrange ml-2">
               View in Ledger
             </Link>
           </div>
         )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Movement Parameters</CardTitle>
-            <CardDescription>
+        <div className="bg-white border-2 border-ink shadow-retro rounded-xl p-6">
+          <div className="border-b-2 border-ink pb-4 mb-4">
+            <h2 className="text-base font-black text-ink font-mono uppercase">Movement Parameters</h2>
+            <p className="text-xs text-ink/70 font-medium mt-1">
               Every stock change generates an immutable ledger record with balance versioning and actor audit trail.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+            </p>
+          </div>
+
+          <div>
             {error && (
-              <div className="mb-4 p-3 rounded-xl bg-dangerRed/15 border border-dangerRed/40 text-rose-300 text-xs">
+              <div className="mb-4 p-3 rounded-xl bg-rose-50 border-2 border-ink text-hackRed text-xs font-mono font-bold">
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono font-bold">
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mutedText">
+                <label className="block text-xs font-mono font-black uppercase tracking-wider text-ink/70">
                   Target Ingredient
                 </label>
                 <select
                   value={selectedIngredientId}
                   onChange={(e) => setSelectedIngredientId(e.target.value)}
-                  className="w-full h-11 rounded-xl border border-white/10 bg-[#171321] px-4 text-sm text-white focus:outline-none focus:border-potionPurple"
+                  className="w-full h-11 rounded-xl border-2 border-ink bg-cream px-4 text-xs font-bold text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   disabled={loading}
                   required
                 >
@@ -185,13 +190,13 @@ function AdjustStockPageContent() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-mutedText">
+                  <label className="block text-xs font-mono font-black uppercase tracking-wider text-ink/70">
                     Operation Type
                   </label>
                   <select
                     value={movementType}
                     onChange={(e) => setMovementType(e.target.value as StockMovementType)}
-                    className="w-full h-11 rounded-xl border border-white/10 bg-[#171321] px-4 text-sm text-white focus:outline-none focus:border-potionPurple"
+                    className="w-full h-11 rounded-xl border-2 border-ink bg-cream px-4 text-xs font-bold text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   >
                     <option value={StockMovementType.RECEIPT}>Receipt (Stock Intake from Supplier)</option>
                     <option value={StockMovementType.ADJUSTMENT_IN}>Manual Adjustment (+) Increase</option>
@@ -202,13 +207,13 @@ function AdjustStockPageContent() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-mutedText">
+                  <label className="block text-xs font-mono font-black uppercase tracking-wider text-ink/70">
                     Target Shelf / Location
                   </label>
                   <select
                     value={selectedLocationId}
                     onChange={(e) => setSelectedLocationId(e.target.value)}
-                    className="w-full h-11 rounded-xl border border-white/10 bg-[#171321] px-4 text-sm text-white focus:outline-none focus:border-potionPurple"
+                    className="w-full h-11 rounded-xl border-2 border-ink bg-cream px-4 text-xs font-bold text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   >
                     {locations.map((loc) => (
                       <option key={loc.id} value={loc.id}>
@@ -241,16 +246,16 @@ function AdjustStockPageContent() {
 
               {/* Balance Impact Preview */}
               {selectedIngredient && (
-                <div className="p-4 rounded-xl bg-ink/70 border border-white/10 flex items-center justify-between">
-                  <span className="text-mutedText">Projected Physical Balance:</span>
+                <div className="p-4 rounded-xl bg-sand border-2 border-ink flex items-center justify-between">
+                  <span className="text-ink/70">Projected Physical Balance:</span>
                   <div className="flex items-center gap-3">
-                    <span className="text-mutedText font-mono">
+                    <span className="text-ink/80 font-mono">
                       {selectedIngredient.onHand} {selectedIngredient.baseUnit}
                     </span>
-                    <span className="text-mutedText">→</span>
+                    <span className="text-ink">→</span>
                     <span
                       className={`text-base font-black font-mono ${
-                        (projectedBalance ?? 0) < 0 ? 'text-dangerRed' : 'text-emerald-400'
+                        (projectedBalance ?? 0) < 0 ? 'text-hackRed' : 'text-hackMint'
                       }`}
                     >
                       {projectedBalance} {selectedIngredient.baseUnit}
@@ -262,23 +267,24 @@ function AdjustStockPageContent() {
                 </div>
               )}
 
-              <div className="pt-4 flex justify-end gap-3 border-t border-white/10">
+              <div className="pt-4 flex justify-end gap-3 border-t-2 border-ink">
                 <Button href="/inventory" type="button" variant="outline">
                   Cancel
                 </Button>
                 <Button
                   type="submit"
-                  variant="primary"
+                  variant="orange"
                   isLoading={submitting}
                   disabled={(projectedBalance ?? 0) < 0}
+                  className="font-black"
                 >
                   <Save className="w-4 h-4 mr-2" />
                   Post Movement to Ledger
                 </Button>
               </div>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </AppShell>
   );
@@ -286,7 +292,7 @@ function AdjustStockPageContent() {
 
 export default function AdjustStockPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-ink flex items-center justify-center text-paleLavender/50">Loading adjustment form...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-cream flex items-center justify-center font-mono text-ink/70">Loading adjustment form...</div>}>
       <AdjustStockPageContent />
     </Suspense>
   );

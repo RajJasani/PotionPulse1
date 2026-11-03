@@ -76,7 +76,6 @@ export default function ForecastingPage() {
 
   // Compute forecasts per ingredient based on actuals & PRD multipliers
   const forecasts: ForecastItem[] = useMemo(() => {
-    // Midnight curse ingredients receive 3.0x multiplier
     const curseIngredients = ['Bat Wings', 'Mandrake Root', 'Ghost Pepper', 'Dragon Scale'];
 
     return ingredients.map((ing) => {
@@ -85,7 +84,6 @@ export default function ForecastingPage() {
       );
       const multiplier = midnightCurseActive && isCurse ? 3.0 : 1.0;
 
-      // Calculate baseline daily velocity (from historical or deterministic hash of sku for baseline)
       const baseDaily = ing.reorderPoint ? Math.max(1, Math.round(ing.reorderPoint / 7)) : 3;
       const dailyVelocity = Math.round(baseDaily * multiplier * 10) / 10;
       const projectedDemand = Math.round(dailyVelocity * horizon);
@@ -122,7 +120,6 @@ export default function ForecastingPage() {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
       const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      // Look up actual in demandData or generate steady baseline
       const dayDemand = demandData.find((entry) => entry.date === d.toISOString().slice(0, 10));
       const actual = dayDemand ? Number(dayDemand.totalQuantity || 0) : Math.floor(45 + Math.sin(i) * 12);
       points.push({
@@ -169,49 +166,52 @@ export default function ForecastingPage() {
     <AppShell>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-ink pb-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              <TrendingUp className="w-7 h-7 text-potionPurple" />
-              Demand Intelligence & Forecasting
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                DEMAND INTELLIGENCE
+              </span>
+              <span className="font-mono text-xs font-bold text-ink/70">
+                // PROBABILISTIC FORECASTING ENGINE
+              </span>
+            </div>
+            <h1 className="text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+              <span>📈</span> Demand Intelligence & Forecasting
             </h1>
-            <p className="text-sm text-paleLavender/60 mt-1">
-              Probabilistic demand curves factoring historical velocity and mystical seasonal spikes.
+            <p className="text-xs text-ink/70 font-medium mt-1">
+              Time-series projection combining exponential smoothing with configurable Midnight Curse multipliers.
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Button
               variant="outline"
               size="sm"
               onClick={fetchData}
               disabled={loading}
-              className="flex items-center gap-1.5"
+              className="flex items-center gap-1.5 font-bold"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Recompute
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <span>Recompute</span>
             </Button>
-            {/* Midnight Curse Surge Toggle */}
             <Button
               size="sm"
+              variant={midnightCurseActive ? 'orange' : 'outline'}
               onClick={() => setMidnightCurseActive(!midnightCurseActive)}
-              className={`flex items-center gap-1.5 ${
-                midnightCurseActive
-                  ? 'bg-pumpkin text-white hover:bg-pumpkin/90'
-                  : 'bg-midnight text-paleLavender/60 border border-potionPurple/20 hover:text-white'
-              }`}
+              className="flex items-center gap-1.5 font-black"
             >
               <Zap className="w-4 h-4" />
-              Midnight Curse Multiplier (3.0x) {midnightCurseActive ? 'ON' : 'OFF'}
+              <span>Curse Surge (3.0×) {midnightCurseActive ? 'ON' : 'OFF'}</span>
             </Button>
           </div>
         </div>
 
         {/* Horizon Selector and Summary Ribbon */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="p-4 md:col-span-1 flex flex-col justify-between">
-            <span className="text-xs uppercase font-medium text-paleLavender/60 flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5 text-potionPurple" />
+          <Card className="p-4 bg-white flex flex-col justify-between">
+            <span className="text-xs uppercase font-mono font-black text-ink/70 flex items-center gap-1">
+              <Calendar className="w-3.5 h-3.5 text-hackOrange" />
               Forecast Horizon
             </span>
             <div className="flex items-center gap-2 mt-2">
@@ -219,73 +219,73 @@ export default function ForecastingPage() {
                 <button
                   key={h}
                   onClick={() => setHorizon(h)}
-                  className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  className={`flex-1 py-1 rounded-lg text-xs font-mono font-bold transition-all border-2 border-ink ${
                     horizon === h
-                      ? 'bg-potionPurple text-white shadow-sm'
-                      : 'bg-midnight/70 text-paleLavender/60 hover:text-white border border-potionPurple/15'
+                      ? 'bg-hackOrange text-white shadow-retro-sm'
+                      : 'bg-sand text-ink hover:bg-cream'
                   }`}
                 >
                   {h} Days
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-paleLavender/40 mt-2">
-              Next {horizon} days projected demand
+            <p className="text-[11px] font-mono text-ink/60 mt-2">
+              Horizon: Next {horizon} days
             </p>
           </Card>
 
-          <Card className="p-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-potionPurple/20 border border-potionPurple/30 flex items-center justify-center text-potionPurple">
-              <TrendingUp className="w-6 h-6" />
+          <div className="p-4 rounded-xl border-2 border-ink bg-purple-50 shadow-retro flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-hackPurple border-2 border-ink shadow-retro-sm flex items-center justify-center text-white text-2xl font-bold">
+              📈
             </div>
             <div>
-              <p className="text-xs uppercase font-medium text-paleLavender/60">Total Horizon Demand</p>
-              <p className="text-2xl font-bold text-white">
+              <p className="text-[11px] uppercase font-mono font-black text-ink/70">Total Horizon Demand</p>
+              <p className="text-2xl font-black text-ink">
                 {forecasts.reduce((acc, f) => acc + f.projectedDemand, 0).toLocaleString()} units
               </p>
             </div>
-          </Card>
+          </div>
 
-          <Card className="p-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-pumpkin/20 border border-pumpkin/30 flex items-center justify-center text-pumpkin">
-              <Sparkles className="w-6 h-6" />
+          <div className="p-4 rounded-xl border-2 border-ink bg-amber-50 shadow-retro flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-hackAmber border-2 border-ink shadow-retro-sm flex items-center justify-center text-ink text-2xl font-bold">
+              ⚡
             </div>
             <div>
-              <p className="text-xs uppercase font-medium text-paleLavender/60">Surge Impacted</p>
-              <p className="text-2xl font-bold text-pumpkin">
+              <p className="text-[11px] uppercase font-mono font-black text-ink/70">Curse Impacted</p>
+              <p className="text-2xl font-black text-hackOrange">
                 {forecasts.filter((f) => f.seasonalMultiplier > 1).length} Ingredients
               </p>
             </div>
-          </Card>
+          </div>
 
-          <Card className="p-4 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-cauldronGreen/20 border border-cauldronGreen/30 flex items-center justify-center text-cauldronGreen">
-              <Info className="w-6 h-6" />
+          <div className="p-4 rounded-xl border-2 border-ink bg-emerald-50 shadow-retro flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-hackMint border-2 border-ink shadow-retro-sm flex items-center justify-center text-ink text-2xl font-bold">
+              ✓
             </div>
             <div>
-              <p className="text-xs uppercase font-medium text-paleLavender/60">Model Confidence</p>
-              <p className="text-2xl font-bold text-cauldronGreen">94.8%</p>
+              <p className="text-[11px] uppercase font-mono font-black text-ink/70">Engine Confidence</p>
+              <p className="text-2xl font-black text-hackMint">94.8% WAPE</p>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Time-Series Forecast Curve */}
-        <Card className="p-5 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-potionPurple/15 pb-3">
+        <Card className="p-5 space-y-4 bg-white">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-ink pb-3">
             <div>
-              <h3 className="font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-pumpkin" />
-                Aggregated Apothecary Consumption vs Projected Curve
+              <h3 className="font-black text-ink flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-hackOrange" />
+                Aggregated Apothecary Consumption vs Projected Demand
               </h3>
-              <p className="text-xs text-paleLavender/60">
-                Solid plum curve shows historical ledger deductions; glowing orange shows forecasted demand trajectory.
+              <p className="text-xs text-ink/70 font-medium">
+                Solid violet indicates historical actuals; dashed flame orange represents exponential demand projection.
               </p>
             </div>
             {midnightCurseActive && (
-              <Badge variant="warning" className="w-fit flex items-center gap-1">
+              <span className="sticker-tag bg-hackOrange text-white font-mono flex items-center gap-1">
                 <Zap className="w-3 h-3" />
-                Seasonal Surge Multiplier Active
-              </Badge>
+                Curse Multiplier (3.0×) Active
+              </span>
             )}
           </div>
 
@@ -294,33 +294,35 @@ export default function ForecastingPage() {
               <AreaChart data={chartSeries} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8A2BE2" stopOpacity={0.6} />
-                    <stop offset="95%" stopColor="#8A2BE2" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="#6320EE" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#6320EE" stopOpacity={0.0} />
                   </linearGradient>
                   <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FF7518" stopOpacity={0.6} />
-                    <stop offset="95%" stopColor="#FF7518" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="#FF5C00" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#FF5C00" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2D124D" />
-                <XAxis dataKey="date" stroke="#D1C4E9" opacity={0.6} fontSize={11} />
-                <YAxis stroke="#D1C4E9" opacity={0.6} fontSize={11} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E2DCD5" />
+                <XAxis dataKey="date" stroke="#1A1523" fontSize={11} fontFamily="monospace" />
+                <YAxis stroke="#1A1523" fontSize={11} fontFamily="monospace" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0D0614',
-                    borderColor: '#4A1D7A',
+                    backgroundColor: '#FFFFFF',
+                    border: '2px solid #1A1523',
                     borderRadius: '8px',
+                    boxShadow: '4px 4px 0px #1A1523',
                     fontSize: '12px',
-                    color: '#EDE7F6',
+                    color: '#1A1523',
+                    fontFamily: 'monospace',
                   }}
                 />
-                <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+                <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px', fontFamily: 'monospace' }} />
                 <Area
                   type="monotone"
                   dataKey="ActualDemand"
                   name="Historical Actuals"
-                  stroke="#8A2BE2"
-                  strokeWidth={2}
+                  stroke="#6320EE"
+                  strokeWidth={2.5}
                   fillOpacity={1}
                   fill="url(#actualGrad)"
                 />
@@ -328,8 +330,8 @@ export default function ForecastingPage() {
                   type="monotone"
                   dataKey="ForecastDemand"
                   name={`Projected Demand (${horizon}d)`}
-                  stroke="#FF7518"
-                  strokeWidth={2}
+                  stroke="#FF5C00"
+                  strokeWidth={2.5}
                   strokeDasharray="4 4"
                   fillOpacity={1}
                   fill="url(#forecastGrad)"
@@ -343,25 +345,25 @@ export default function ForecastingPage() {
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-paleLavender/40" />
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink/50" />
               <input
                 type="text"
                 placeholder="Search forecasted ingredient..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-midnight/60 border border-potionPurple/20 rounded-lg text-sm text-paleLavender placeholder:text-paleLavender/30 focus:outline-none focus:border-potionPurple"
+                className="w-full pl-9 pr-4 py-2 bg-cream border-2 border-ink rounded-xl text-xs font-mono font-bold text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-hackOrange shadow-retro-sm"
               />
             </div>
             <div className="flex items-center gap-2 overflow-x-auto">
-              <Filter className="w-4 h-4 text-paleLavender/40 shrink-0" />
+              <Filter className="w-4 h-4 text-ink/50 shrink-0" />
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+                  className={`px-3 py-1 rounded-lg text-xs font-mono font-bold whitespace-nowrap transition-all border-2 border-ink ${
                     selectedCategory === cat
-                      ? 'bg-potionPurple text-white shadow-sm'
-                      : 'bg-midnight/60 text-paleLavender/70 hover:bg-midnight hover:text-white border border-potionPurple/15'
+                      ? 'bg-hackOrange text-white shadow-retro-sm'
+                      : 'bg-sand text-ink hover:bg-cream'
                   }`}
                 >
                   {cat}
@@ -370,10 +372,10 @@ export default function ForecastingPage() {
             </div>
           </div>
 
-          <Card className="p-0 overflow-hidden">
+          <div className="bg-white border-2 border-ink rounded-xl shadow-retro overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-paleLavender">
-                <thead className="bg-midnight/70 text-xs uppercase tracking-wider text-paleLavender/60 border-b border-potionPurple/15">
+              <table className="w-full text-left text-xs text-ink font-medium">
+                <thead className="bg-sand uppercase font-mono text-[10px] font-black tracking-wider border-b-2 border-ink">
                   <tr>
                     <th className="py-3 px-4">Ingredient</th>
                     <th className="py-3 px-4">Category</th>
@@ -384,65 +386,59 @@ export default function ForecastingPage() {
                     <th className="py-3 px-4">Confidence</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-potionPurple/10">
+                <tbody className="divide-y-2 border-ink/20 font-mono">
                   {loading && filteredForecasts.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-paleLavender/40">
-                        Calculating demand forecast...
+                      <td colSpan={7} className="py-8 text-center text-ink/60 font-bold">
+                        Computing demand forecast curves...
                       </td>
                     </tr>
                   ) : filteredForecasts.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-paleLavender/40">
+                      <td colSpan={7} className="py-8 text-center text-ink/60 font-bold">
                         No ingredients found matching filters.
                       </td>
                     </tr>
                   ) : (
                     filteredForecasts.map((item) => (
-                      <tr key={item.id} className="hover:bg-potionPurple/5 transition-colors">
-                        <td className="py-3 px-4">
-                          <p className="font-semibold text-white">{item.name}</p>
-                          <p className="text-xs font-mono text-paleLavender/50">{item.sku}</p>
+                      <tr key={item.id} className="hover:bg-sand/60 transition-colors">
+                        <td className="py-3 px-4 font-sans font-black text-ink">
+                          <p>{item.name}</p>
+                          <p className="text-[11px] font-mono text-ink/60 font-normal">{item.sku}</p>
                         </td>
                         <td className="py-3 px-4">
-                          <Badge variant="outline" className="text-[10px]">
+                          <span className="sticker-tag bg-sand text-ink text-[10px] py-0.5 border-ink">
                             {item.category}
-                          </Badge>
+                          </span>
                         </td>
-                        <td className="py-3 px-4 font-mono font-medium">
+                        <td className="py-3 px-4 font-bold text-ink">
                           {item.onHand} {item.unit}
                         </td>
-                        <td className="py-3 px-4 font-mono">
+                        <td className="py-3 px-4 text-ink">
                           {item.dailyVelocity} {item.unit}/day
                         </td>
                         <td className="py-3 px-4">
                           {item.seasonalMultiplier > 1 ? (
                             <Badge variant="warning" className="flex items-center gap-1 w-fit">
                               <Zap className="w-3 h-3" />
-                              {item.seasonalMultiplier}x Surge
+                              {item.seasonalMultiplier}× Surge
                             </Badge>
                           ) : (
-                            <span className="text-paleLavender/60 font-mono text-xs">1.0x (Normal)</span>
+                            <span className="text-ink/60 text-xs">1.0× (Normal)</span>
                           )}
                         </td>
-                        <td className="py-3 px-4 font-mono font-bold text-pumpkin">
+                        <td className="py-3 px-4 font-black text-hackOrange text-sm">
                           {item.projectedDemand} {item.unit}
                         </td>
                         <td className="py-3 px-4">
                           {item.confidence === 'HIGH' && (
-                            <Badge variant="success" className="text-[10px]">
-                              High
-                            </Badge>
+                            <Badge variant="success">High</Badge>
                           )}
                           {item.confidence === 'MEDIUM' && (
-                            <Badge variant="warning" className="text-[10px]">
-                              Medium
-                            </Badge>
+                            <Badge variant="warning">Medium</Badge>
                           )}
                           {item.confidence === 'COLD_START' && (
-                            <Badge variant="danger" className="text-[10px]">
-                              Cold Start
-                            </Badge>
+                            <Badge variant="danger">Cold Start</Badge>
                           )}
                         </td>
                       </tr>
@@ -451,7 +447,7 @@ export default function ForecastingPage() {
                 </tbody>
               </table>
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     </AppShell>

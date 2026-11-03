@@ -40,53 +40,43 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#110C1D] flex flex-col justify-center items-center p-6 relative overflow-hidden selection:bg-potionPurple selection:text-white">
-      {/* Mystical Floating Cartoon Orbs */}
-      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] pointer-events-none opacity-30 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-orange-500 animate-pulse-glow" />
-      <div className="absolute bottom-[-15%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none opacity-20 bg-emerald-500" />
-
-      {/* Floating Cartoon Particle Decorators */}
-      <div className="fixed top-12 left-12 text-3xl opacity-60 animate-bubble-float pointer-events-none select-none">🧪</div>
-      <div className="fixed top-24 right-16 text-3xl opacity-60 animate-bounce-subtle pointer-events-none select-none">✨</div>
-      <div className="fixed bottom-16 left-20 text-3xl opacity-50 animate-wiggle-slow pointer-events-none select-none">🦇</div>
-      <div className="fixed bottom-20 right-20 text-4xl opacity-60 animate-bubble-float pointer-events-none select-none">🎃</div>
-
+    <div className="min-h-screen bg-[#FFFDF9] flex flex-col justify-center items-center p-6 relative selection:bg-hackOrange selection:text-white">
       <div className="w-full max-w-md z-10 space-y-6">
-        {/* Cartoon Header Brand */}
+        {/* Brand Header — Hacktoberfest Festival Badge */}
         <div className="flex flex-col items-center text-center">
-          <Link href="/" className="inline-flex items-center gap-3 mb-2 group">
-            <div className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-violet-600 via-potionPurple to-pink-500 flex items-center justify-center border-3 border-white/50 shadow-cartoon-purple group-hover:scale-105 group-hover:rotate-3 transition-transform text-2xl">
-              🔮
+          <Link href="/" className="inline-flex items-center gap-3 mb-3 group">
+            <div className="w-12 h-12 rounded-xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center text-white shadow-retro group-hover:translate-x-[-1px] group-hover:translate-y-[-1px] transition-transform text-2xl">
+              ⚡
             </div>
             <div className="text-left">
-              <span className="text-3xl font-black text-white tracking-tight flex items-center gap-1.5 drop-shadow-md">
+              <span className="text-3xl font-black text-ink tracking-tight font-mono block leading-none">
                 PotionPulse
               </span>
-              <span className="text-xs font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-pink-400 block">
-                Predict. Manage. Thrive.
+              <span className="text-[10px] font-mono font-black uppercase tracking-widest text-[#FF5C00] block mt-1">
+                Open Inventory Intelligence
               </span>
             </div>
           </Link>
-          <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-900/40 border-2 border-purple-400/30 text-[11px] font-extrabold text-purple-200">
-            <span>✨</span> Multi-Tenant Inventory Intelligence Platform
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FAF5EE] border-2 border-ink text-xs font-mono font-black text-ink shadow-retro-xs">
+            <span>🧙‍♀️</span> APOTHECARY WORKSPACE // 2026
           </div>
         </div>
 
-        {/* Main Login Card */}
-        <Card className="border-3 border-purple-500/30 bg-[#1D132D]/95 backdrop-blur-2xl shadow-[0_12px_0_0_#0D0717,0_20px_40px_rgba(139,92,246,0.25)] rounded-3xl p-7">
+        {/* Login Card — Clean Paper Pass with Hard Retro Shadow */}
+        <Card className="border-2 border-ink bg-white shadow-retro-lg rounded-2xl p-7">
           <CardHeader className="p-0 pb-5 text-center">
-            <CardTitle className="text-2xl font-black text-white flex items-center justify-center gap-2">
-              Sign in to your shop 🧙‍♀️
+            <CardTitle className="text-2xl font-black text-ink flex items-center justify-center gap-2 font-mono">
+              SIGN IN TO SHOP
             </CardTitle>
-            <CardDescription className="text-xs font-bold text-purple-300/80">
+            <CardDescription className="text-xs font-semibold text-mutedText">
               Enter your credentials to access your inventory and demand intelligence.
             </CardDescription>
           </CardHeader>
 
           <CardContent className="p-0 space-y-5">
             {error && (
-              <div className="p-3.5 rounded-2xl bg-rose-500/20 border-2 border-rose-400 text-rose-200 text-xs font-black flex items-center gap-2.5 shadow-sm animate-wiggle-slow">
-                <AlertCircle className="w-4 h-4 shrink-0 text-rose-300" />
+              <div className="p-3.5 rounded-xl bg-[#FDECEE] border-2 border-hackRed text-hackRed text-xs font-mono font-bold flex items-center gap-2.5 shadow-retro-xs">
+                <AlertCircle className="w-4 h-4 shrink-0 text-hackRed" />
                 <span>{error}</span>
               </div>
             )}
@@ -119,38 +109,38 @@ export default function LoginPage() {
             {/* Evaluation Options Divider */}
             <div className="relative my-6 text-center">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t-2 border-purple-500/20" />
+                <div className="w-full border-t-2 border-sandDark" />
               </div>
-              <span className="relative bg-[#1D132D] px-4 text-[11px] uppercase tracking-wider text-amber-300 font-black">
-                ⚡ Evaluation Options
+              <span className="relative bg-white px-3 text-[11px] font-mono font-black uppercase tracking-wider text-mutedText">
+                EVALUATION OPTIONS
               </span>
             </div>
 
             {/* Quick Demo Credentials Button */}
             <Button
               type="button"
-              variant="orange"
+              variant="amber"
               size="md"
               className="w-full flex items-center justify-center gap-2"
               onClick={fillDemoAccount}
             >
-              <Zap className="w-4 h-4 text-yellow-200 fill-yellow-200 animate-pulse" />
+              <Zap className="w-4 h-4 text-ink fill-ink" />
               <span>Fill Demo Credentials (Madam Hexley)</span>
             </Button>
 
-            <div className="pt-2 text-center text-xs font-bold text-purple-300/80">
+            <div className="pt-2 text-center text-xs font-bold text-mutedText">
               Don&apos;t have a shop workspace yet?{' '}
-              <Link href="/auth/register" className="text-amber-400 hover:text-amber-300 underline font-black">
-                Create new shop 🪄
+              <Link href="/auth/register" className="text-hackOrange hover:underline font-black">
+                Create new shop →
               </Link>
             </div>
           </CardContent>
         </Card>
 
         {/* Security / Isolation Footer Pill */}
-        <div className="text-center text-xs font-bold text-purple-300/80 flex items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-purple-950/40 border-2 border-purple-500/20 shadow-sm">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Tenant-isolated server session with encrypted RBAC</span>
+        <div className="text-center text-xs font-mono font-bold text-mutedText flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-[#FAF5EE] border-2 border-ink shadow-retro-xs">
+          <ShieldCheck className="w-4 h-4 text-[#06D6A0]" />
+          <span>TENANT-ISOLATED SESSION // SHA-256 RBAC</span>
         </div>
       </div>
     </div>

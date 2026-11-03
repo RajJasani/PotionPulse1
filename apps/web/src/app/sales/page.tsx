@@ -18,6 +18,8 @@ import {
   RotateCcw,
   CheckCircle2,
   XCircle,
+  Receipt,
+  X,
 } from 'lucide-react';
 
 interface SaleItem {
@@ -160,67 +162,71 @@ export default function SalesPage() {
     <AppShell>
       <div className="space-y-6">
         {/* Top Header Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-ink pb-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 border-2 border-orange-400/40 text-[11px] font-black text-amber-300 mb-2">
-              <span>🛒</span>
-              <span>Point of Sale & Register</span>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                TRANSACTIONS // POS
+              </span>
+              <span className="font-mono text-xs font-bold text-ink/70">
+                // REAL-TIME AUDITED REGISTER
+              </span>
             </div>
-            <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2">
-              <span>🧙‍♀️</span> Sales & POS Transactions
+            <h1 className="text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+              <span>🛒</span> Sales & POS Transactions
             </h1>
-            <p className="text-xs text-purple-200/80 font-bold mt-1">
+            <p className="text-xs text-ink/70 font-medium mt-1">
               Live transaction ledger with atomic stock deduction and instant receipt issuance.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <Button
-              variant="secondary"
+              variant="outline"
               size="sm"
               onClick={fetchSales}
               disabled={loading}
-              className="flex items-center gap-1.5 text-xs"
+              className="flex items-center gap-1.5 font-bold"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span>Sync</span>
             </Button>
-            <Button href="/sales/new" size="sm" variant="orange" className="flex items-center gap-1.5 text-xs">
+            <Button href="/sales/new" size="sm" variant="orange" className="flex items-center gap-1.5 font-black">
               <PlusCircle className="w-4 h-4" />
               <span>Open POS Register</span>
             </Button>
           </div>
         </div>
 
-        {/* KPI Metrics - 3 Signature Cartoon Cards */}
+        {/* KPI Metrics - 3 Distinct Retro Color Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-3xl border-3 border-amber-500/30 bg-[#281E12]/80 backdrop-blur-xl p-5 shadow-[0_6px_0_0_#78350F] flex items-center gap-4 transition-transform hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border-2 border-amber-400/40 flex items-center justify-center text-amber-300 text-2xl shadow-sm">
+          <div className="rounded-xl border-2 border-ink bg-amber-50 p-5 shadow-retro flex items-center gap-4 transition-transform hover:-translate-y-0.5">
+            <div className="w-12 h-12 rounded-xl bg-hackAmber border-2 border-ink shadow-retro-sm flex items-center justify-center text-ink text-2xl font-bold">
               💰
             </div>
             <div>
-              <p className="text-[11px] uppercase font-black text-amber-300 tracking-wider">Batch Revenue (Page)</p>
-              <p className="text-2xl font-black text-white">{formatCurrency(totalRevenue)}</p>
+              <p className="text-[11px] uppercase font-mono font-black text-ink/70 tracking-wider">Page Revenue</p>
+              <p className="text-2xl font-black text-ink">{formatCurrency(totalRevenue)}</p>
             </div>
           </div>
 
-          <div className="rounded-3xl border-3 border-emerald-500/30 bg-[#142322]/80 backdrop-blur-xl p-5 shadow-[0_6px_0_0_#064E3B] flex items-center gap-4 transition-transform hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400/40 flex items-center justify-center text-emerald-300 text-2xl shadow-sm">
+          <div className="rounded-xl border-2 border-ink bg-emerald-50 p-5 shadow-retro flex items-center gap-4 transition-transform hover:-translate-y-0.5">
+            <div className="w-12 h-12 rounded-xl bg-hackMint border-2 border-ink shadow-retro-sm flex items-center justify-center text-ink text-2xl font-bold">
               ✓
             </div>
             <div>
-              <p className="text-[11px] uppercase font-black text-emerald-300 tracking-wider">Completed Sales</p>
-              <p className="text-2xl font-black text-white">{completedCount}</p>
+              <p className="text-[11px] uppercase font-mono font-black text-ink/70 tracking-wider">Completed Sales</p>
+              <p className="text-2xl font-black text-ink">{completedCount}</p>
             </div>
           </div>
 
-          <div className="rounded-3xl border-3 border-rose-500/30 bg-[#25121E]/80 backdrop-blur-xl p-5 shadow-[0_6px_0_0_#881337] flex items-center gap-4 transition-transform hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border-2 border-rose-400/40 flex items-center justify-center text-rose-300 text-2xl shadow-sm">
+          <div className="rounded-xl border-2 border-ink bg-rose-50 p-5 shadow-retro flex items-center gap-4 transition-transform hover:-translate-y-0.5">
+            <div className="w-12 h-12 rounded-xl bg-hackRed text-white border-2 border-ink shadow-retro-sm flex items-center justify-center text-xl font-bold">
               ↺
             </div>
             <div>
-              <p className="text-[11px] uppercase font-black text-rose-300 tracking-wider">Refunded Orders</p>
-              <p className="text-2xl font-black text-rose-300">{refundedCount}</p>
+              <p className="text-[11px] uppercase font-mono font-black text-hackRed tracking-wider">Refunded Orders</p>
+              <p className="text-2xl font-black text-hackRed">{refundedCount}</p>
             </div>
           </div>
         </div>
@@ -228,28 +234,28 @@ export default function SalesPage() {
         {/* Search Bar */}
         <div className="flex items-center gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-paleLavender/40" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink/50" />
             <input
               type="text"
-              placeholder="Search by sale number or notes..."
+              placeholder="Search by sale number or customer notes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-midnight/60 border border-potionPurple/20 rounded-lg text-sm text-paleLavender placeholder:text-paleLavender/30 focus:outline-none focus:border-potionPurple"
+              className="w-full pl-9 pr-4 py-2.5 bg-cream border-2 border-ink rounded-xl text-xs font-mono font-bold text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-hackOrange shadow-retro-sm"
             />
           </div>
         </div>
 
         {/* Sales Table */}
-        <Card className="p-0 overflow-hidden">
+        <div className="bg-white border-2 border-ink rounded-xl shadow-retro overflow-hidden">
           {error && (
-            <div className="p-4 bg-crimson/10 border-b border-crimson/20 text-crimson text-sm">
+            <div className="p-3 bg-hackRed/10 border-b-2 border-ink text-hackRed font-mono text-xs font-bold">
               {error}
             </div>
           )}
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-paleLavender">
-              <thead className="bg-midnight/70 text-xs uppercase tracking-wider text-paleLavender/60 border-b border-potionPurple/15">
+            <table className="w-full text-left text-xs text-ink font-medium">
+              <thead className="bg-sand text-ink uppercase font-mono text-[10px] font-black tracking-wider border-b-2 border-ink">
                 <tr>
                   <th className="py-3 px-4">Sale Number</th>
                   <th className="py-3 px-4">Date & Time</th>
@@ -259,32 +265,34 @@ export default function SalesPage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-potionPurple/10">
+              <tbody className="divide-y-2 border-ink/20">
                 {loading && sales.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="py-8 text-center text-paleLavender/40">
+                    <td colSpan={6} className="py-12 text-center text-ink/60 font-mono font-bold">
+                      <RefreshCw className="w-5 h-5 animate-spin mx-auto text-hackOrange mb-2" />
                       Loading sales ledger...
                     </td>
                   </tr>
                 ) : filteredSales.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="py-8 text-center text-paleLavender/40">
-                      No sales recorded yet. Click &apos;Point of Sale&apos; to process your first order.
+                    <td colSpan={6} className="py-12 text-center text-ink/60 font-mono font-bold">
+                      <Receipt className="w-8 h-8 mx-auto text-ink/30 mb-2" />
+                      No sales recorded yet. Click &apos;Open POS Register&apos; to process your first order.
                     </td>
                   </tr>
                 ) : (
                   filteredSales.map((sale) => (
-                    <tr key={sale.id} className="hover:bg-potionPurple/5 transition-colors">
-                      <td className="py-3 px-4 font-mono font-medium text-white">
+                    <tr key={sale.id} className="hover:bg-sand/60 transition-colors">
+                      <td className="py-3 px-4 font-mono font-bold text-ink">
                         {sale.saleNumber}
                       </td>
-                      <td className="py-3 px-4 text-paleLavender/70">
+                      <td className="py-3 px-4 font-mono text-ink/75">
                         {formatDateTime(sale.createdAt)}
                       </td>
-                      <td className="py-3 px-4">
-                        <span className="font-medium text-white">{sale.itemCount || sale.items?.length || 1}</span> items
+                      <td className="py-3 px-4 font-mono">
+                        <span className="font-bold text-ink">{sale.itemCount || sale.items?.length || 1}</span> items
                       </td>
-                      <td className="py-3 px-4 font-semibold text-white">
+                      <td className="py-3 px-4 font-mono font-black text-ink text-sm">
                         {formatCurrency(sale.totalAmount)}
                       </td>
                       <td className="py-3 px-4">
@@ -309,24 +317,24 @@ export default function SalesPage() {
                       </td>
                       <td className="py-3 px-4 text-right space-x-2">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="sm"
                           onClick={() => handleViewDetails(sale.id)}
-                          className="h-8 px-2 text-xs"
+                          className="h-8 px-2.5 text-xs font-bold"
                         >
                           <Eye className="w-3.5 h-3.5 mr-1" />
                           View
                         </Button>
                         {sale.status === 'COMPLETED' && (
                           <Button
-                            variant="outline"
+                            variant="danger"
                             size="sm"
                             onClick={() => {
                               setRefundingSale(sale);
                               setRefundReason('');
                               setRestockInventory(true);
                             }}
-                            className="h-8 px-2 text-xs border-crimson/30 text-crimson hover:bg-crimson/10"
+                            className="h-8 px-2.5 text-xs font-bold"
                           >
                             <RotateCcw className="w-3.5 h-3.5 mr-1" />
                             Refund
@@ -341,7 +349,7 @@ export default function SalesPage() {
           </div>
 
           {/* Pagination Controls */}
-          <div className="p-4 border-t border-potionPurple/15 flex items-center justify-between text-xs text-paleLavender/60">
+          <div className="p-3.5 border-t-2 border-ink bg-sand/40 flex items-center justify-between text-xs font-mono font-bold text-ink">
             <span>
               Page {page} of {totalPages}
             </span>
@@ -364,73 +372,71 @@ export default function SalesPage() {
               </Button>
             </div>
           </div>
-        </Card>
+        </div>
 
-        {/* Order Details Drawer / Modal */}
+        {/* Order Details Modal */}
         {selectedSale && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <Card className="w-full max-w-lg p-6 bg-ink border border-potionPurple/30 space-y-4">
-              <div className="flex items-center justify-between border-b border-potionPurple/20 pb-3">
+          <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-lg p-6 bg-white border-3 border-ink shadow-retro-xl rounded-2xl space-y-4 text-ink">
+              <div className="flex items-center justify-between border-b-2 border-ink pb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <ShoppingCart className="w-5 h-5 text-potionPurple" />
+                  <h3 className="text-lg font-black text-ink flex items-center gap-2">
+                    <ShoppingCart className="w-5 h-5 text-hackOrange" />
                     Sale Details
                   </h3>
-                  <p className="text-xs font-mono text-paleLavender/60">{selectedSale.saleNumber}</p>
+                  <p className="text-xs font-mono font-bold text-ink/70">{selectedSale.saleNumber}</p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <button
                   onClick={() => setSelectedSale(null)}
-                  className="text-paleLavender/60 hover:text-white"
+                  className="w-8 h-8 rounded-lg border-2 border-ink bg-sand flex items-center justify-center text-ink hover:bg-cream"
                 >
-                  ✕
-                </Button>
+                  <X className="w-4 h-4" />
+                </button>
               </div>
 
               {detailLoading ? (
-                <div className="py-8 text-center text-paleLavender/50">Loading order details...</div>
+                <div className="py-8 text-center font-mono text-ink/70">Loading order details...</div>
               ) : (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-2 text-xs bg-midnight/40 p-3 rounded-lg border border-potionPurple/15">
+                  <div className="grid grid-cols-2 gap-2 text-xs bg-sand p-3.5 rounded-xl border-2 border-ink">
                     <div>
-                      <span className="text-paleLavender/60 block">Date</span>
-                      <span className="text-white font-medium">{formatDateTime(selectedSale.createdAt)}</span>
+                      <span className="font-mono text-ink/70 block uppercase text-[10px]">Date</span>
+                      <span className="text-ink font-mono font-bold">{formatDateTime(selectedSale.createdAt)}</span>
                     </div>
                     <div>
-                      <span className="text-paleLavender/60 block">Status</span>
+                      <span className="font-mono text-ink/70 block uppercase text-[10px]">Status</span>
                       <Badge variant={selectedSale.status === 'COMPLETED' ? 'success' : 'warning'}>
                         {selectedSale.status}
                       </Badge>
                     </div>
                     {selectedSale.notes && (
                       <div className="col-span-2 mt-1">
-                        <span className="text-paleLavender/60 block">Notes</span>
-                        <span className="text-white">{selectedSale.notes}</span>
+                        <span className="font-mono text-ink/70 block uppercase text-[10px]">Notes</span>
+                        <span className="text-ink font-bold">{selectedSale.notes}</span>
                       </div>
                     )}
                     {selectedSale.refundReason && (
-                      <div className="col-span-2 mt-1 text-crimson">
-                        <span className="font-semibold block">Refund Reason:</span>
-                        <span>{selectedSale.refundReason}</span>
+                      <div className="col-span-2 mt-1 text-hackRed">
+                        <span className="font-mono font-black block uppercase text-[10px]">Refund Reason:</span>
+                        <span className="font-bold">{selectedSale.refundReason}</span>
                       </div>
                     )}
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-semibold uppercase text-paleLavender/60 mb-2">Line Items</h4>
-                    <div className="border border-potionPurple/15 rounded-lg divide-y divide-potionPurple/10 overflow-hidden">
+                    <h4 className="text-xs font-mono font-black uppercase text-ink/70 mb-2">Line Items</h4>
+                    <div className="border-2 border-ink rounded-xl divide-y-2 border-ink overflow-hidden">
                       {selectedSale.items?.map((item, idx) => (
-                        <div key={idx} className="p-3 flex items-center justify-between text-xs bg-midnight/20">
+                        <div key={idx} className="p-3 flex items-center justify-between text-xs bg-cream">
                           <div>
-                            <p className="font-semibold text-white">
+                            <p className="font-black text-ink">
                               {item.ingredient?.name || `Ingredient #${item.ingredientId.slice(-6)}`}
                             </p>
-                            <p className="text-paleLavender/50 font-mono">
+                            <p className="text-ink/60 font-mono text-[11px]">
                               {item.quantity} × {formatCurrency(item.unitPrice)}
                             </p>
                           </div>
-                          <span className="font-bold text-white font-mono">
+                          <span className="font-black text-ink font-mono text-sm">
                             {formatCurrency(item.subtotal || item.quantity * item.unitPrice)}
                           </span>
                         </div>
@@ -438,9 +444,9 @@ export default function SalesPage() {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-potionPurple/20 flex items-center justify-between text-base font-bold text-white">
+                  <div className="pt-2 border-t-2 border-ink flex items-center justify-between text-base font-black text-ink">
                     <span>Total Amount</span>
-                    <span className="text-pumpkin">{formatCurrency(selectedSale.totalAmount)}</span>
+                    <span className="text-hackOrange font-mono text-xl">{formatCurrency(selectedSale.totalAmount)}</span>
                   </div>
 
                   <div className="flex justify-end pt-2">
@@ -450,32 +456,30 @@ export default function SalesPage() {
                   </div>
                 </div>
               )}
-            </Card>
+            </div>
           </div>
         )}
 
         {/* Refund Processing Modal */}
         {refundingSale && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <Card className="w-full max-w-md p-6 bg-ink border border-crimson/30 space-y-4">
-              <div className="flex items-center justify-between border-b border-crimson/20 pb-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <RotateCcw className="w-5 h-5 text-crimson" />
+          <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-md p-6 bg-white border-3 border-ink shadow-retro-xl rounded-2xl space-y-4">
+              <div className="flex items-center justify-between border-b-2 border-ink pb-3">
+                <h3 className="text-lg font-black text-hackRed flex items-center gap-2">
+                  <RotateCcw className="w-5 h-5 text-hackRed" />
                   Refund Sale #{refundingSale.saleNumber}
                 </h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <button
                   onClick={() => setRefundingSale(null)}
-                  className="text-paleLavender/60 hover:text-white"
+                  className="w-8 h-8 rounded-lg border-2 border-ink bg-sand flex items-center justify-center text-ink hover:bg-cream"
                 >
-                  ✕
-                </Button>
+                  <X className="w-4 h-4" />
+                </button>
               </div>
 
               <form onSubmit={handleProcessRefund} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-paleLavender/80 mb-1">
+                  <label className="block text-xs font-mono font-black text-ink mb-1">
                     Refund Reason
                   </label>
                   <textarea
@@ -484,7 +488,7 @@ export default function SalesPage() {
                     placeholder="Describe reason for returning items..."
                     value={refundReason}
                     onChange={(e) => setRefundReason(e.target.value)}
-                    className="w-full p-2.5 bg-midnight/60 border border-potionPurple/20 rounded-lg text-sm text-paleLavender focus:outline-none focus:border-crimson"
+                    className="w-full p-2.5 bg-cream border-2 border-ink rounded-xl text-xs font-medium text-ink focus:outline-none focus:ring-2 focus:ring-hackRed shadow-retro-sm"
                   />
                 </div>
 
@@ -494,17 +498,17 @@ export default function SalesPage() {
                     id="restockCheckbox"
                     checked={restockInventory}
                     onChange={(e) => setRestockInventory(e.target.checked)}
-                    className="w-4 h-4 rounded border-potionPurple/30 bg-midnight accent-potionPurple"
+                    className="w-4 h-4 rounded border-2 border-ink accent-hackOrange"
                   />
-                  <label htmlFor="restockCheckbox" className="text-xs text-paleLavender cursor-pointer">
+                  <label htmlFor="restockCheckbox" className="text-xs font-mono font-bold text-ink cursor-pointer">
                     Restock inventory ledger with returned items
                   </label>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-potionPurple/15">
+                <div className="flex items-center justify-end gap-3 pt-3 border-t-2 border-ink">
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => setRefundingSale(null)}
                     disabled={refundSubmitting}
@@ -513,15 +517,15 @@ export default function SalesPage() {
                   </Button>
                   <Button
                     type="submit"
+                    variant="danger"
                     size="sm"
                     disabled={refundSubmitting || !refundReason.trim()}
-                    className="bg-crimson hover:bg-crimson/90 text-white"
                   >
                     {refundSubmitting ? 'Processing...' : 'Confirm Refund'}
                   </Button>
                 </div>
               </form>
-            </Card>
+            </div>
           </div>
         )}
       </div>

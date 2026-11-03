@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink' | 'purple' | 'amber';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   isLoading?: boolean;
   href?: string;
@@ -15,38 +15,42 @@ export const buttonVariants = ({
   size = 'md',
   className = '',
 }: {
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' | 'success' | 'orange' | 'pink' | 'purple' | 'amber';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 } = {}) => {
   const variants = {
     primary:
-      'bg-gradient-to-r from-violet-600 via-potionPurple to-purple-600 text-white font-bold border-2 border-violet-300/40 shadow-cartoon-purple hover:shadow-cartoon-purple-sm hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'bg-[#FF5C00] text-white hover:bg-[#E55300] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
+    purple:
+      'bg-[#6320EE] text-white hover:bg-[#5214D6] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
     secondary:
-      'bg-[#2A1C44] text-paleLavender font-bold border-2 border-purple-400/30 shadow-[0_4px_0_0_#140B22] hover:bg-[#342354] hover:border-purple-300/60 hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'bg-white text-ink hover:bg-[#FAF5EE] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-extrabold',
     success:
-      'bg-gradient-to-r from-emerald-500 via-teal-500 to-cauldronGreen text-slate-950 font-extrabold border-2 border-emerald-200/60 shadow-cartoon-green hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'bg-[#06D6A0] text-ink hover:bg-[#05BF8E] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
     orange:
-      'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white font-extrabold border-2 border-amber-200/50 shadow-cartoon-orange hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'bg-[#FF5C00] text-white hover:bg-[#E55300] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
+    amber:
+      'bg-[#FFBE1A] text-ink hover:bg-[#F0B010] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
     pink:
-      'bg-gradient-to-r from-fuchsia-500 via-pink-500 to-rose-500 text-white font-extrabold border-2 border-pink-200/50 shadow-cartoon-pink hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'bg-[#FF2E93] text-white hover:bg-[#E52080] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
     outline:
-      'border-2 border-purple-400/40 bg-purple-950/30 text-purple-200 font-bold hover:bg-purple-900/40 hover:border-purple-300 hover:text-white shadow-[0_4px_0_0_#160A26] hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'border-2 border-ink bg-[#FAF5EE] text-ink hover:bg-[#EFE7D8] shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-extrabold',
     danger:
-      'bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold border-2 border-red-300/40 shadow-[0_4px_0_0_#991B1B] hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-100',
+      'bg-[#E63946] text-white hover:bg-[#D02936] border-2 border-ink shadow-retro hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0px_#1A1523] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#1A1523] font-black',
     ghost:
-      'bg-transparent text-paleLavender hover:bg-white/10 hover:text-white font-bold transition-all duration-150',
+      'bg-transparent text-ink hover:bg-sand font-extrabold border-2 border-transparent hover:border-ink transition-all',
   };
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-xs rounded-xl gap-1.5',
-    md: 'px-4.5 py-2.5 text-sm rounded-2xl gap-2',
-    lg: 'px-6 py-3.5 text-base rounded-2xl font-extrabold gap-2.5',
-    xl: 'px-8 py-4 text-lg rounded-3xl font-black gap-3',
+    sm: 'px-3 py-1.5 text-xs rounded-lg gap-1.5',
+    md: 'px-4 py-2 text-sm rounded-xl gap-2',
+    lg: 'px-6 py-3 text-base rounded-xl font-black gap-2.5',
+    xl: 'px-8 py-4 text-lg rounded-2xl font-black gap-3',
   };
 
   return cn(
-    'inline-flex items-center justify-center font-bold tracking-tight select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-potionPurple disabled:opacity-50 disabled:pointer-events-none cursor-pointer',
+    'inline-flex items-center justify-center font-bold tracking-tight select-none cursor-pointer transition-all duration-100 disabled:opacity-50 disabled:pointer-events-none',
     variants[variant],
     sizes[size],
     className,

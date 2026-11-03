@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, AlertCircle } from 'lucide-react';
+import { ArrowRight, AlertCircle, ShieldCheck } from 'lucide-react';
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -41,49 +41,40 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#110C1D] flex flex-col justify-center items-center p-6 relative overflow-hidden selection:bg-potionPurple selection:text-white">
-      {/* Background glow */}
-      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] pointer-events-none opacity-30 bg-gradient-to-br from-violet-600 via-pink-600 to-amber-500 animate-pulse-glow" />
-
-      {/* Floating cartoon emojis */}
-      <div className="fixed top-12 left-12 text-3xl opacity-60 animate-bubble-float pointer-events-none select-none">🍄</div>
-      <div className="fixed top-24 right-16 text-3xl opacity-60 animate-bounce-subtle pointer-events-none select-none">✨</div>
-      <div className="fixed bottom-16 left-20 text-3xl opacity-50 animate-wiggle-slow pointer-events-none select-none">🧪</div>
-      <div className="fixed bottom-20 right-20 text-4xl opacity-60 animate-bubble-float pointer-events-none select-none">🔮</div>
-
+    <div className="min-h-screen bg-[#FFFDF9] flex flex-col justify-center items-center p-6 relative selection:bg-hackOrange selection:text-white">
       <div className="w-full max-w-md z-10 space-y-6">
         <div className="flex flex-col items-center text-center">
-          <Link href="/" className="inline-flex items-center gap-3 mb-2 group">
-            <div className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-violet-600 via-potionPurple to-pink-500 flex items-center justify-center border-3 border-white/50 shadow-cartoon-purple group-hover:scale-105 group-hover:rotate-3 transition-transform text-2xl">
-              🔮
+          <Link href="/" className="inline-flex items-center gap-3 mb-3 group">
+            <div className="w-12 h-12 rounded-xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center text-white shadow-retro group-hover:translate-x-[-1px] group-hover:translate-y-[-1px] transition-transform text-2xl">
+              ⚡
             </div>
             <div className="text-left">
-              <span className="text-3xl font-black text-white tracking-tight flex items-center gap-1.5 drop-shadow-md">
+              <span className="text-3xl font-black text-ink tracking-tight font-mono block leading-none">
                 PotionPulse
               </span>
-              <span className="text-xs font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-pink-400 block">
-                Predict. Manage. Thrive.
+              <span className="text-[10px] font-mono font-black uppercase tracking-widest text-[#FF5C00] block mt-1">
+                Open Inventory Intelligence
               </span>
             </div>
           </Link>
-          <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-900/40 border-2 border-purple-400/30 text-[11px] font-extrabold text-purple-200">
-            <span>✨</span> Provision New Isolated Apothecary
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FAF5EE] border-2 border-ink text-xs font-mono font-black text-ink shadow-retro-xs">
+            <span>✨</span> PROVISION NEW APOTHECARY // 2026
           </div>
         </div>
 
-        <Card className="border-3 border-purple-500/30 bg-[#1D132D]/95 backdrop-blur-2xl shadow-[0_12px_0_0_#0D0717,0_20px_40px_rgba(139,92,246,0.25)] rounded-3xl p-7">
+        <Card className="border-2 border-ink bg-white shadow-retro-lg rounded-2xl p-7">
           <CardHeader className="p-0 pb-5 text-center">
-            <CardTitle className="text-2xl font-black text-white flex items-center justify-center gap-2">
-              Set up your Potion Shop 🪄
+            <CardTitle className="text-2xl font-black text-ink flex items-center justify-center gap-2 font-mono">
+              CREATE APOTHECARY
             </CardTitle>
-            <CardDescription className="text-xs font-bold text-purple-300/80">
+            <CardDescription className="text-xs font-semibold text-mutedText">
               Create an owner account and provision your isolated shop workspace.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0 space-y-5">
             {error && (
-              <div className="p-3.5 rounded-2xl bg-rose-500/20 border-2 border-rose-400 text-rose-200 text-xs font-black flex items-center gap-2.5 shadow-sm animate-wiggle-slow">
-                <AlertCircle className="w-4 h-4 shrink-0 text-rose-300" />
+              <div className="p-3.5 rounded-xl bg-[#FDECEE] border-2 border-hackRed text-hackRed text-xs font-mono font-bold flex items-center gap-2.5 shadow-retro-xs">
+                <AlertCircle className="w-4 h-4 shrink-0 text-hackRed" />
                 <span>{error}</span>
               </div>
             )}
@@ -124,19 +115,24 @@ export default function RegisterPage() {
               />
 
               <Button type="submit" variant="primary" size="lg" className="w-full mt-2" isLoading={loading}>
-                <span>Create Shop & Launch</span>
+                <span>Provision Shop Workspace</span>
                 <ArrowRight className="w-5 h-5 ml-1.5" />
               </Button>
             </form>
 
-            <div className="pt-2 text-center text-xs font-bold text-purple-300/80">
+            <div className="pt-2 text-center text-xs font-bold text-mutedText">
               Already have a shop workspace?{' '}
-              <Link href="/auth/login" className="text-amber-400 hover:text-amber-300 underline font-black">
-                Sign in here 🧙‍♀️
+              <Link href="/auth/login" className="text-hackOrange hover:underline font-black">
+                Sign in here →
               </Link>
             </div>
           </CardContent>
         </Card>
+
+        <div className="text-center text-xs font-mono font-bold text-mutedText flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-[#FAF5EE] border-2 border-ink shadow-retro-xs">
+          <ShieldCheck className="w-4 h-4 text-[#06D6A0]" />
+          <span>TENANT-ISOLATED SESSION // SHA-256 RBAC</span>
+        </div>
       </div>
     </div>
   );

@@ -3,94 +3,87 @@
 @tailwind utilities;
 
 :root {
-  --background: #110C1D;
-  --foreground: #F4F0FA;
+  --background: #FFFDF9;
+  --foreground: #1A1523;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: #1A1523;
+  background-color: #FFFDF9;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(249, 115, 22, 0.06) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+  /* Authentic Hacktoberfest subtle dot-matrix engineering grid */
+  background-image: radial-gradient(rgba(26, 21, 35, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
   background-attachment: fixed;
 }
 
-/* Custom Scrollbar - Cartoon Potion Tube */
+::selection {
+  background-color: #FF5C00;
+  color: #FFFFFF;
+}
+
+/* Hacktoberfest Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #171026;
-  border-radius: 9999px;
+  background: #FAF5EE;
+  border-left: 2px solid #1A1523;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #8B5CF6 0%, #EC4899 50%, #F97316 100%);
-  border-radius: 9999px;
-  border: 2px solid #171026;
+  background: #FF5C00;
+  border: 2px solid #1A1523;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #A78BFA 0%, #F43F5E 50%, #FB923C 100%);
+  background: #E55300;
 }
 
-/* Tactile 3D Cartoon Button Base */
-.btn-cartoon {
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+/* Hacktoberfest Tactile Hard-Shadow Elements */
+.retro-card {
+  background: #FFFFFF;
+  border: 2px solid #1A1523;
+  box-shadow: 4px 4px 0px #1A1523;
+  border-radius: 1rem;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.retro-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0px #1A1523;
+}
+
+.retro-btn {
+  border: 2px solid #1A1523;
+  box-shadow: 3px 3px 0px #1A1523;
+  transition: all 0.1s cubic-bezier(0.16, 1, 0.3, 1);
   font-weight: 700;
-  letter-spacing: -0.01em;
 }
 
-.btn-cartoon:hover {
-  transform: translateY(-2px);
+.retro-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #1A1523;
 }
 
-.btn-cartoon:active {
-  transform: translateY(2px);
+.retro-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #1A1523;
 }
 
-/* Cartoon Potion Card */
-.card-cartoon {
-  border-radius: 1.5rem;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  background: rgba(30, 20, 48, 0.85);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 8px 0 0 #0D0817, 0 16px 36px rgba(139, 92, 246, 0.12);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-cartoon:hover {
-  border-color: rgba(167, 139, 250, 0.35);
-  box-shadow: 0 10px 0 0 #0D0817, 0 20px 40px rgba(139, 92, 246, 0.2);
-}
-
-/* Cartoon Badge Pill */
-.badge-cartoon {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-weight: 700;
-  font-size: 0.75rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  border-width: 2px;
-  letter-spacing: -0.01em;
-}
-
-/* Floating Magical Dust Particles */
-@keyframes magicalDrift {
-  0% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
-  50% { transform: translateY(-15px) translateX(10px); opacity: 0.8; }
-  100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
-}
-
-.magical-float {
-  animation: magicalDrift 6s ease-in-out infinite;
+/* Monospace Sticker Tag */
+.sticker-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid #1A1523;
+  box-shadow: 2px 2px 0px #1A1523;
+  border-radius: 0.375rem;
 }

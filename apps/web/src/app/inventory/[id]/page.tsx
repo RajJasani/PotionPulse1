@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { AppShell } from '@/components/layout/app-shell';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/lib/auth-context';
@@ -70,9 +69,9 @@ export default function IngredientDetailPage() {
   if (loading) {
     return (
       <AppShell>
-        <div className="flex items-center justify-center py-24 text-mutedText text-xs">
-          <RefreshCw className="w-5 h-5 animate-spin mr-2 text-potionPurple" />
-          Loading ingredient details...
+        <div className="flex items-center justify-center py-24 text-ink/70 font-mono text-xs">
+          <RefreshCw className="w-5 h-5 animate-spin mr-2 text-hackOrange" />
+          Querying ingredient ledger...
         </div>
       </AppShell>
     );
@@ -82,8 +81,8 @@ export default function IngredientDetailPage() {
     return (
       <AppShell>
         <div className="max-w-md mx-auto py-16 text-center space-y-4">
-          <p className="text-dangerRed text-sm">{error || 'Ingredient not found'}</p>
-          <Button href="/inventory" variant="secondary" size="sm">
+          <p className="text-hackRed font-mono font-bold text-sm">{error || 'Ingredient not found'}</p>
+          <Button href="/inventory" variant="outline" size="sm">
             Return to Catalog
           </Button>
         </div>
@@ -95,20 +94,20 @@ export default function IngredientDetailPage() {
     <AppShell>
       <div className="space-y-6">
         {/* Navigation Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-ink pb-4">
           <div className="flex items-center gap-3">
-            <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+            <Button href="/inventory" variant="outline" size="sm" className="h-9 px-2.5 text-xs font-bold">
               <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
+              Catalog
             </Button>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-black text-white tracking-tight">{ingredient.name}</h1>
+                <h1 className="text-2xl sm:text-3xl font-black text-ink tracking-tight">{ingredient.name}</h1>
                 <Badge variant={ingredient.isLowStock ? 'danger' : 'success'}>
-                  {ingredient.isLowStock ? 'Low Stock' : 'Healthy Balance'}
+                  {ingredient.isLowStock ? '⚠️ Low Stock' : '✓ Healthy Balance'}
                 </Badge>
               </div>
-              <div className="flex items-center gap-3 text-xs text-mutedText mt-0.5">
+              <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-ink/70 mt-1">
                 <span>SKU: {ingredient.sku || 'None'}</span>
                 <span>•</span>
                 <span>Category: {ingredient.category}</span>
@@ -119,7 +118,7 @@ export default function IngredientDetailPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Button href={`/inventory/adjust?ingredientId=${ingredient.id}`} size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
+            <Button href={`/inventory/adjust?ingredientId=${ingredient.id}`} size="sm" variant="orange" className="text-xs font-black flex items-center gap-1.5">
               <PlusCircle className="w-3.5 h-3.5" />
               Adjust / Intake Stock
             </Button>
@@ -129,7 +128,7 @@ export default function IngredientDetailPage() {
               variant="outline"
               onClick={handleArchive}
               isLoading={archiving}
-              className="text-xs text-dangerRed hover:bg-dangerRed/10 border-dangerRed/40"
+              className="text-xs text-hackRed border-2 border-ink font-bold hover:bg-rose-50"
             >
               <Archive className="w-3.5 h-3.5 mr-1" />
               Archive
@@ -139,119 +138,119 @@ export default function IngredientDetailPage() {
 
         {/* Stock Balance Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card className="p-5">
-            <span className="text-xs font-semibold text-mutedText uppercase tracking-wider">
+          <div className="p-5 rounded-xl border-2 border-ink bg-white shadow-retro">
+            <span className="text-[10px] font-mono font-black text-ink/70 uppercase tracking-wider block">
               On-Hand Physical Stock
             </span>
-            <div className="mt-3 text-3xl font-black text-white">
+            <div className="mt-2 text-3xl font-black font-mono text-ink">
               {ingredient.onHand}{' '}
-              <span className="text-sm font-normal text-mutedText">{ingredient.baseUnit}</span>
+              <span className="text-sm font-normal text-ink/70">{ingredient.baseUnit}</span>
             </div>
-            <p className="text-[11px] text-mutedText mt-1">Verified on physical shelves</p>
-          </Card>
+            <p className="text-[11px] font-mono text-ink/60 mt-1">Verified on physical shelves</p>
+          </div>
 
-          <Card className="p-5">
-            <span className="text-xs font-semibold text-mutedText uppercase tracking-wider">
+          <div className="p-5 rounded-xl border-2 border-ink bg-amber-50 shadow-retro">
+            <span className="text-[10px] font-mono font-black text-ink/70 uppercase tracking-wider block">
               Reserved / In-Process
             </span>
-            <div className="mt-3 text-3xl font-black text-amber-400">
+            <div className="mt-2 text-3xl font-black font-mono text-hackOrange">
               {ingredient.reserved}{' '}
-              <span className="text-sm font-normal text-mutedText">{ingredient.baseUnit}</span>
+              <span className="text-sm font-normal text-ink/70">{ingredient.baseUnit}</span>
             </div>
-            <p className="text-[11px] text-mutedText mt-1">Committed to active orders</p>
-          </Card>
+            <p className="text-[11px] font-mono text-ink/60 mt-1">Committed to active orders</p>
+          </div>
 
-          <Card className="p-5">
-            <span className="text-xs font-semibold text-mutedText uppercase tracking-wider">
+          <div className="p-5 rounded-xl border-2 border-ink bg-purple-50 shadow-retro">
+            <span className="text-[10px] font-mono font-black text-ink/70 uppercase tracking-wider block">
               Available to Promise
             </span>
-            <div className="mt-3 text-3xl font-black text-violetGlow">
+            <div className="mt-2 text-3xl font-black font-mono text-hackPurple">
               {ingredient.available}{' '}
-              <span className="text-sm font-normal text-mutedText">{ingredient.baseUnit}</span>
+              <span className="text-sm font-normal text-ink/70">{ingredient.baseUnit}</span>
             </div>
-            <p className="text-[11px] text-mutedText mt-1">Usable for immediate sales</p>
-          </Card>
+            <p className="text-[11px] font-mono text-ink/60 mt-1">Usable for immediate sales</p>
+          </div>
         </div>
 
         {/* Thresholds & Procurement Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Procurement & Buffer Parameters</CardTitle>
-            <CardDescription>
+        <div className="bg-white border-2 border-ink shadow-retro rounded-xl p-6 space-y-4">
+          <div className="border-b-2 border-ink pb-3">
+            <h2 className="text-base font-black text-ink font-mono uppercase">Procurement & Buffer Parameters</h2>
+            <p className="text-xs text-ink/70 font-medium mt-1">
               Inventory intelligence inputs used for stockout risk prediction and reorder quantity calculation.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-xs">
-              <div className="p-3 rounded-xl bg-ink/50 border border-white/5">
-                <span className="text-mutedText">Reorder Point:</span>
-                <div className="text-base font-bold text-white mt-1">
+            </p>
+          </div>
+          <div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+              <div className="p-3.5 rounded-xl bg-sand border-2 border-ink">
+                <span className="text-ink/70 font-bold block text-[10px] uppercase">Reorder Point:</span>
+                <div className="text-base font-black text-ink mt-1">
                   {ingredient.reorderPoint} {ingredient.baseUnit}
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-ink/50 border border-white/5">
-                <span className="text-mutedText">Safety Stock Buffer:</span>
-                <div className="text-base font-bold text-white mt-1">
+              <div className="p-3.5 rounded-xl bg-sand border-2 border-ink">
+                <span className="text-ink/70 font-bold block text-[10px] uppercase">Safety Stock Buffer:</span>
+                <div className="text-base font-black text-ink mt-1">
                   {ingredient.safetyStock} {ingredient.baseUnit}
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-ink/50 border border-white/5">
-                <span className="text-mutedText">Supplier Lead Time:</span>
-                <div className="text-base font-bold text-white mt-1">
+              <div className="p-3.5 rounded-xl bg-sand border-2 border-ink">
+                <span className="text-ink/70 font-bold block text-[10px] uppercase">Supplier Lead Time:</span>
+                <div className="text-base font-black text-ink mt-1">
                   {ingredient.leadTimeDays} days
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-ink/50 border border-white/5">
-                <span className="text-mutedText">Cost per Unit:</span>
-                <div className="text-base font-bold text-white mt-1">
+              <div className="p-3.5 rounded-xl bg-sand border-2 border-ink">
+                <span className="text-ink/70 font-bold block text-[10px] uppercase">Cost per Unit:</span>
+                <div className="text-base font-black text-hackOrange mt-1">
                   {formatCurrency(ingredient.costPerUnit || 0)}
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Shelf & Location Breakdown */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Layers className="w-4 h-4 text-violetGlow" />
-              Shelf & Location Distribution
-            </CardTitle>
-            <CardDescription>
-              Multi-shelf inventory breakdown for physical stock audits.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        <div className="bg-white border-2 border-ink shadow-retro rounded-xl overflow-hidden">
+          <div className="p-4 border-b-2 border-ink bg-sand flex items-center justify-between">
+            <div>
+              <h3 className="text-base font-black text-ink font-mono uppercase flex items-center gap-2">
+                <Layers className="w-4 h-4 text-hackOrange" />
+                Shelf & Storage Distribution
+              </h3>
+              <p className="text-xs text-ink/70 font-medium">Multi-shelf inventory breakdown for physical stock audits.</p>
+            </div>
+          </div>
+          <div>
             {ingredient.locationBalances?.length === 0 ? (
-              <div className="text-center py-6 text-xs text-mutedText">
+              <div className="text-center py-6 text-xs font-mono font-bold text-ink/60">
                 No storage locations assigned yet.
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-xs text-left">
+                <table className="w-full text-xs text-left text-ink font-medium">
                   <thead>
-                    <tr className="border-b border-white/10 text-mutedText uppercase text-[10px]">
+                    <tr className="border-b-2 border-ink bg-cream text-ink uppercase font-mono text-[10px] font-black">
                       <th className="py-2.5 px-3">Location Name</th>
                       <th className="py-2.5 px-3">Code</th>
                       <th className="py-2.5 px-3">On-Hand Quantity</th>
                       <th className="py-2.5 px-3">Reserved</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y-2 border-ink/20 font-mono">
                     {ingredient.locationBalances?.map((b: any) => (
-                      <tr key={b.locationId}>
-                        <td className="py-3 px-3 font-semibold text-white">
-                          {b.locationName || 'Main Shelf'}
+                      <tr key={b.locationId} className="hover:bg-sand/60 transition-colors">
+                        <td className="py-3 px-3 font-sans font-black text-ink">
+                          {b.locationName || 'Main Vault Shelf'}
                         </td>
-                        <td className="py-3 px-3 font-mono text-mutedText">{b.locationCode}</td>
-                        <td className="py-3 px-3 font-bold font-mono text-white">
+                        <td className="py-3 px-3 font-bold text-hackOrange">{b.locationCode}</td>
+                        <td className="py-3 px-3 font-black text-ink">
                           {b.onHand} {ingredient.baseUnit}
                         </td>
-                        <td className="py-3 px-3 font-mono text-mutedText">
+                        <td className="py-3 px-3 text-ink/70">
                           {b.reserved} {ingredient.baseUnit}
                         </td>
                       </tr>
@@ -260,8 +259,8 @@ export default function IngredientDetailPage() {
                 </table>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </AppShell>
   );

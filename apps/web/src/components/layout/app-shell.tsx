@@ -18,15 +18,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#110C1D] flex flex-col items-center justify-center text-white relative overflow-hidden">
-        <div className="absolute w-[400px] h-[400px] bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
-        <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-purple-600 via-pink-500 to-orange-500 flex items-center justify-center animate-bounce shadow-cartoon-purple border-2 border-white/40 mb-4 text-2xl">
-          🔮
+      <div className="min-h-screen bg-[#FFFDF9] flex flex-col items-center justify-center text-ink p-6 select-none">
+        <div className="w-16 h-16 rounded-2xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center shadow-retro mb-4 text-3xl animate-bounce">
+          ⚡
         </div>
-        <p className="text-base font-black tracking-tight text-purple-200">
-          Conjuring PotionPulse Workspace...
+        <p className="text-base font-black font-mono tracking-tight text-ink uppercase">
+          Initializing PotionPulse...
         </p>
-        <span className="text-xs text-purple-400/80 font-bold mt-1">Stirring cauldron ingredients</span>
+        <span className="text-xs font-mono font-bold text-mutedText mt-1">Connecting to apothecary nodes</span>
       </div>
     );
   }
@@ -36,7 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#110C1D] flex text-paleLavender selection:bg-potionPurple selection:text-white relative">
+    <div className="min-h-screen bg-[#FFFDF9] flex text-ink relative selection:bg-hackOrange selection:text-white">
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <Header />

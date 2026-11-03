@@ -3,12 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AppShell } from '@/components/layout/app-shell';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient } from '@/lib/api-client';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Plus } from 'lucide-react';
 
 export default function NewIngredientPage() {
   const { activeTenant, accessToken } = useAuth();
@@ -78,32 +77,43 @@ export default function NewIngredientPage() {
   return (
     <AppShell>
       <div className="max-w-2xl mx-auto space-y-6">
-        <div className="flex items-center gap-3">
-          <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+        <div className="flex items-center gap-3 border-b-2 border-ink pb-4">
+          <Button href="/inventory" variant="outline" size="sm" className="h-9 px-2.5 text-xs font-bold">
             <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Catalog
+            Catalog
           </Button>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Add New Ingredient</h1>
-            <p className="text-xs text-mutedText">Configure inventory tracking parameters and reorder rules.</p>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                CATALOG DEFINITION
+              </span>
+              <span className="font-mono text-xs font-bold text-ink/70">
+                // INGREDIENT REGISTRATION
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+              <Plus className="w-6 h-6 text-hackOrange" />
+              Add New Ingredient
+            </h1>
           </div>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Ingredient Specifications</CardTitle>
-            <CardDescription>
-              Backend requires unique SKU within shop, explicit base measurement unit, and non-negative thresholds.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        <div className="bg-white border-2 border-ink shadow-retro rounded-xl p-6">
+          <div className="border-b-2 border-ink pb-4 mb-4">
+            <h2 className="text-base font-black text-ink font-mono uppercase">Ingredient Specifications</h2>
+            <p className="text-xs text-ink/70 font-medium mt-1">
+              Requires unique SKU within shop, explicit base measurement unit, and non-negative reorder thresholds.
+            </p>
+          </div>
+
+          <div>
             {error && (
-              <div className="mb-4 p-3 rounded-xl bg-dangerRed/15 border border-dangerRed/40 text-rose-300 text-xs">
+              <div className="mb-4 p-3 rounded-xl bg-rose-50 border-2 border-ink text-hackRed text-xs font-mono font-bold">
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 font-mono font-bold text-xs">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   label="Ingredient Name"
@@ -124,13 +134,13 @@ export default function NewIngredientPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-mutedText">
+                  <label className="block text-xs font-mono font-black uppercase tracking-wider text-ink/70">
                     Category
                   </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full h-11 rounded-xl border border-white/10 bg-[#171321] px-4 text-sm text-white focus:outline-none focus:border-potionPurple"
+                    className="w-full h-11 rounded-xl border-2 border-ink bg-cream px-4 text-xs font-bold text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   >
                     <option value="Magical Flora">Magical Flora</option>
                     <option value="Animal Parts">Animal Parts</option>
@@ -142,13 +152,13 @@ export default function NewIngredientPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-mutedText">
+                  <label className="block text-xs font-mono font-black uppercase tracking-wider text-ink/70">
                     Base Measurement Unit
                   </label>
                   <select
                     value={baseUnit}
                     onChange={(e) => setBaseUnit(e.target.value)}
-                    className="w-full h-11 rounded-xl border border-white/10 bg-[#171321] px-4 text-sm text-white focus:outline-none focus:border-potionPurple"
+                    className="w-full h-11 rounded-xl border-2 border-ink bg-cream px-4 text-xs font-bold text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   >
                     <option value="piece">Piece (individual items)</option>
                     <option value="gram">Gram (g)</option>
@@ -158,7 +168,7 @@ export default function NewIngredientPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
                 <Input
                   label="Reorder Threshold"
                   type="number"
@@ -187,9 +197,9 @@ export default function NewIngredientPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                 <Input
-                  label="Estimated Cost per Unit ($)"
+                  label="Cost per Unit ($)"
                   type="number"
                   step="0.01"
                   min="0"
@@ -198,13 +208,13 @@ export default function NewIngredientPage() {
                 />
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-mutedText">
-                    Default Storage Shelf / Location
+                  <label className="block text-xs font-mono font-black uppercase tracking-wider text-ink/70">
+                    Default Storage Shelf
                   </label>
                   <select
                     value={defaultLocationId}
                     onChange={(e) => setDefaultLocationId(e.target.value)}
-                    className="w-full h-11 rounded-xl border border-white/10 bg-[#171321] px-4 text-sm text-white focus:outline-none focus:border-potionPurple"
+                    className="w-full h-11 rounded-xl border-2 border-ink bg-cream px-4 text-xs font-bold text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   >
                     <option value="">Select location...</option>
                     {locations.map((loc) => (
@@ -216,18 +226,18 @@ export default function NewIngredientPage() {
                 </div>
               </div>
 
-              <div className="pt-4 flex justify-end gap-3 border-t border-white/10">
+              <div className="pt-4 flex justify-end gap-3 border-t-2 border-ink">
                 <Button href="/inventory" type="button" variant="outline">
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary" isLoading={loading}>
+                <Button type="submit" variant="orange" className="font-black" isLoading={loading}>
                   <Save className="w-4 h-4 mr-2" />
                   Save Ingredient
                 </Button>
               </div>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </AppShell>
   );

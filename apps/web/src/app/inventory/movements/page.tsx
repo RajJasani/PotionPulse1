@@ -51,34 +51,39 @@ export default function StockMovementsPage() {
   return (
     <AppShell>
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-ink pb-4">
           <div className="flex items-center gap-3">
-            <Button href="/inventory" variant="ghost" size="sm" className="h-8 px-2 text-xs">
+            <Button href="/inventory" variant="outline" size="sm" className="h-9 px-2.5 text-xs font-bold">
               <ArrowLeft className="w-4 h-4 mr-1" />
               Inventory
             </Button>
             <div>
-              <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                <ArrowLeftRight className="w-6 h-6 text-violetGlow" />
-                Immutable Stock Ledger
+              <div className="flex items-center gap-2 mb-1">
+                <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                  DOUBLE-ENTRY LEDGER
+                </span>
+                <span className="font-mono text-xs font-bold text-ink/70">
+                  // AUDIT TRAIL
+                </span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+                <ArrowLeftRight className="w-6 h-6 text-hackOrange" />
+                Immutable Stock Movement Ledger
               </h1>
-              <p className="text-xs text-mutedText mt-0.5">
-                Auditable transactional log of all receipts, sales deductions, and adjustments.
-              </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Button href="/inventory/adjust" size="sm" variant="primary" className="text-xs flex items-center gap-1.5">
+            <Button href="/inventory/adjust" size="sm" variant="orange" className="text-xs font-black flex items-center gap-1.5">
               <PlusCircle className="w-3.5 h-3.5" />
               Post Movement
             </Button>
 
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={fetchMovements}
-              className="text-xs text-mutedText"
+              className="text-xs font-bold"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
             </Button>
@@ -86,9 +91,9 @@ export default function StockMovementsPage() {
         </div>
 
         {/* Filter Bar */}
-        <Card className="p-3">
+        <Card className="p-3 bg-white">
           <div className="flex items-center gap-2 overflow-x-auto text-xs">
-            <span className="text-[10px] font-bold uppercase text-mutedText flex items-center gap-1 mr-1">
+            <span className="text-[10px] font-mono font-black uppercase text-ink/70 flex items-center gap-1 mr-1 shrink-0">
               <Filter className="w-3 h-3" />
               Movement Type:
             </span>
@@ -100,10 +105,10 @@ export default function StockMovementsPage() {
                     setTypeFilter(type);
                     setPage(1);
                   }}
-                  className={`px-2.5 py-1 rounded-lg transition-colors font-medium ${
+                  className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all border-2 border-ink shrink-0 ${
                     typeFilter === type
-                      ? 'bg-potionPurple text-white font-semibold'
-                      : 'bg-white/5 text-mutedText hover:text-white'
+                      ? 'bg-hackOrange text-white shadow-retro-sm'
+                      : 'bg-sand text-ink hover:bg-cream'
                   }`}
                 >
                   {type}
@@ -114,11 +119,11 @@ export default function StockMovementsPage() {
         </Card>
 
         {/* Movements Table */}
-        <Card className="p-0 overflow-hidden">
+        <div className="bg-white border-2 border-ink rounded-xl shadow-retro overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left">
+            <table className="w-full text-xs text-left text-ink font-medium">
               <thead>
-                <tr className="border-b border-white/10 bg-white/[0.02] text-mutedText uppercase text-[10px] tracking-wider">
+                <tr className="border-b-2 border-ink bg-sand text-ink uppercase font-mono text-[10px] font-black tracking-wider">
                   <th className="py-3 px-4">Date / Time</th>
                   <th className="py-3 px-4">Ingredient</th>
                   <th className="py-3 px-4">Location</th>
@@ -129,28 +134,28 @@ export default function StockMovementsPage() {
                   <th className="py-3 px-4">Actor</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y-2 border-ink/20 font-mono">
                 {movements.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="py-12 text-center text-mutedText">
-                      {loading ? 'Loading ledger records...' : 'No ledger movements found.'}
+                    <td colSpan={8} className="py-12 text-center text-ink/60 font-bold">
+                      {loading ? 'Consulting ledger records...' : 'No ledger movements found.'}
                     </td>
                   </tr>
                 ) : (
                   movements.map((m) => (
-                    <tr key={m.id} className="hover:bg-white/5 transition-colors">
-                      <td className="py-3 px-4 text-mutedText font-mono whitespace-nowrap">
+                    <tr key={m.id} className="hover:bg-sand/60 transition-colors">
+                      <td className="py-3 px-4 text-ink/75 whitespace-nowrap">
                         {formatDateTime(m.occurredAt)}
                       </td>
-                      <td className="py-3 px-4 font-bold text-white">
-                        <Link href={`/inventory/${m.ingredientId}`} className="hover:text-violetGlow">
+                      <td className="py-3 px-4 font-sans font-black text-ink">
+                        <Link href={`/inventory/${m.ingredientId}`} className="hover:text-hackOrange">
                           {m.ingredientName}
                         </Link>
                       </td>
-                      <td className="py-3 px-4 text-mutedText font-mono">
-                        {m.locationCode || 'Shelf'}
+                      <td className="py-3 px-4 text-ink/75">
+                        {m.locationCode || 'Vault Shelf'}
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 font-sans">
                         <Badge
                           variant={
                             m.type === 'RECEIPT'
@@ -159,7 +164,7 @@ export default function StockMovementsPage() {
                               ? 'purple'
                               : m.type === 'RETURN'
                               ? 'orange'
-                              : 'default'
+                              : 'outline'
                           }
                           className="text-[10px]"
                         >
@@ -167,19 +172,19 @@ export default function StockMovementsPage() {
                         </Badge>
                       </td>
                       <td
-                        className={`py-3 px-4 font-mono font-bold ${
-                          m.quantityDelta > 0 ? 'text-emerald-400' : 'text-rose-400'
+                        className={`py-3 px-4 font-bold ${
+                          m.quantityDelta > 0 ? 'text-hackMint' : 'text-hackRed'
                         }`}
                       >
                         {m.quantityDelta > 0 ? `+${m.quantityDelta}` : m.quantityDelta} {m.unit}
                       </td>
-                      <td className="py-3 px-4 font-mono text-white">
+                      <td className="py-3 px-4 font-bold text-ink">
                         {m.balanceAfter} {m.unit}
                       </td>
-                      <td className="py-3 px-4 text-mutedText max-w-xs truncate" title={m.reason}>
+                      <td className="py-3 px-4 text-ink/80 max-w-xs truncate font-sans text-xs" title={m.reason}>
                         {m.reason}
                       </td>
-                      <td className="py-3 px-4 text-mutedText">
+                      <td className="py-3 px-4 text-ink/75 font-sans">
                         {m.actor?.displayName || 'System'}
                       </td>
                     </tr>
@@ -191,7 +196,7 @@ export default function StockMovementsPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="p-4 border-t border-white/10 flex items-center justify-between text-xs text-mutedText">
+            <div className="p-3.5 border-t-2 border-ink bg-sand/40 flex items-center justify-between text-xs font-mono font-bold text-ink">
               <span>Page {page} of {totalPages}</span>
               <div className="flex gap-2">
                 <Button
@@ -215,7 +220,7 @@ export default function StockMovementsPage() {
               </div>
             </div>
           )}
-        </Card>
+        </div>
       </div>
     </AppShell>
   );

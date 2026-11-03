@@ -14,6 +14,7 @@ import {
   Mail,
   Phone,
   CheckCircle2,
+  X,
 } from 'lucide-react';
 
 interface Supplier {
@@ -118,68 +119,77 @@ export default function SuppliersPage() {
     <AppShell>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-ink pb-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              <Truck className="w-7 h-7 text-potionPurple" />
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                SUPPLIER DIRECTORY
+              </span>
+              <span className="font-mono text-xs font-bold text-ink/70">
+                // VENDOR CATALOG & SLAs
+              </span>
+            </div>
+            <h1 className="text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+              <Truck className="w-7 h-7 text-hackOrange" />
               Supplier Management & Vendor Directory
             </h1>
-            <p className="text-sm text-paleLavender/60 mt-1">
+            <p className="text-xs text-ink/70 font-medium mt-1">
               Maintain supplier SLAs, lead times, reliability ratings, and procurement terms.
             </p>
           </div>
 
           <Button
             size="sm"
+            variant="orange"
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1.5 bg-pumpkin hover:bg-pumpkin/90 text-white"
+            className="flex items-center gap-1.5 font-black"
           >
             <PlusCircle className="w-4 h-4" />
-            Add Supplier
+            <span>Add Supplier</span>
           </Button>
         </div>
 
         {/* Search */}
         <div className="relative">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-paleLavender/40" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink/50" />
           <input
             type="text"
             placeholder="Search suppliers by name or vendor code..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-midnight/60 border border-potionPurple/20 rounded-lg text-sm text-paleLavender placeholder:text-paleLavender/30 focus:outline-none focus:border-potionPurple"
+            className="w-full pl-9 pr-4 py-2.5 bg-cream border-2 border-ink rounded-xl text-xs font-mono font-bold text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-hackOrange shadow-retro-sm"
           />
         </div>
 
         {/* Suppliers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filtered.map((sup) => (
-            <Card key={sup.id} className="p-5 space-y-4 hover:border-potionPurple/40 transition-all">
+            <div key={sup.id} className="p-5 rounded-xl border-2 border-ink shadow-retro bg-white space-y-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="font-bold text-white text-base">{sup.name}</h3>
-                  <span className="text-xs font-mono text-pumpkin">{sup.code}</span>
+                  <h3 className="font-black text-ink text-base">{sup.name}</h3>
+                  <span className="text-xs font-mono font-bold text-hackOrange">{sup.code}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-midnight/80 px-2 py-1 rounded border border-potionPurple/20 text-xs font-semibold text-yellow-400">
-                  <Star className="w-3.5 h-3.5 fill-yellow-400" />
+                <div className="flex items-center gap-1 bg-sand px-2.5 py-1 rounded-lg border-2 border-ink text-xs font-mono font-black text-ink shadow-retro-sm">
+                  <Star className="w-3.5 h-3.5 fill-hackAmber text-hackAmber" />
                   <span>{sup.rating.toFixed(1)}</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 text-xs bg-midnight/40 p-3 rounded-lg border border-potionPurple/15">
-                <div className="flex items-center gap-2 text-paleLavender/80">
-                  <Clock className="w-3.5 h-3.5 text-potionPurple" />
-                  <span>Lead Time: <strong className="text-white">{sup.leadTimeDays} days</strong></span>
+              <div className="grid grid-cols-2 gap-3 text-xs bg-sand p-3.5 rounded-xl border-2 border-ink/40 font-mono">
+                <div className="flex items-center gap-2 text-ink font-bold">
+                  <Clock className="w-3.5 h-3.5 text-hackOrange" />
+                  <span>Lead Time: <strong className="text-hackOrange">{sup.leadTimeDays} days</strong></span>
                 </div>
-                <div className="text-paleLavender/80">
-                  <span>Terms: <strong className="text-white">{sup.paymentTerms}</strong></span>
+                <div className="text-ink font-bold">
+                  <span>Terms: <strong>{sup.paymentTerms}</strong></span>
                 </div>
-                <div className="flex items-center gap-2 text-paleLavender/80 col-span-2">
-                  <Mail className="w-3.5 h-3.5 text-potionPurple" />
+                <div className="flex items-center gap-2 text-ink/80 col-span-2">
+                  <Mail className="w-3.5 h-3.5 text-hackPurple" />
                   <span className="truncate">{sup.contactEmail}</span>
                 </div>
-                <div className="flex items-center gap-2 text-paleLavender/80 col-span-2">
-                  <Phone className="w-3.5 h-3.5 text-potionPurple" />
+                <div className="flex items-center gap-2 text-ink/80 col-span-2">
+                  <Phone className="w-3.5 h-3.5 text-hackPurple" />
                   <span>{sup.contactPhone}</span>
                 </div>
               </div>
@@ -187,41 +197,39 @@ export default function SuppliersPage() {
               <div className="flex items-center justify-between pt-1">
                 <div className="flex flex-wrap gap-1">
                   {sup.categories.map((c) => (
-                    <Badge key={c} variant="outline" className="text-[10px]">
+                    <span key={c} className="sticker-tag bg-cream text-ink text-[10px] py-0.5 border-ink">
                       {c}
-                    </Badge>
+                    </span>
                   ))}
                 </div>
-                <Button variant="ghost" size="sm" className="text-xs text-potionPurple hover:underline h-7 px-2">
+                <Button variant="outline" size="sm" className="text-xs font-bold h-8 px-2.5">
                   View Contracts
                 </Button>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
 
         {/* Add Supplier Modal */}
         {showAddModal && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <Card className="w-full max-w-md p-6 bg-ink border border-potionPurple/30 space-y-4">
-              <div className="flex items-center justify-between border-b border-potionPurple/20 pb-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Truck className="w-5 h-5 text-potionPurple" />
+          <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-md p-6 bg-white border-3 border-ink shadow-retro-xl rounded-2xl space-y-4">
+              <div className="flex items-center justify-between border-b-2 border-ink pb-3">
+                <h3 className="text-lg font-black text-ink flex items-center gap-2">
+                  <Truck className="w-5 h-5 text-hackOrange" />
                   Add New Supplier
                 </h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <button
                   onClick={() => setShowAddModal(false)}
-                  className="text-paleLavender/60 hover:text-white"
+                  className="w-8 h-8 rounded-lg border-2 border-ink bg-sand flex items-center justify-center text-ink hover:bg-cream"
                 >
-                  ✕
-                </Button>
+                  <X className="w-4 h-4" />
+                </button>
               </div>
 
-              <form onSubmit={handleAddSupplier} className="space-y-3">
+              <form onSubmit={handleAddSupplier} className="space-y-3 font-mono font-bold text-xs">
                 <div>
-                  <label className="block text-xs font-semibold text-paleLavender/80 mb-1">
+                  <label className="block text-xs font-mono font-black text-ink mb-1">
                     Supplier Name
                   </label>
                   <input
@@ -230,13 +238,13 @@ export default function SuppliersPage() {
                     placeholder="e.g. Starfall Reagents Ltd."
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full p-2 bg-midnight/70 border border-potionPurple/20 rounded-lg text-sm text-paleLavender focus:outline-none focus:border-potionPurple"
+                    className="w-full p-2 bg-cream border-2 border-ink rounded-xl text-xs font-sans text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-paleLavender/80 mb-1">
+                    <label className="block text-xs font-mono font-black text-ink mb-1">
                       Vendor Code
                     </label>
                     <input
@@ -245,11 +253,11 @@ export default function SuppliersPage() {
                       placeholder="e.g. SRL-05"
                       value={code}
                       onChange={(e) => setCode(e.target.value)}
-                      className="w-full p-2 bg-midnight/70 border border-potionPurple/20 rounded-lg text-xs text-paleLavender focus:outline-none focus:border-potionPurple font-mono"
+                      className="w-full p-2 bg-cream border-2 border-ink rounded-xl text-xs text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-paleLavender/80 mb-1">
+                    <label className="block text-xs font-mono font-black text-ink mb-1">
                       Lead Time (Days)
                     </label>
                     <input
@@ -259,13 +267,13 @@ export default function SuppliersPage() {
                       required
                       value={leadTime}
                       onChange={(e) => setLeadTime(Number(e.target.value))}
-                      className="w-full p-2 bg-midnight/70 border border-potionPurple/20 rounded-lg text-xs text-paleLavender focus:outline-none focus:border-potionPurple"
+                      className="w-full p-2 bg-cream border-2 border-ink rounded-xl text-xs text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-paleLavender/80 mb-1">
+                  <label className="block text-xs font-mono font-black text-ink mb-1">
                     Email Address
                   </label>
                   <input
@@ -274,12 +282,12 @@ export default function SuppliersPage() {
                     placeholder="orders@starfall.realm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-2 bg-midnight/70 border border-potionPurple/20 rounded-lg text-sm text-paleLavender focus:outline-none focus:border-potionPurple"
+                    className="w-full p-2 bg-cream border-2 border-ink rounded-xl text-xs text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-paleLavender/80 mb-1">
+                  <label className="block text-xs font-mono font-black text-ink mb-1">
                     Phone Number
                   </label>
                   <input
@@ -288,18 +296,18 @@ export default function SuppliersPage() {
                     placeholder="+1 (555) 019-2831"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full p-2 bg-midnight/70 border border-potionPurple/20 rounded-lg text-sm text-paleLavender focus:outline-none focus:border-potionPurple"
+                    className="w-full p-2 bg-cream border-2 border-ink rounded-xl text-xs text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-paleLavender/80 mb-1">
+                  <label className="block text-xs font-mono font-black text-ink mb-1">
                     Payment Terms
                   </label>
                   <select
                     value={paymentTerms}
                     onChange={(e) => setPaymentTerms(e.target.value)}
-                    className="w-full p-2 bg-midnight/70 border border-potionPurple/20 rounded-lg text-xs text-paleLavender focus:outline-none focus:border-potionPurple"
+                    className="w-full p-2 bg-cream border-2 border-ink rounded-xl text-xs text-ink focus:outline-none focus:ring-2 focus:ring-hackOrange font-bold"
                   >
                     <option value="Net 15">Net 15</option>
                     <option value="Net 30">Net 30</option>
@@ -308,10 +316,10 @@ export default function SuppliersPage() {
                   </select>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-potionPurple/15">
+                <div className="flex items-center justify-end gap-3 pt-3 border-t-2 border-ink">
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => setShowAddModal(false)}
                   >
@@ -319,15 +327,16 @@ export default function SuppliersPage() {
                   </Button>
                   <Button
                     type="submit"
+                    variant="orange"
                     size="sm"
-                    className="bg-potionPurple hover:bg-potionPurple/90 text-white flex items-center gap-1"
+                    className="font-black"
                   >
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="w-4 h-4 mr-1" />
                     Save Supplier
                   </Button>
                 </div>
               </form>
-            </Card>
+            </div>
           </div>
         )}
       </div>

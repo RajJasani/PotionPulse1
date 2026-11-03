@@ -31,41 +31,41 @@ const NAV_SECTIONS = [
   {
     title: 'Core Operations',
     items: [
-      { label: 'Overview', href: '/dashboard', icon: LayoutDashboard, color: 'text-violet-400' },
-      { label: 'Inventory Catalog', href: '/inventory', icon: Package, color: 'text-emerald-400' },
-      { label: 'Shelves & Locations', href: '/inventory/locations', icon: Layers, color: 'text-cyan-400' },
-      { label: 'Stock Movements', href: '/inventory/movements', icon: ArrowLeftRight, color: 'text-amber-400' },
-      { label: 'Receive / Adjust', href: '/inventory/adjust', icon: PlusCircle, color: 'text-pink-400' },
-      { label: 'Sales Orders', href: '/sales', icon: ShoppingCart, color: 'text-orange-400' },
-      { label: 'Point of Sale', href: '/sales/new', icon: PlusCircle, color: 'text-emerald-300' },
+      { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+      { label: 'Inventory Catalog', href: '/inventory', icon: Package },
+      { label: 'Shelves & Locations', href: '/inventory/locations', icon: Layers },
+      { label: 'Stock Movements', href: '/inventory/movements', icon: ArrowLeftRight },
+      { label: 'Receive / Adjust', href: '/inventory/adjust', icon: PlusCircle },
+      { label: 'Sales Orders', href: '/sales', icon: ShoppingCart },
+      { label: 'Point of Sale', href: '/sales/new', icon: PlusCircle },
     ],
   },
   {
     title: 'Inventory Intelligence',
     items: [
-      { label: 'Demand Forecasting', href: '/forecasting', icon: TrendingUp, color: 'text-purple-400' },
-      { label: 'Restock Engine', href: '/restock', icon: Package, color: 'text-cyan-400' },
-      { label: 'Anomaly Center', href: '/anomalies', icon: AlertTriangle, color: 'text-rose-400' },
-      { label: 'Midnight Curse', href: '/events', icon: Flame, badge: '3x Event', color: 'text-orange-500' },
+      { label: 'Demand Forecasting', href: '/forecasting', icon: TrendingUp },
+      { label: 'Restock Engine', href: '/restock', icon: Package },
+      { label: 'Anomaly Center', href: '/anomalies', icon: AlertTriangle },
+      { label: 'Midnight Curse', href: '/events', icon: Flame, badge: '3X EVENT' },
     ],
   },
   {
     title: 'Procurement & Recipes',
     items: [
-      { label: 'Suppliers', href: '/suppliers', icon: Truck, color: 'text-amber-300' },
-      { label: 'Purchase Orders', href: '/purchase-orders', icon: FileText, color: 'text-blue-400' },
-      { label: 'Potion Recipes', href: '/recipes', icon: FlaskConical, color: 'text-emerald-400' },
+      { label: 'Suppliers', href: '/suppliers', icon: Truck },
+      { label: 'Purchase Orders', href: '/purchase-orders', icon: FileText },
+      { label: 'Potion Recipes', href: '/recipes', icon: FlaskConical },
     ],
   },
   {
     title: 'System & Platform',
     items: [
-      { label: 'Analytics & Reports', href: '/analytics', icon: BarChart3, color: 'text-pink-400' },
-      { label: 'Notifications', href: '/notifications', icon: Bell, color: 'text-yellow-400' },
-      { label: 'Team & RBAC', href: '/team', icon: Users, color: 'text-indigo-400' },
-      { label: 'Import / Export', href: '/import-export', icon: Database, color: 'text-teal-400' },
-      { label: 'Audit Trail', href: '/audit', icon: History, color: 'text-purple-300' },
-      { label: 'Shop Settings', href: '/settings', icon: Settings, color: 'text-gray-400' },
+      { label: 'Analytics & Reports', href: '/analytics', icon: BarChart3 },
+      { label: 'Notifications', href: '/notifications', icon: Bell },
+      { label: 'Team & RBAC', href: '/team', icon: Users },
+      { label: 'Import / Export', href: '/import-export', icon: Database },
+      { label: 'Audit Trail', href: '/audit', icon: History },
+      { label: 'Shop Settings', href: '/settings', icon: Settings },
     ],
   },
 ];
@@ -77,33 +77,39 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <aside
       className={cn(
-        'w-64 bg-[#140D22] border-r-2 border-purple-500/20 flex flex-col h-screen sticky top-0 overflow-y-auto selection:bg-potionPurple shadow-xl',
+        'w-64 bg-[#FAF5EE] border-r-2 border-ink flex flex-col h-screen sticky top-0 overflow-y-auto selection:bg-hackOrange selection:text-white',
         className,
       )}
     >
-      {/* Brand Header with Cartoon Flask */}
-      <div className="p-4 border-b-2 border-purple-500/15 flex items-center justify-between bg-[#19102B]/60">
+      {/* Brand Header with Hacktoberfest Fire & Alchemist Badge */}
+      <div className="p-4 border-b-2 border-ink bg-[#FFFDF9]">
         <Link href="/dashboard" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-violet-600 via-potionPurple to-pink-500 flex items-center justify-center border-2 border-violet-300/40 shadow-cartoon-purple group-hover:scale-105 transition-transform">
-            <span className="text-xl">🔮</span>
+          <div className="w-10 h-10 rounded-xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center text-white shadow-retro-sm group-hover:translate-x-[-1px] group-hover:translate-y-[-1px] transition-transform">
+            <span className="text-xl">⚡</span>
           </div>
           <div>
-            <h1 className="text-base font-black text-white tracking-tight flex items-center gap-1.5">
-              PotionPulse
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-extrabold">v1</span>
-            </h1>
-            <p className="text-[10px] text-purple-300/80 font-bold">Predict. Manage. Thrive.</p>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-base font-black text-ink tracking-tight font-mono">
+                PotionPulse
+              </h1>
+              <span className="text-[9px] font-mono font-black px-1.5 py-0.2 rounded bg-[#FFBE1A] text-ink border border-ink uppercase">
+                2026
+              </span>
+            </div>
+            <p className="text-[10px] text-mutedText font-mono font-bold uppercase tracking-wider">
+              Open Apothecary Intelligence
+            </p>
           </div>
         </Link>
       </div>
 
-      {/* Cartoon Tenant Selector Box */}
-      <div className="p-3 border-b-2 border-purple-500/15 bg-[#1C1230]">
-        <div className="text-[10px] font-black uppercase tracking-wider text-purple-300/80 px-1 mb-1.5 flex justify-between items-center">
-          <span className="flex items-center gap-1">
-            <span>🧙‍♀️</span> Active Shop
+      {/* Tenant Switcher Selector */}
+      <div className="p-3 border-b-2 border-ink bg-white">
+        <div className="text-[10px] font-mono font-black uppercase tracking-wider text-mutedText px-1 mb-1.5 flex justify-between items-center">
+          <span className="flex items-center gap-1 text-ink font-bold">
+            <span>🏛️</span> Active Shop
           </span>
-          <span className="text-[9px] px-2 py-0.5 rounded-full bg-potionPurple/30 border border-purple-400/40 text-purple-200 font-extrabold uppercase">
+          <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#6320EE] text-white border border-ink font-mono font-black uppercase">
             {activeTenant?.role || 'Staff'}
           </span>
         </div>
@@ -111,7 +117,7 @@ export function Sidebar({ className }: { className?: string }) {
           <select
             value={activeTenant?.id || ''}
             onChange={(e) => switchTenant(e.target.value)}
-            className="w-full text-xs font-bold bg-[#120A1E] border-2 border-purple-400/30 text-white rounded-xl px-3 py-2 appearance-none focus:outline-none focus:border-purple-400 cursor-pointer shadow-inner"
+            className="w-full text-xs font-mono font-bold bg-[#FAF5EE] border-2 border-ink text-ink rounded-lg px-2.5 py-1.5 appearance-none focus:outline-none focus:border-hackOrange cursor-pointer shadow-retro-xs"
           >
             {memberships.map((m) => (
               <option key={m.tenantId} value={m.tenantId}>
@@ -119,7 +125,7 @@ export function Sidebar({ className }: { className?: string }) {
               </option>
             ))}
           </select>
-          <ChevronDown className="w-4 h-4 text-purple-300 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className="w-4 h-4 text-ink absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
         </div>
       </div>
 
@@ -127,7 +133,7 @@ export function Sidebar({ className }: { className?: string }) {
       <nav className="flex-1 px-3 py-4 space-y-5">
         {NAV_SECTIONS.map((section) => (
           <div key={section.title} className="space-y-1">
-            <h3 className="text-[10px] font-black uppercase tracking-wider text-purple-300/60 px-2 mb-2">
+            <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-mutedText px-2 mb-2">
               {section.title}
             </h3>
             {section.items.map((item) => {
@@ -139,18 +145,18 @@ export function Sidebar({ className }: { className?: string }) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150',
+                    'flex items-center justify-between px-3 py-2 rounded-xl text-xs font-extrabold transition-all duration-100',
                     isActive
-                      ? 'bg-gradient-to-r from-violet-600/40 to-pink-500/20 text-white border-2 border-violet-400/60 shadow-[0_3px_0_0_#4C1D95] scale-[1.02]'
-                      : 'text-purple-200/70 hover:text-white hover:bg-white/5 border border-transparent',
+                      ? 'bg-[#FF5C00] text-white border-2 border-ink shadow-retro-sm translate-x-[-1px] translate-y-[-1px]'
+                      : 'text-ink/80 hover:text-ink hover:bg-white border-2 border-transparent hover:border-ink hover:shadow-retro-xs',
                   )}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={cn('w-4 h-4', isActive ? 'text-violet-300' : item.color)} />
+                    <Icon className={cn('w-4 h-4', isActive ? 'text-white' : 'text-ink/70')} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-orange-500/25 text-orange-300 border-2 border-orange-400/50 animate-pulse">
+                    <span className="text-[9px] font-mono font-black px-1.5 py-0.5 rounded bg-[#FFBE1A] text-ink border border-ink shadow-[1px_1px_0px_#1A1523]">
                       {item.badge}
                     </span>
                   )}
@@ -162,13 +168,13 @@ export function Sidebar({ className }: { className?: string }) {
       </nav>
 
       {/* Footer Info */}
-      <div className="p-3.5 border-t-2 border-purple-500/15 bg-[#170F28] text-[10px] font-bold text-purple-300/70 flex justify-between items-center">
+      <div className="p-3 border-t-2 border-ink bg-white text-[10px] font-mono font-black text-ink flex justify-between items-center">
         <span className="flex items-center gap-1.5">
-          <span>🧪</span> PotionCore 2026
+          <span>📜</span> TRACK-01
         </span>
-        <span className="text-emerald-400 flex items-center gap-1.5 font-black px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          Live Sync
+        <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-[#06D6A0] text-ink border border-ink shadow-[1px_1px_0px_#1A1523]">
+          <span className="w-1.5 h-1.5 rounded-full bg-ink animate-pulse" />
+          ONLINE
         </span>
       </div>
     </aside>

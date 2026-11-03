@@ -91,7 +91,6 @@ export default function NewSalePage() {
         alert('This ingredient is out of stock.');
         return;
       }
-      // Potion retail price formula: costPerUnit * 1.5 markup or minimum $5
       const retailPrice = Number(ing.costPerUnit || 10) * 1.5;
       setCart([
         ...cart,
@@ -187,31 +186,35 @@ export default function NewSalePage() {
     <AppShell>
       <div className="space-y-6">
         {/* Top Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-ink pb-4">
           <div className="flex items-center gap-3">
-            <Button href="/sales" variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-lg">
-              <ArrowLeft className="w-5 h-5 text-paleLavender/70" />
+            <Button href="/sales" variant="outline" size="sm" className="h-10 w-10 p-0 font-bold">
+              <ArrowLeft className="w-5 h-5 text-ink" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                <ShoppingCart className="w-7 h-7 text-potionPurple" />
-                Point of Sale Terminal
+              <div className="flex items-center gap-2 mb-1">
+                <span className="sticker-tag bg-hackOrange text-white text-[10px]">
+                  CASHIER TERMINAL
+                </span>
+                <span className="font-mono text-xs font-bold text-ink/70">
+                  // POS REAL-TIME DISPENSING
+                </span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-ink tracking-tight flex items-center gap-2">
+                <span>🛒</span> Point of Sale Register
               </h1>
-              <p className="text-sm text-paleLavender/60">
-                Dispense potions & raw alchemy ingredients with instant ledger deduction.
-              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="border-pumpkin/40 text-pumpkin flex items-center gap-1">
-              <Sparkles className="w-3 h-3" />
-              Register Active
-            </Badge>
+            <span className="sticker-tag bg-hackMint text-ink flex items-center gap-1.5 font-bold">
+              <Sparkles className="w-3.5 h-3.5" />
+              Register Online
+            </span>
           </div>
         </div>
 
         {error && (
-          <div className="p-4 bg-crimson/10 border border-crimson/20 rounded-lg text-crimson text-sm flex items-center gap-2">
+          <div className="p-4 bg-hackRed/10 border-2 border-ink rounded-xl text-hackRed text-xs font-mono font-bold flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <span>{error}</span>
           </div>
@@ -221,17 +224,17 @@ export default function NewSalePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Catalog Section */}
           <div className="lg:col-span-8 space-y-4">
-            <Card className="p-4 space-y-4">
+            <Card className="p-4 space-y-3 bg-white">
               {/* Category pills */}
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                    className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all border-2 border-ink ${
                       selectedCategory === cat
-                        ? 'bg-potionPurple text-white shadow-md'
-                        : 'bg-midnight/60 text-paleLavender/70 hover:bg-midnight hover:text-white border border-potionPurple/15'
+                        ? 'bg-hackOrange text-white shadow-retro-sm'
+                        : 'bg-sand text-ink hover:bg-cream'
                     }`}
                   >
                     {cat}
@@ -241,22 +244,24 @@ export default function NewSalePage() {
 
               {/* Search input */}
               <div className="relative">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-paleLavender/40" />
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink/50" />
                 <input
                   type="text"
                   placeholder="Search catalog by name or SKU..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-midnight/60 border border-potionPurple/20 rounded-lg text-sm text-paleLavender placeholder:text-paleLavender/30 focus:outline-none focus:border-potionPurple"
+                  className="w-full pl-9 pr-4 py-2 bg-cream border-2 border-ink rounded-xl text-xs font-mono font-bold text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-hackOrange shadow-retro-sm"
                 />
               </div>
             </Card>
 
             {/* Ingredients Grid */}
             {loading ? (
-              <div className="py-12 text-center text-paleLavender/50">Loading ingredients catalog...</div>
+              <div className="py-12 text-center font-mono font-bold text-ink/70">
+                Loading ingredients catalog...
+              </div>
             ) : filteredIngredients.length === 0 ? (
-              <div className="py-12 text-center text-paleLavender/50 bg-midnight/30 rounded-xl border border-potionPurple/10">
+              <div className="py-12 text-center font-mono font-bold text-ink/70 bg-white rounded-xl border-2 border-ink shadow-retro">
                 No matching ingredients found.
               </div>
             ) : (
@@ -267,29 +272,29 @@ export default function NewSalePage() {
                   const estimatedRetail = Math.round(Number(ing.costPerUnit || 10) * 1.5 * 100) / 100;
 
                   return (
-                    <Card
+                    <div
                       key={ing.id}
-                      className={`p-4 flex flex-col justify-between transition-all hover:border-potionPurple/40 ${
-                        isOutOfStock ? 'opacity-60 bg-midnight/30' : 'bg-midnight/60'
+                      className={`p-4 rounded-xl border-2 border-ink flex flex-col justify-between transition-all bg-white shadow-retro-sm hover:shadow-retro ${
+                        isOutOfStock ? 'opacity-60 bg-sand' : ''
                       }`}
                     >
                       <div className="space-y-1.5">
                         <div className="flex items-start justify-between gap-1">
-                          <h4 className="font-semibold text-sm text-white line-clamp-1">{ing.name}</h4>
-                          <Badge variant="outline" className="text-[10px] uppercase">
+                          <h4 className="font-black text-sm text-ink line-clamp-1">{ing.name}</h4>
+                          <span className="sticker-tag bg-sand text-ink text-[9px] py-0 px-1 border-ink">
                             {ing.category}
-                          </Badge>
+                          </span>
                         </div>
-                        <p className="text-xs font-mono text-paleLavender/50">SKU: {ing.sku}</p>
-                        <div className="flex items-center justify-between text-xs pt-1">
-                          <span className="text-paleLavender/70">Stock:</span>
+                        <p className="text-xs font-mono font-bold text-ink/60">SKU: {ing.sku || '—'}</p>
+                        <div className="flex items-center justify-between text-xs pt-1 font-mono">
+                          <span className="text-ink/70">Stock:</span>
                           <span
-                            className={`font-semibold ${
+                            className={`font-black ${
                               isOutOfStock
-                                ? 'text-crimson'
+                                ? 'text-hackRed'
                                 : onHand <= (ing.safetyStock || 5)
-                                ? 'text-pumpkin'
-                                : 'text-cauldronGreen'
+                                ? 'text-hackOrange'
+                                : 'text-hackMint'
                             }`}
                           >
                             {onHand} {ing.unit}
@@ -297,21 +302,22 @@ export default function NewSalePage() {
                         </div>
                       </div>
 
-                      <div className="pt-3 mt-3 border-t border-potionPurple/15 flex items-center justify-between">
-                        <span className="text-base font-bold text-pumpkin">
+                      <div className="pt-3 mt-3 border-t-2 border-ink/15 flex items-center justify-between">
+                        <span className="text-base font-black text-ink font-mono">
                           {formatCurrency(estimatedRetail)}
                         </span>
                         <Button
                           size="sm"
                           disabled={isOutOfStock}
                           onClick={() => addToCart(ing)}
-                          className="h-8 px-2.5 bg-potionPurple hover:bg-potionPurple/80 text-white text-xs flex items-center gap-1"
+                          variant="orange"
+                          className="h-8 px-2.5 text-xs font-black flex items-center gap-1"
                         >
                           <Plus className="w-3.5 h-3.5" />
                           Add
                         </Button>
                       </div>
-                    </Card>
+                    </div>
                   );
                 })}
               </div>
@@ -320,16 +326,16 @@ export default function NewSalePage() {
 
           {/* Active Cart / Order Ticket */}
           <div className="lg:col-span-4">
-            <Card className="p-5 space-y-5 sticky top-20 bg-ink border border-potionPurple/25">
-              <div className="flex items-center justify-between border-b border-potionPurple/20 pb-3">
+            <div className="p-5 space-y-4 sticky top-20 bg-white border-2 border-ink shadow-retro rounded-xl">
+              <div className="flex items-center justify-between border-b-2 border-ink pb-3">
                 <div className="flex items-center gap-2">
-                  <Receipt className="w-5 h-5 text-pumpkin" />
-                  <h3 className="font-bold text-white">Current Ticket</h3>
+                  <Receipt className="w-5 h-5 text-hackOrange" />
+                  <h3 className="font-black text-ink">Register Ticket</h3>
                 </div>
                 {cart.length > 0 && (
                   <button
                     onClick={clearCart}
-                    className="text-xs text-crimson hover:underline"
+                    className="text-xs font-mono font-black text-hackRed hover:underline"
                   >
                     Clear All
                   </button>
@@ -339,26 +345,26 @@ export default function NewSalePage() {
               {/* Order Meta */}
               <div className="space-y-2">
                 <div>
-                  <label className="text-[11px] uppercase tracking-wider text-paleLavender/60 block mb-1">
+                  <label className="text-[10px] uppercase font-mono font-black text-ink/70 block mb-1">
                     Sale Reference
                   </label>
                   <input
                     type="text"
                     value={saleNumber}
                     onChange={(e) => setSaleNumber(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-midnight/70 border border-potionPurple/20 rounded text-xs text-white font-mono"
+                    className="w-full px-3 py-1.5 bg-cream border-2 border-ink rounded-lg text-xs text-ink font-mono font-bold"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] uppercase tracking-wider text-paleLavender/60 block mb-1">
+                  <label className="text-[10px] uppercase font-mono font-black text-ink/70 block mb-1">
                     Customer / Note
                   </label>
                   <input
                     type="text"
-                    placeholder="Walk-in, potion order..."
+                    placeholder="Walk-in, wizard order..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-midnight/70 border border-potionPurple/20 rounded text-xs text-paleLavender placeholder:text-paleLavender/30"
+                    className="w-full px-3 py-1.5 bg-cream border-2 border-ink rounded-lg text-xs text-ink font-medium placeholder:text-ink/40"
                   />
                 </div>
               </div>
@@ -366,7 +372,7 @@ export default function NewSalePage() {
               {/* Cart Items List */}
               <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
                 {cart.length === 0 ? (
-                  <div className="py-8 text-center text-xs text-paleLavender/40 border border-dashed border-potionPurple/20 rounded-lg">
+                  <div className="py-8 text-center text-xs font-mono font-bold text-ink/50 border-2 border-dashed border-ink/30 rounded-lg">
                     Ticket is empty.
                     <br />
                     Select ingredients from the catalog.
@@ -375,41 +381,41 @@ export default function NewSalePage() {
                   cart.map((item) => (
                     <div
                       key={item.ingredientId}
-                      className="p-2.5 bg-midnight/40 rounded-lg border border-potionPurple/15 space-y-2"
+                      className="p-2.5 bg-sand/60 rounded-lg border-2 border-ink space-y-2"
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-xs font-semibold text-white line-clamp-1">{item.name}</p>
-                          <p className="text-[10px] text-paleLavender/50 font-mono">
+                          <p className="text-xs font-black text-ink line-clamp-1">{item.name}</p>
+                          <p className="text-[10px] text-ink/70 font-mono">
                             {formatCurrency(item.unitPrice)} / {item.unit}
                           </p>
                         </div>
                         <button
                           onClick={() => removeFromCart(item.ingredientId)}
-                          className="text-paleLavender/40 hover:text-crimson p-1"
+                          className="text-ink/60 hover:text-hackRed p-1"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center border border-potionPurple/30 rounded bg-midnight/60">
+                        <div className="flex items-center border-2 border-ink rounded-lg bg-white">
                           <button
                             onClick={() => updateQuantity(item.ingredientId, item.quantity - 1)}
-                            className="px-2 py-0.5 text-paleLavender/80 hover:text-white"
+                            className="px-2 py-0.5 text-ink hover:bg-sand"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="px-2 text-xs font-semibold text-white">{item.quantity}</span>
+                          <span className="px-2 text-xs font-black font-mono text-ink">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.ingredientId, item.quantity + 1)}
-                            className="px-2 py-0.5 text-paleLavender/80 hover:text-white"
+                            className="px-2 py-0.5 text-ink hover:bg-sand"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
                         </div>
 
-                        <span className="text-xs font-bold text-white font-mono">
+                        <span className="text-xs font-black text-ink font-mono">
                           {formatCurrency(item.quantity * item.unitPrice)}
                         </span>
                       </div>
@@ -420,18 +426,18 @@ export default function NewSalePage() {
 
               {/* Order Summary Calculations */}
               {cart.length > 0 && (
-                <div className="pt-3 border-t border-potionPurple/20 space-y-2 text-xs">
-                  <div className="flex justify-between text-paleLavender/70">
+                <div className="pt-3 border-t-2 border-ink space-y-1.5 text-xs font-mono font-bold">
+                  <div className="flex justify-between text-ink/70">
                     <span>Subtotal</span>
-                    <span className="font-mono">{formatCurrency(subtotal)}</span>
+                    <span>{formatCurrency(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between text-paleLavender/70">
+                  <div className="flex justify-between text-ink/70">
                     <span>Apothecary Levy (5%)</span>
-                    <span className="font-mono">{formatCurrency(tax)}</span>
+                    <span>{formatCurrency(tax)}</span>
                   </div>
-                  <div className="flex justify-between text-base font-bold text-white pt-2 border-t border-potionPurple/15">
+                  <div className="flex justify-between text-base font-black text-ink pt-2 border-t-2 border-ink">
                     <span>Total Due</span>
-                    <span className="text-pumpkin font-mono">{formatCurrency(grandTotal)}</span>
+                    <span className="text-hackOrange font-mono text-lg">{formatCurrency(grandTotal)}</span>
                   </div>
                 </div>
               )}
@@ -440,49 +446,50 @@ export default function NewSalePage() {
               <Button
                 disabled={cart.length === 0 || submitting}
                 onClick={handleCompleteSale}
-                className="w-full py-3 bg-cauldronGreen hover:bg-cauldronGreen/90 text-black font-bold flex items-center justify-center gap-2"
+                variant="mint"
+                className="w-full py-3 text-ink font-black flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   'Deducting Inventory...'
                 ) : (
                   <>
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="w-4 h-4 text-ink" />
                     Complete Sale ({formatCurrency(grandTotal)})
                   </>
                 )}
               </Button>
-            </Card>
+            </div>
           </div>
         </div>
 
         {/* Receipt Success Dialog */}
         {saleSuccess && (
-          <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-            <Card className="w-full max-w-md p-6 bg-ink border border-cauldronGreen/40 space-y-5 text-center">
-              <div className="w-14 h-14 mx-auto rounded-full bg-cauldronGreen/20 border border-cauldronGreen/40 flex items-center justify-center text-cauldronGreen">
-                <CheckCircle2 className="w-8 h-8" />
+          <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-md p-6 bg-white border-3 border-ink shadow-retro-xl rounded-2xl space-y-4 text-center">
+              <div className="w-14 h-14 mx-auto rounded-xl bg-hackMint border-2 border-ink shadow-retro-sm flex items-center justify-center text-ink text-2xl font-bold">
+                ✓
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-white">Sale Completed Successfully!</h3>
-                <p className="text-xs text-paleLavender/70 mt-1 font-mono">
+                <h3 className="text-xl font-black text-ink">Sale Completed Successfully!</h3>
+                <p className="text-xs text-ink/70 mt-1 font-mono font-bold">
                   Receipt #{saleSuccess.saleNumber || saleNumber}
                 </p>
-                <p className="text-xs text-cauldronGreen mt-1">
-                  Inventory balances automatically deducted in real time.
+                <p className="text-xs text-hackMint font-mono font-bold mt-1">
+                  ✓ Stock ledger balances automatically deducted.
                 </p>
               </div>
 
-              <div className="bg-midnight/60 rounded-xl p-4 border border-potionPurple/20 text-left space-y-2 text-xs font-mono">
-                <div className="flex justify-between text-paleLavender/70">
+              <div className="bg-sand rounded-xl p-4 border-2 border-ink text-left space-y-2 text-xs font-mono font-bold text-ink">
+                <div className="flex justify-between text-ink/70">
                   <span>Total Amount Paid:</span>
-                  <span className="font-bold text-pumpkin">
+                  <span className="font-black text-hackOrange text-base">
                     {formatCurrency(saleSuccess.totalAmount || grandTotal)}
                   </span>
                 </div>
-                <div className="flex justify-between text-paleLavender/70">
+                <div className="flex justify-between text-ink/70">
                   <span>Items Dispensed:</span>
-                  <span className="text-white font-semibold">
+                  <span className="text-ink font-black">
                     {saleSuccess.items?.length || 1} line item(s)
                   </span>
                 </div>
@@ -501,13 +508,13 @@ export default function NewSalePage() {
                 </Button>
                 <Button
                   size="sm"
+                  variant="orange"
                   onClick={() => router.push('/sales')}
-                  className="bg-potionPurple hover:bg-potionPurple/90 text-white"
                 >
                   View in Sales Ledger
                 </Button>
               </div>
-            </Card>
+            </div>
           </div>
         )}
       </div>
