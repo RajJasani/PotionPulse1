@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -14,6 +14,7 @@ import { Tenant, TenantSchema } from '../tenants/schemas/tenant.schema';
 import { Membership, MembershipSchema } from '../tenants/schemas/membership.schema';
 import { Location, LocationSchema } from '../inventory/schemas/location.schema';
 
+@Global()
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),

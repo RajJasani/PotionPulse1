@@ -9,9 +9,11 @@ import { InventoryBalance, InventoryBalanceSchema } from '../inventory/schemas/i
 import { Sale, SaleSchema } from '../sales/schemas/sale.schema';
 import { SaleItem, SaleItemSchema } from '../sales/schemas/sale-item.schema';
 import { DemandEvent, DemandEventSchema } from '../events/schemas/demand-event.schema';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     MongooseModule.forFeature([
       { name: Anomaly.name, schema: AnomalySchema },
       { name: Ingredient.name, schema: IngredientSchema },
