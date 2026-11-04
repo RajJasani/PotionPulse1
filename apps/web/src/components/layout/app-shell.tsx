@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Sidebar } from './sidebar';
 import { Header } from './header';
+import { PotionPulseIcon } from '@/components/brand/logo';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
@@ -19,9 +20,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#FFFDF9] flex flex-col items-center justify-center text-ink p-6 select-none">
-        <div className="w-16 h-16 rounded-2xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center shadow-retro mb-4 text-3xl animate-bounce">
-          ⚡
-        </div>
+        <PotionPulseIcon size="lg" className="mb-4 animate-bounce" />
         <p className="text-base font-black font-mono tracking-tight text-ink uppercase">
           Initializing PotionPulse...
         </p>

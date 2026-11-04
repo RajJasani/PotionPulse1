@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Logo } from '@/components/brand/logo';
 
 export default function HomePage() {
   return (
@@ -32,24 +33,7 @@ export default function HomePage() {
       {/* Navigation Header */}
       <header className="border-b-2 border-ink bg-white/95 backdrop-blur sticky top-0 z-30 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-xl bg-hackOrange text-white border-2 border-ink shadow-retro flex items-center justify-center text-2xl group-hover:-translate-y-0.5 group-hover:shadow-retro-lg transition-all">
-              ⚗️
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-black text-2xl tracking-tight text-ink">
-                  PotionPulse
-                </span>
-                <span className="sticker-tag bg-hackPink text-white border-ink text-[9px] py-0 px-1.5">
-                  v1.0.0
-                </span>
-              </div>
-              <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-ink/70 block">
-                Predictive Inventory Intelligence
-              </span>
-            </div>
-          </Link>
+          <Logo href="/" size="md" />
 
           <nav className="hidden md:flex items-center gap-6 text-xs font-mono font-bold uppercase tracking-wider text-ink">
             <a href="#features" className="hover:text-hackOrange hover:underline decoration-2 underline-offset-4">
@@ -521,15 +505,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t-2 border-ink bg-white px-6 py-8 mt-12">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-hackOrange text-white border-2 border-ink shadow-retro-sm flex items-center justify-center font-bold text-base">
-              ⚗️
-            </div>
-            <div>
-              <span className="font-black text-sm text-ink block">PotionPulse Platform</span>
-              <span className="text-[11px] font-mono text-ink/70">Handcrafted Hacktoberfest Edition • MIT License</span>
-            </div>
-          </div>
+          <Logo href="/" size="sm" />
 
           <div className="flex flex-wrap items-center gap-6 font-mono text-xs font-bold uppercase">
             <Link href="/dashboard" className="hover:text-hackOrange">Dashboard</Link>

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { cn } from '@/lib/utils';
 import { ClientOnly } from '@/components/ui/client-only';
+import { Logo } from '@/components/brand/logo';
 import {
   LayoutDashboard,
   Package,
@@ -82,26 +83,9 @@ export function Sidebar({ className }: { className?: string }) {
         className,
       )}
     >
-      {/* Brand Header with Hacktoberfest Fire & Alchemist Badge */}
+      {/* Brand Header with Vector Flask Logo */}
       <div className="p-4 border-b-2 border-ink bg-[#FFFDF9]">
-        <Link href="/dashboard" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center text-white shadow-retro-sm group-hover:translate-x-[-1px] group-hover:translate-y-[-1px] transition-transform">
-            <span className="text-xl">⚡</span>
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <h1 className="text-base font-black text-ink tracking-tight font-mono">
-                PotionPulse
-              </h1>
-              <span className="text-[9px] font-mono font-black px-1.5 py-0.2 rounded bg-[#FFBE1A] text-ink border border-ink uppercase">
-                2026
-              </span>
-            </div>
-            <p className="text-[10px] text-mutedText font-mono font-bold uppercase tracking-wider">
-              Open Apothecary Intelligence
-            </p>
-          </div>
-        </Link>
+        <Logo href="/dashboard" size="sm" />
       </div>
 
       {/* Tenant Switcher Selector */}

@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useSocket } from '@/lib/socket-context';
 import { Button } from '@/components/ui/button';
 import { ClientOnly } from '@/components/ui/client-only';
+import { PotionPulseIcon } from '@/components/brand/logo';
 import {
   Bell,
   LogOut,
@@ -22,9 +23,7 @@ export function Header() {
       {/* Workspace Quick Status */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#FF5C00] border-2 border-ink flex items-center justify-center text-white text-base shadow-retro-xs">
-            ⚡
-          </div>
+          <PotionPulseIcon size="sm" />
           <div>
             <span className="text-sm font-black text-ink tracking-tight block leading-tight font-mono">
               {activeTenant?.name || "Madam Hexley's Apothecary"}

@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Logo } from '@/components/brand/logo';
 import { ArrowRight, ShieldCheck, Zap, AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
@@ -42,23 +43,11 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#FFFDF9] flex flex-col justify-center items-center p-6 relative selection:bg-hackOrange selection:text-white">
       <div className="w-full max-w-md z-10 space-y-6">
-        {/* Brand Header — Hacktoberfest Festival Badge */}
+        {/* Brand Header */}
         <div className="flex flex-col items-center text-center">
-          <Link href="/" className="inline-flex items-center gap-3 mb-3 group">
-            <div className="w-12 h-12 rounded-xl bg-[#FF5C00] border-2 border-ink flex items-center justify-center text-white shadow-retro group-hover:translate-x-[-1px] group-hover:translate-y-[-1px] transition-transform text-2xl">
-              ⚡
-            </div>
-            <div className="text-left">
-              <span className="text-3xl font-black text-ink tracking-tight font-mono block leading-none">
-                PotionPulse
-              </span>
-              <span className="text-[10px] font-mono font-black uppercase tracking-widest text-[#FF5C00] block mt-1">
-                Open Inventory Intelligence
-              </span>
-            </div>
-          </Link>
+          <Logo href="/" size="lg" className="justify-center mb-3" />
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FAF5EE] border-2 border-ink text-xs font-mono font-black text-ink shadow-retro-xs">
-            <span>🧙‍♀️</span> APOTHECARY WORKSPACE // 2026
+            <span>🧙‍♀️</span> APOTHECARY WORKSPACE
           </div>
         </div>
 
