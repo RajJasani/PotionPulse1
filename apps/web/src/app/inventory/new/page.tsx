@@ -29,10 +29,12 @@ export default function NewIngredientPage() {
 
   useEffect(() => {
     if (!activeTenant?.id || !accessToken) return;
-    apiClient<any[]>('/locations', { token: accessToken, tenantId: activeTenant.id })
+    apiClient<any>('/locations', { token: accessToken, tenantId: activeTenant.id })
       .then((res) => {
-        setLocations(res.data || []);
-        const def = (res.data || []).find((l) => l.isDefault);
+        const raw = res.data;
+        const locList = Array.isArray(raw) ? raw : (raw as any)?.items || [];
+        setLocations(locList);
+        const def = locList.find((l: any) => l.isDefault);
         if (def) setDefaultLocationId(def.id);
       })
       .catch(() => {});

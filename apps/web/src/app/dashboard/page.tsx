@@ -63,7 +63,9 @@ export default function DashboardPage() {
         setMetrics(overviewRes.data);
       }
       if (movementsRes.data) {
-        setRecentMovements(movementsRes.data);
+        const rawMv = movementsRes.data;
+        const mvList = Array.isArray(rawMv) ? rawMv : (rawMv as any)?.items || [];
+        setRecentMovements(mvList);
       }
     } catch {
       // Handled gracefully

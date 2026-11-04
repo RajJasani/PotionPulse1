@@ -39,14 +39,19 @@ function AdjustStockPageContent() {
       apiClient<any[]>('/locations', { token: accessToken, tenantId: activeTenant.id }),
     ])
       .then(([ingRes, locRes]) => {
-        setIngredients(ingRes.data || []);
-        setLocations(locRes.data || []);
+        const rawIng = ingRes.data;
+        const ingList = Array.isArray(rawIng) ? rawIng : (rawIng as any)?.items || [];
+        const rawLoc = locRes.data;
+        const locList = Array.isArray(rawLoc) ? rawLoc : (rawLoc as any)?.items || [];
 
-        if (!selectedIngredientId && (ingRes.data || []).length > 0) {
-          setSelectedIngredientId(ingRes.data[0].id);
+        setIngredients(ingList);
+        setLocations(locList);
+
+        if (!selectedIngredientId && ingList.length > 0) {
+          setSelectedIngredientId(ingList[0].id);
         }
 
-        const defLoc = (locRes.data || []).find((l) => l.isDefault) || (locRes.data || [])[0];
+        const defLoc = locList.find((l: any) => l.isDefault) || locList[0];
         if (defLoc) {
           setSelectedLocationId(defLoc.id);
         }
@@ -55,7 +60,9 @@ function AdjustStockPageContent() {
       .finally(() => setLoading(false));
   }, [activeTenant?.id, accessToken]);
 
-  const selectedIngredient = ingredients.find((i) => i.id === selectedIngredientId);
+  const selectedIngredient = (Array.isArray(ingredients) ? ingredients : []).find(
+    (i) => i.id === selectedIngredientId,
+  );
   const isNegativeOperation =
     movementType === StockMovementType.WASTAGE ||
     movementType === StockMovementType.ADJUSTMENT_OUT;
@@ -101,11 +108,12 @@ function AdjustStockPageContent() {
       setSuccess(res.data);
       setReason('');
 
-      const updatedList = await apiClient<any[]>('/ingredients', {
+      const updatedList = await apiClient<any>('/ingredients', {
         token: accessToken || undefined,
         tenantId: activeTenant?.id,
       });
-      setIngredients(updatedList.data || []);
+      const rawUp = updatedList.data;
+      setIngredients(Array.isArray(rawUp) ? rawUp : (rawUp as any)?.items || []);
     } catch (err: any) {
       setError(err.message || 'Failed to post stock movement.');
     } finally {

@@ -57,11 +57,23 @@ export default function ForecastingPage() {
     setLoading(true);
     try {
       const [ingRes, demandRes] = await Promise.all([
-        apiClient<any[]>('/ingredients', { token: accessToken, tenantId: activeTenant.id }),
-        apiClient<any[]>(`/analytics/demand?days=30`, { token: accessToken, tenantId: activeTenant.id }),
+        apiClient<any>('/ingredients', { token: accessToken, tenantId: activeTenant.id }),
+        apiClient<any>(`/analytics/demand?days=30`, { token: accessToken, tenantId: activeTenant.id }),
       ]);
-      setIngredients(ingRes.data || []);
-      setDemandData(demandRes.data || []);
+      const rawIngredients = ingRes.data;
+      const ingList = Array.isArray(rawIngredients)
+        ? rawIngredients
+        : (rawIngredients as any)?.items || [];
+
+      const rawDemand = demandRes.data;
+      const demandPoints = Array.isArray(rawDemand)
+        ? rawDemand
+        : Array.isArray((rawDemand as any)?.points)
+        ? (rawDemand as any).points
+        : [];
+
+      setIngredients(ingList);
+      setDemandData(demandPoints);
     } catch (err) {
       console.error('Failed to load forecast data', err);
     } finally {
@@ -75,6 +87,7 @@ export default function ForecastingPage() {
 
   // Compute forecasts per ingredient based on actuals & PRD multipliers
   const forecasts: ForecastItem[] = useMemo(() => {
+    if (!Array.isArray(ingredients)) return [];
     const curseIngredients = ['Bat Wings', 'Mandrake Root', 'Ghost Pepper', 'Dragon Scale'];
 
     return ingredients.map((ing) => {
@@ -98,7 +111,7 @@ export default function ForecastingPage() {
         name: ing.name,
         sku: ing.sku,
         category: ing.category,
-        unit: ing.unit,
+        unit: ing.unit || ing.baseUnit || 'pcs',
         onHand: Number(ing.onHand || 0),
         dailyVelocity,
         projectedDemand,
@@ -113,14 +126,16 @@ export default function ForecastingPage() {
   const chartSeries = useMemo(() => {
     const points: any[] = [];
     const today = new Date();
+    const safeDemand = Array.isArray(demandData) ? demandData : [];
 
     // Past 7 days
     for (let i = 6; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
       const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-      const dayDemand = demandData.find((entry) => entry.date === d.toISOString().slice(0, 10));
-      const actual = dayDemand ? Number(dayDemand.totalQuantity || 0) : Math.floor(45 + Math.sin(i) * 12);
+      const targetIso = d.toISOString().slice(0, 10);
+      const dayDemand = safeDemand.find((entry: any) => entry && entry.date === targetIso);
+      const actual = dayDemand ? Number(dayDemand.quantity ?? dayDemand.totalQuantity ?? 0) : Math.floor(45 + Math.sin(i) * 12);
       points.push({
         date: label,
         ActualDemand: actual,
@@ -130,7 +145,7 @@ export default function ForecastingPage() {
 
     // Future days based on horizon
     const steps = horizon === 7 ? 7 : horizon === 14 ? 14 : 30;
-    const lastActual = points[points.length - 1].ActualDemand;
+    const lastActual = points[points.length - 1]?.ActualDemand ?? 45;
 
     for (let i = 1; i <= steps; i++) {
       const d = new Date(today);
@@ -151,10 +166,10 @@ export default function ForecastingPage() {
     return points;
   }, [horizon, midnightCurseActive, demandData]);
 
-  const filteredForecasts = forecasts.filter((f) => {
+  const filteredForecasts = (Array.isArray(forecasts) ? forecasts : []).filter((f) => {
     const matchesSearch =
-      f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.sku.toLowerCase().includes(searchQuery.toLowerCase());
+      f.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      f.sku?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCat = selectedCategory === 'ALL' || f.category === selectedCategory;
     return matchesSearch && matchesCat;
   });

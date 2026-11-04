@@ -59,7 +59,9 @@ export default function InventoryPage() {
       });
 
       if (res.data) {
-        setIngredients(res.data);
+        const raw = res.data;
+        const list = Array.isArray(raw) ? raw : (raw as any)?.items || [];
+        setIngredients(list);
       }
     } catch {
       // Handled

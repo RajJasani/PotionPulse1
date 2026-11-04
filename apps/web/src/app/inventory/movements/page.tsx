@@ -33,7 +33,8 @@ export default function StockMovementsPage() {
         },
       });
 
-      setMovements(res.data || []);
+      const raw = res.data;
+      setMovements(Array.isArray(raw) ? raw : (raw as any)?.items || []);
       if (res.meta?.totalPages) {
         setTotalPages(res.meta.totalPages);
       }

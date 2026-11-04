@@ -26,11 +26,12 @@ export default function LocationsPage() {
     if (!activeTenant?.id || !accessToken) return;
     setLoading(true);
     try {
-      const res = await apiClient<any[]>('/locations', {
+      const res = await apiClient<any>('/locations', {
         token: accessToken,
         tenantId: activeTenant.id,
       });
-      setLocations(res.data || []);
+      const raw = res.data;
+      setLocations(Array.isArray(raw) ? raw : (raw as any)?.items || []);
     } catch {
       // Handled
     } finally {

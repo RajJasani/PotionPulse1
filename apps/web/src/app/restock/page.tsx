@@ -56,11 +56,13 @@ export default function RestockPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await apiClient<any[]>('/ingredients', {
+      const res = await apiClient<any>('/ingredients', {
         token: accessToken,
         tenantId: activeTenant.id,
       });
-      setIngredients(res.data || []);
+      const rawData = res.data;
+      const ingList = Array.isArray(rawData) ? rawData : (rawData as any)?.items || [];
+      setIngredients(ingList);
     } catch (err: any) {
       setError(err.message || 'Failed to load stockout intelligence');
     } finally {
@@ -74,6 +76,7 @@ export default function RestockPage() {
 
   // Compute stockout risks and restock formula
   const recommendations: RestockItem[] = useMemo(() => {
+    if (!Array.isArray(ingredients)) return [];
     return ingredients.map((ing) => {
       const onHand = Number(ing.onHand || 0);
       const leadTimeDays = Number(ing.leadTimeDays || 4);

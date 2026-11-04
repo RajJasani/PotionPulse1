@@ -57,9 +57,11 @@ export default function NewSalePage() {
   useEffect(() => {
     if (!activeTenant?.id || !accessToken) return;
     setLoading(true);
-    apiClient<any[]>('/ingredients', { token: accessToken, tenantId: activeTenant.id })
+    apiClient<any>('/ingredients', { token: accessToken, tenantId: activeTenant.id })
       .then((res) => {
-        setIngredients(res.data || []);
+        const raw = res.data;
+        const list = Array.isArray(raw) ? raw : (raw as any)?.items || [];
+        setIngredients(list);
       })
       .catch((err) => {
         setError(err.message || 'Failed to load catalog');
@@ -170,7 +172,7 @@ export default function NewSalePage() {
   };
 
   // Filtered ingredients
-  const filteredIngredients = ingredients.filter((ing) => {
+  const filteredIngredients = (Array.isArray(ingredients) ? ingredients : []).filter((ing) => {
     const matchesSearch =
       ing.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       ing.sku?.toLowerCase().includes(searchQuery.toLowerCase());

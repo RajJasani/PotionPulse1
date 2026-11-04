@@ -75,7 +75,8 @@ export default function SalesPage() {
         token: accessToken,
         tenantId: activeTenant.id,
       });
-      setSales(res.data || []);
+      const rawSales = res.data;
+      setSales(Array.isArray(rawSales) ? rawSales : (rawSales as any)?.items || []);
       if (res.meta) {
         setTotalPages(Math.ceil((res.meta.total || 0) / (res.meta.limit || 15)) || 1);
       }
