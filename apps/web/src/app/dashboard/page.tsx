@@ -120,7 +120,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Midnight Curse Operational Banner — Hacktoberfest Event Pass */}
+        {/* Midnight Curse Operational Banner */}
         <div className="rounded-2xl border-2 border-ink bg-[#FFF0EB] p-6 shadow-retro-md relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 z-10 relative">
             <div className="flex items-start gap-4">
@@ -151,7 +151,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* KPI Stat Cards Grid — 4 Hacktoberfest-Inspired Light Color Blocks */}
+        {/* KPI Stat Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Card 1: Total Ingredients (Mint Light) */}
           <div className="rounded-2xl border-2 border-ink bg-[#E8FAF5] p-5 shadow-retro transition-all hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-retro-lg">

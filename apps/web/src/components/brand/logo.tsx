@@ -169,3 +169,4 @@ export function Logo({ size = 'md', iconOnly = false, href = '/', className = ''
 
   return content;
 }
+

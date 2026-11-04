@@ -16,7 +16,7 @@ body {
   background-color: #FFFDF9;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-  /* Authentic Hacktoberfest subtle dot-matrix engineering grid */
+  /* Retro subtle dot-matrix engineering grid */
   background-image: radial-gradient(rgba(26, 21, 35, 0.08) 1px, transparent 1px);
   background-size: 20px 20px;
   background-attachment: fixed;
@@ -27,7 +27,7 @@ body {
   color: #FFFFFF;
 }
 
-/* Hacktoberfest Custom Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -48,7 +48,7 @@ body {
   background: #E55300;
 }
 
-/* Hacktoberfest Tactile Hard-Shadow Elements */
+/* Tactile Hard-Shadow Elements */
 .retro-card {
   background: #FFFFFF;
   border: 2px solid #1A1523;
