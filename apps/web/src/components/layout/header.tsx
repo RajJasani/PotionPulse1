@@ -10,7 +10,6 @@ import { PotionPulseIcon } from '@/components/brand/logo';
 import {
   Bell,
   LogOut,
-  ExternalLink,
   Plus,
 } from 'lucide-react';
 
@@ -63,15 +62,6 @@ export function Header() {
           <Plus className="w-3.5 h-3.5" />
           <span>Receive Stock</span>
         </Button>
-
-        <Link
-          href="http://localhost:4000/api/docs"
-          target="_blank"
-          className="text-xs font-mono font-black text-ink hover:text-white hover:bg-ink px-3 py-1.5 rounded-lg border-2 border-ink bg-white shadow-retro-xs transition-colors flex items-center gap-1.5"
-        >
-          <span>OPENAPI</span>
-          <ExternalLink className="w-3 h-3" />
-        </Link>
 
         <Link href="/notifications" className="relative p-2 text-ink hover:bg-sand rounded-lg border-2 border-ink bg-white shadow-retro-xs transition-colors">
           <Bell className="w-4 h-4" />
