@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Logo } from '@/components/brand/logo';
-import { ArrowRight, ShieldCheck, Zap, AlertCircle } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Zap, AlertCircle, AlertTriangle } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -15,6 +15,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
+
+  useEffect(() => {
+    fetch('/api/v1/health')
+      .then((res) => (res.ok ? setBackendStatus('online') : setBackendStatus('offline')))
+      .catch(() => setBackendStatus('offline'));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,9 +33,14 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     try {
-      await login(email, password);
+      await login(email.trim(), password);
     } catch (err: any) {
-      setError(err.message || 'Login failed. Please verify credentials.');
+      const msg = err?.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Unable to reach')) {
+        setError('Cannot connect to the PotionPulse API server. Ensure the backend service on port 4000 is running.');
+      } else {
+        setError(msg || 'Invalid email or password. Please verify credentials.');
+      }
     } finally {
       setLoading(false);
     }
@@ -38,6 +50,25 @@ export default function LoginPage() {
     setEmail('hexley@potionpulse.dev');
     setPassword('HexleyMagic2026!');
     setError(null);
+  };
+
+  const quickDemoLogin = async () => {
+    setEmail('hexley@potionpulse.dev');
+    setPassword('HexleyMagic2026!');
+    setError(null);
+    setLoading(true);
+    try {
+      await login('hexley@potionpulse.dev', 'HexleyMagic2026!');
+    } catch (err: any) {
+      const msg = err?.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Unable to reach')) {
+        setError('Cannot connect to the PotionPulse API server. Ensure the backend service on port 4000 is running.');
+      } else {
+        setError(msg || 'Login failed. Please verify credentials.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,6 +94,18 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent className="p-0 space-y-5">
+            {backendStatus === 'offline' && (
+              <div className="p-3.5 rounded-xl bg-amber-50 border-2 border-ink text-ink text-xs font-mono font-bold flex items-start gap-2.5 shadow-retro-xs">
+                <AlertTriangle className="w-4 h-4 text-hackOrange shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <span className="block font-black text-hackOrange uppercase">Backend API Offline</span>
+                  <span className="text-[11px] block text-ink/80">
+                    The API server on port 4000 is not responding. Please make sure the API process is started.
+                  </span>
+                </div>
+              </div>
+            )}
+
             {error && (
               <div className="p-3.5 rounded-xl bg-[#FDECEE] border-2 border-hackRed text-hackRed text-xs font-mono font-bold flex items-center gap-2.5 shadow-retro-xs">
                 <AlertCircle className="w-4 h-4 shrink-0 text-hackRed" />
@@ -105,17 +148,30 @@ export default function LoginPage() {
               </span>
             </div>
 
-            {/* Quick Demo Credentials Button */}
-            <Button
-              type="button"
-              variant="amber"
-              size="md"
-              className="w-full flex items-center justify-center gap-2"
-              onClick={fillDemoAccount}
-            >
-              <Zap className="w-4 h-4 text-ink fill-ink" />
-              <span>Fill Demo Credentials (Madam Hexley)</span>
-            </Button>
+            {/* Demo Login Actions */}
+            <div className="space-y-2.5">
+              <Button
+                type="button"
+                variant="orange"
+                size="md"
+                className="w-full flex items-center justify-center gap-2 font-black"
+                onClick={quickDemoLogin}
+                isLoading={loading}
+              >
+                <Zap className="w-4 h-4 fill-white text-white" />
+                <span>1-Click Instant Login (Madam Hexley)</span>
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full flex items-center justify-center gap-2 text-xs"
+                onClick={fillDemoAccount}
+              >
+                <span>Fill Credentials Manually</span>
+              </Button>
+            </div>
 
             <div className="pt-2 text-center text-xs font-bold text-mutedText">
               Don&apos;t have a shop workspace yet?{' '}

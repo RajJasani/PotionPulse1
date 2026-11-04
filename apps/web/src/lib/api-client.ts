@@ -1,6 +1,9 @@
 import { ApiErrorEnvelope } from '@potionpulse/contracts';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+const isBrowser = typeof window !== 'undefined';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (isBrowser ? '/api/v1' : `${process.env.API_INTERNAL_URL || 'http://localhost:4000'}/api/v1`);
 
 export class ApiError extends Error {
   public code: string;
@@ -70,11 +73,18 @@ export async function apiClient<T>(
     formattedBody = JSON.stringify(body);
   }
 
-  const response = await fetch(url, {
-    ...customConfig,
-    headers: reqHeaders,
-    body: formattedBody,
-  });
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      ...customConfig,
+      headers: reqHeaders,
+      body: formattedBody,
+    });
+  } catch (err: any) {
+    throw new Error(
+      `Unable to reach PotionPulse API server. Please ensure the backend is running. (${err?.message || 'Connection failed'})`
+    );
+  }
 
   if (!response.ok) {
     let errorData: ApiErrorEnvelope | undefined;

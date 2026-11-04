@@ -33,9 +33,14 @@ export default function RegisterPage() {
     setLoading(true);
     setError(null);
     try {
-      await register(email, password, displayName, shopName || undefined);
+      await register(email.trim().toLowerCase(), password, displayName.trim(), shopName?.trim() || undefined);
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please check your information.');
+      const msg = err?.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Unable to reach')) {
+        setError('Cannot connect to the PotionPulse API server. Ensure the backend service on port 4000 is running.');
+      } else {
+        setError(msg || 'Registration failed. Please check your information.');
+      }
     } finally {
       setLoading(false);
     }
