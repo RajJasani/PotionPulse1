@@ -321,6 +321,171 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Forecasting Showcase Section */}
+        <section id="forecasting" className="w-full pt-16 space-y-8 text-left scroll-mt-24">
+          <div className="text-center space-y-3">
+            <span className="sticker-tag bg-hackAmber text-ink text-xs font-mono font-black uppercase tracking-wider">
+              TIME-SERIES INTELLIGENCE
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-ink">
+              Multi-Horizon Demand Forecasting
+            </h2>
+            <p className="text-sm text-ink/70 max-w-2xl mx-auto font-medium">
+              Deterministic Holt-Winters exponential smoothing, 7 / 14 / 30 day demand projections,
+              and real-time 3.0× demand curve adjustments for festival scenarios like Midnight Curse.
+            </p>
+          </div>
+
+          <div className="bg-white border-3 border-ink shadow-retro-xl rounded-2xl p-6 sm:p-8 space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-ink pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">📈</span>
+                  <h3 className="text-xl font-black text-ink">Simulated Demand Curve vs Midnight Curse</h3>
+                </div>
+                <p className="text-xs font-mono text-ink/70 mt-1">
+                  Active Scenario: Midnight Curse • 3.00× Surge Multiplier Across Configured Ingredients
+                </p>
+              </div>
+              <Button href="/forecasting" variant="orange" size="md">
+                <span>Open Full Forecasting Studio</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+
+            {/* Visual simulation representation */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl bg-sand border-2 border-ink shadow-retro-sm">
+                <span className="text-[10px] font-mono font-bold uppercase text-ink/70 block">
+                  7-Day Horizon
+                </span>
+                <div className="text-2xl font-black text-ink mt-1">142.5 Units</div>
+                <span className="text-xs font-mono text-hackOrange font-bold flex items-center gap-1 mt-1">
+                  ▲ +300% Curse Peak
+                </span>
+              </div>
+              <div className="p-4 rounded-xl bg-sand border-2 border-ink shadow-retro-sm">
+                <span className="text-[10px] font-mono font-bold uppercase text-ink/70 block">
+                  14-Day Horizon
+                </span>
+                <div className="text-2xl font-black text-ink mt-1">298.0 Units</div>
+                <span className="text-xs font-mono text-hackMint font-bold flex items-center gap-1 mt-1">
+                  ● Lead Time Covered
+                </span>
+              </div>
+              <div className="p-4 rounded-xl bg-sand border-2 border-ink shadow-retro-sm">
+                <span className="text-[10px] font-mono font-bold uppercase text-ink/70 block">
+                  Forecast Confidence
+                </span>
+                <div className="text-2xl font-black text-ink mt-1">98.4% α=0.3</div>
+                <span className="text-xs font-mono text-hackPurple font-bold flex items-center gap-1 mt-1">
+                  ★ Zero Future Leakage
+                </span>
+              </div>
+            </div>
+
+            {/* Comparison bar graphic */}
+            <div className="p-5 bg-sand/40 border-2 border-ink rounded-xl space-y-3 font-mono text-xs">
+              <div className="flex justify-between font-bold">
+                <span>Ghost Lily (Affected Item #1)</span>
+                <span className="text-hackOrange">3.0× Multiplier Applied (45 u/day)</span>
+              </div>
+              <div className="w-full bg-white h-4 rounded-md border-2 border-ink overflow-hidden flex">
+                <div className="bg-hackPurple h-full" style={{ width: '33%' }} title="Baseline: 15 u/day" />
+                <div className="bg-hackOrange h-full animate-pulse" style={{ width: '67%' }} title="Curse Surge: +30 u/day" />
+              </div>
+              <div className="flex justify-between text-[11px] text-ink/70">
+                <span>Baseline: 15.0 units/day</span>
+                <span className="font-bold text-ink">Peak Festival Demand: 45.0 units/day</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Point of Sale Showcase Section */}
+        <section id="pos" className="w-full pt-16 space-y-8 text-left scroll-mt-24">
+          <div className="text-center space-y-3">
+            <span className="sticker-tag bg-hackMint text-ink text-xs font-mono font-black uppercase tracking-wider">
+              FAST CASHIER REGISTER
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-ink">
+              High-Speed Point of Sale & Ledger Deduction
+            </h2>
+            <p className="text-sm text-ink/70 max-w-2xl mx-auto font-medium">
+              Real-time stock validation, instant batch formulation scaling, barcode / SKU search, 
+              and ACID-safe double-entry ledger transactions with zero negative-balance risk.
+            </p>
+          </div>
+
+          <div className="bg-white border-3 border-ink shadow-retro-xl rounded-2xl p-6 sm:p-8 space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-ink pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🛒</span>
+                  <h3 className="text-xl font-black text-ink">Apothecary Checkout Counter</h3>
+                </div>
+                <p className="text-xs font-mono text-ink/70 mt-1">
+                  Instant receipt generation • Automatic lot allocation • Multi-tender payments
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button href="/sales/new" variant="amber" size="md">
+                  <ShoppingCart className="w-4 h-4 mr-1.5" />
+                  <span>Launch POS Register</span>
+                </Button>
+                <Button href="/sales" variant="outline" size="md">
+                  <span>Sales History</span>
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl bg-sand border-2 border-ink shadow-retro-sm">
+                <span className="text-[10px] font-mono font-bold uppercase text-ink/70 block">
+                  Checkout Speed
+                </span>
+                <div className="text-2xl font-black text-ink mt-1">&lt; 150 ms</div>
+                <span className="text-xs font-mono text-hackMint font-bold flex items-center gap-1 mt-1">
+                  ⚡ Real-Time Ledger Lock
+                </span>
+              </div>
+              <div className="p-4 rounded-xl bg-sand border-2 border-ink shadow-retro-sm">
+                <span className="text-[10px] font-mono font-bold uppercase text-ink/70 block">
+                  Inventory Safety
+                </span>
+                <div className="text-2xl font-black text-ink mt-1">100% Guarded</div>
+                <span className="text-xs font-mono text-hackPurple font-bold flex items-center gap-1 mt-1">
+                  🛡️ Zero Negative Balances
+                </span>
+              </div>
+              <div className="p-4 rounded-xl bg-sand border-2 border-ink shadow-retro-sm">
+                <span className="text-[10px] font-mono font-bold uppercase text-ink/70 block">
+                  Audit Stamps
+                </span>
+                <div className="text-2xl font-black text-ink mt-1">Idempotent</div>
+                <span className="text-xs font-mono text-hackOrange font-bold flex items-center gap-1 mt-1">
+                  📄 Digital Printable Receipts
+                </span>
+              </div>
+            </div>
+
+            <div className="p-4 bg-sand/40 border-2 border-ink rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-hackMint border-2 border-ink flex items-center justify-center font-bold text-lg">
+                  🧾
+                </div>
+                <div>
+                  <span className="font-bold text-ink block">Live Counter Register Experience</span>
+                  <span className="text-[11px] text-ink/70">Scan ingredients, manage quantities, and print client receipts instantly.</span>
+                </div>
+              </div>
+              <Button href="/sales/new" variant="mint" size="sm">
+                Open Counter &rarr;
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* Tech Stack Banner */}
         <section id="architecture" className="w-full pt-10 pb-6 text-left">
           <div className="bg-sand border-3 border-ink shadow-retro-lg rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">

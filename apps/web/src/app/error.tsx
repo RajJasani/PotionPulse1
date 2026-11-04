@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { RefreshCw, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function ErrorBoundary({
@@ -52,3 +52,4 @@ export default function ErrorBoundary({
     </div>
   );
 }
+
